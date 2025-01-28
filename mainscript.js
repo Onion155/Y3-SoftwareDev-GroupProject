@@ -7,6 +7,7 @@ document.getElementById('egfr-form').addEventListener('submit', function(event) 
     let gender = document.getElementById('gender').value;
     let ethnicity = document.getElementById('ethnicity').value;
     let creatinine = parseFloat(document.getElementById('creatinine').value);
+    let eGFR;
 
     // Validate inputs
     if (isNaN(age) || isNaN(creatinine) || !gender || !ethnicity) {
@@ -14,19 +15,17 @@ document.getElementById('egfr-form').addEventListener('submit', function(event) 
         return;
     }
 
-    // Define constants
-    let k = (gender === 'female') ? 0.7 : 0.9;
-    let alpha = (gender === 'female') ? -0.329 : -0.411;
-    let minSCr = Math.min(creatinine / k, 1);
-    let maxSCr = Math.max(creatinine / k, 1);
-    let genderFactor = (gender === 'female') ? 1.018 : 1;
-    let ethnicityFactor = (ethnicity === 'black') ? 1.159 : 1;
+    
+    function calculateEGFR(gender, age, creatinine, race) {
+        const genderFactor = gender === 'female' ? 0.9 : 0.7;
+        const raceFactor = race === 'black'? 1.210 :1;
+        const eGFR = 186 * Math.pow(creatinine/88.4, -1.154) * Math.pow(age,-0.203) * genderFactor * raceFactor;
+        return eGFR;
+    }
 
-    // Calculate eGFR
-    let eGFR = 141 * Math.pow(minSCr, alpha) * Math.pow(maxSCr, -1.209) *
-               Math.pow(0.993, age) * genderFactor * ethnicityFactor;
+    // calculates eGFR   
+    eGFR = calculateEGFR(gender , age , creatinine, creatinine ,ethnicity );
 
-               
     // diplays the last result of the reading
     displayeGFRresult(eGFR);
 
