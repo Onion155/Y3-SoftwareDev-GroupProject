@@ -19,6 +19,7 @@ document.getElementById('egfr-form').addEventListener('submit', function(event) 
     function calculateEGFR(gender, age, creatinine, race) {
         const genderFactor = gender === 'female' ? 0.9 : 0.7;
         const raceFactor = race === 'black'? 1.210 :1;
+        // creatinine should be divided by 0.00113 to convert to mg/dl
         const eGFR = 186 * Math.pow(creatinine/88.4, -1.154) * Math.pow(age,-0.203) * genderFactor * raceFactor;
         return eGFR;
     }
