@@ -9,11 +9,18 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     // data base
     const Users = ['Marco', 'Ben', 'David', 'Susan', 'Karen'];
     const Paswords = ['123', '456', '789', '101', '000'];
+    
+    const Persons = [
+        {Name: Users[1], Password : Passwords[1] , Access: 0},
+        {Name: Users[2], Password : Passwords[2] , Access: 0},
+        
+    ];
 
     function CorrectUser() // returns true if the user is in the data base (both password and Name)
     {
         for (let i= 0; i < Users.length; i++)
     {
+        
         // return true if there is a user or false if there is not
         if (username == Users[i] && password == Paswords[i])
         {
