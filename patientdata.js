@@ -38,7 +38,8 @@ document.getElementById('result').innerHTML = `<h2>Estimated GFR: ${eGFR.toFixed
 
 function updateChart(newReading) {
     // Add the new reading to the dataset
-    egfrChart.data.labels.push('Current Reading');
+
+    egfrChart.data.labels.push('Reading ' + (egfrChart.data.datasets[0].data.length + 1));
     egfrChart.data.datasets[0].data.push(newReading);
     egfrChart.update();
 }

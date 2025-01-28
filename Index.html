@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>eGFR Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href = "DoctorPage.html">Doctor</a></li>
-                <li><a href="PatientPage.html">Patient</a></li>   
-            </ul>
-        </nav>
-    </header>
-   
-    
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="message"></p>
+    </div>
+    <script src="login.js"></script>
 </body>
 </html>
