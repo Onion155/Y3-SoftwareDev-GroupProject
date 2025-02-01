@@ -1,21 +1,22 @@
 <?php
+require_once "./model/user.php";
+require_once "./model/dataAccess-db.php";
 
-print_r($_REQUEST);
-/*
-if($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST["username"];
-    $password = $_POST["pwd"];
-}
-
+//checks if request has come through
 if(isset($_REQUEST["username"]) && isset($_REQUEST["password"])) {
+
     $username = $_REQUEST["username"];
     $password = $_REQUEST["password"];
+    
     $user = fetchUser($username);
-
-    if($password == $user->password) {
+    
+    if ($user === null) {
+        require_once "./view/login_view.html";
+    }
+    else {
+        $role = $user->role;
         $_SESSION["user"] = $user;
-        exit();
+        $_SESSION["role"] = $role;
     }
 }
-    */
 ?>

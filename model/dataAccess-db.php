@@ -14,7 +14,10 @@
   $statement = $pdo->prepare('SELECT * FROM user WHERE userName = ?');
   $statement->execute([$userName]);
   $result = $statement->fetchALL(PDO::FETCH_CLASS, 'User');
-  return $result[0];
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0];
   }
-
+  }
 ?>
