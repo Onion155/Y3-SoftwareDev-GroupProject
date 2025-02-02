@@ -43,7 +43,7 @@
   //The database stores the latest current data every time patient data is inserted
   function insertPatientRecord($patientID, $eGFR) {
     global $pdo;
-    $statement = $pdo->prepare('INSERT INTO patientRecord (patientID, eGFR) VALUES (?, ?, ?)');
+    $statement = $pdo->prepare('INSERT INTO patientRecord (patientID, eGFR) VALUES (?, ?)');
     $statement->execute([$patientID, $eGFR]);
   }
 ?>

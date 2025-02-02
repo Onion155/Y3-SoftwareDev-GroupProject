@@ -16,4 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo json_encode($patient);
     }
 }
+
+if (isset($_POST['egfr'])) {
+    $eGFR = $_POST['egfr'];
+    $patientID = $_SESSION['patient']->id;
+    insertPatientRecord($patientID,$eGFR);
+}
 ?>
