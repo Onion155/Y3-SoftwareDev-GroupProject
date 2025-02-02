@@ -4,8 +4,9 @@ ini_set('display_errors', 1);
 
 session_start();
 require_once "./model/user.php";
-require_once "./model/dataAccess-db.php";
+require_once "./model/data/dataAccess-db.php";
 require_once "login.php";
+
 
 //Checks if user clicked sign out
 if(isset($_REQUEST["signout"])) {
@@ -13,11 +14,11 @@ session_unset();
 }
 
 //Checks if user is logged in
-if(isset($_SESSION["user"]) && isset($_SESSION["role"]))  {
-    
-    $role = $_SESSION["user"]->role;
-    switch ($role) {
+if(isset($_SESSION["user"]))  {
+
+    switch ($_SESSION["user"]->role) {
         case "doctor":
+            
             require_once "./view/doctor_view.html";
             break;
         case "patient":

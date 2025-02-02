@@ -1,10 +1,53 @@
 
-// Assume previousReadings is an array of past eGFR values
-let previousReadings = [100, 85, 70, 75]; // in future this will be given by a data base 
+
+//AJAX grabbing patient data through database->PHP(server)->javascript
+
+   $.get("./patient.php", function (data, status) {
+    console.log(JSON.parse(data));
+    let patient = JSON.parse(data);
+    loadForm(patient);
+});
+
+//AJAX grabbing patient record data through database->PHP(server)->javascript
+$.get("./doctor.php", function (data, status) {
+    console.log(JSON.parse(data));
+    let patientRecords = JSON.parse(data);
+    loadChart(patientRecords);
+});
+
+function loadForm(patient) {
+    document.getElementById('age').value = calculateAge(patient.DoB);
+    if (patient.isBlack === true) {
+        document.getElementById('ethnicity').value = "black";
+    } else {
+        document.getElementById('ethnicity').value = "non-black"
+    }
+    document.getElementById('sex').value = patient.sex;
+}
+
+function calculateAge(DoB) {
+const today = new Date();
+const birthDate = new Date(DoB);
+
+let age = today.getFullYear() - birthDate.getFullYear();
+
+const monthDifference = today.getMonth() - birthDate.getMonth();
+const dayDifference = today.getDate() - birthDate.getDate();
+
+if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+    age--;
+}
+
+return age;
+}
 
 // Create the chart
-let ctx = document.getElementById('egfr-chart').getContext('2d');
-let egfrChart = new Chart(ctx, {
+function loadChart(patientRecords) {
+    let previousReadings = patientRecords.map(function(record) {
+        return record.eGFR;
+    });
+ ctx = document.getElementById('egfr-chart').getContext('2d');
+ egfrChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: ['Reading 1', 'Reading 2', 'Reading 3', 'Reading 4'],
@@ -28,6 +71,7 @@ let egfrChart = new Chart(ctx, {
         }
     }
 });
+}
 
 function displayeGFRresult(eGFR)
 {
@@ -66,5 +110,3 @@ function GetCurrentegfrValue(list) // this needs to be improved
     }
     else { currentegfrvalue = 5}
 }
-
-

@@ -1,6 +1,6 @@
 <?php
 require_once "./model/user.php";
-require_once "./model/dataAccess-db.php";
+require_once "./model/data/dataAccess-db.php";
 
 //checks if request has come through
 if (isset($_REQUEST["username"]) && isset($_REQUEST["password"])) {
@@ -15,7 +15,6 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["password"])) {
 
         if ($password == $user->userPassword) {
             $_SESSION["user"] = $user;
-            $_SESSION["role"] = $user->role;
         } else {
             echo "Wrong password";
         }
