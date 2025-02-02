@@ -1,3 +1,27 @@
+* {
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 15px 15px;
+    border-radius: 5px;
+
+}
+
+#welcome {
+    min-width: 150px;
+}
+
+#patients {
+margin-inline: 10%;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -8,11 +32,7 @@ h1 {
     color: #333;
 }
 
-form {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-}
+
 
 label {
     display: block;
@@ -27,12 +47,18 @@ input, select {
 }
 
 button {
-    margin-top: 15px;
-    padding: 10px 20px;
+    min-width: 120px;
+    padding: 10px 26px;
     background-color: #28a745;
     color: #fff;
     border: none;
     cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s ease 0s;
+}
+
+#creatinine {
+    margin-bottom: 15px;
 }
 
 button:hover {

@@ -1,16 +1,23 @@
 //Retrieves patient data through database->PHP(server)->javascript
-$.get("./patient.php", function (data) {
+$.get("requestHandler.php", { action: 'getPatients' }, function (data, status) {
   console.log(JSON.parse(data));
   let patient = JSON.parse(data);
+  //loadDDWithPatients(patient);
   loadForm(patient);
 });
 
 //Retrieves patient record data through database->PHP(server)->javascript
-$.get("./doctor.php", function (data) {
+$.get("requestHandler.php", { action: 'getPatientRecords'}, function (data,status) {
   console.log(JSON.parse(data));
   let patientRecords = JSON.parse(data);
   loadChart(patientRecords);
 });
+
+//Retrieves username for "Welcome [username"
+$.get("requestHandler.php", { action: 'getUsername'}, function (username) {
+document.getElementById("welcome").innerHTML = `Welcome back ${username}!`;
+})
+
 
 function loadForm(patient) {
   document.getElementById("age").value = calculateAge(patient.DoB);

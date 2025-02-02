@@ -33,7 +33,7 @@ document.getElementById('egfr-form').addEventListener('submit', function(event) 
     updateChart(eGFR);
 
     //Inserts the new value into the database
-    $.post("patient.php", {
+    $.post("requestHandler.php", {
         egfr: eGFR
     })
 
