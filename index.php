@@ -2,39 +2,14 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-session_start();
 require_once "./model/user.php";
-require_once "./model/data/dataAccess-db.php";
-require_once "login.php";
+session_start();
 
-
-//Checks if user clicked sign out
-if(isset($_REQUEST["signout"])) {
-session_unset();
+//Go to dashboard if logged in, else go to login page
+if(isset($_SESSION["user"])) {
+    header("Location: dashboard.php");
 }
-
-//Checks if user is logged in
-if(isset($_SESSION["user"]))  {
-
-    switch ($_SESSION["user"]->role) {
-        case "doctor":
-            
-            require_once "./view/doctor_view.html";
-            break;
-        case "patient":
-            require_once "./view/patient_view.html";
-            break;
-        case "expert patient":
-            //NOT DONE
-            break;
-            default:
-               throw new Exception("User role doesn't exist");
-    }
-    exit();
-
-} else {
-    
-    require_once "./view/login_view.html";
-    exit();
+else {
+    header("Location: login.php");
 }
 ?>
