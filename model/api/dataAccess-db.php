@@ -35,7 +35,7 @@
     global $pdo;
     $statement = $pdo->prepare('SELECT pr.* FROM patientRecord pr
                                        JOIN patient p on pr.patientID = p.id
-                                       WHERE pr.patientID = ? and P.doctorID = ?');
+                                       WHERE pr.patientID = ? and p.doctorID = ?');
     $statement->execute([$patientID, $doctorID]);
     $result = $statement->fetchALL(PDO::FETCH_CLASS, 'PatientRecord');
     return $result;

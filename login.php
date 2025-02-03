@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require_once "./model/user.php";
 require_once "./model/api/dataAccess-db.php";
 require_once "./view/login_view.html";
@@ -6,32 +7,30 @@ session_start();
 
 if(isset($_REQUEST["signout"])) {
     session_unset();
-    header("Location: login");
+    header("Location: login.php");
     }    
 
-    //If the user goes to the login url while signed in
-    if(isset($_SESSION["user"])) {
+    if(isset($_SESSION["user"])) { //If the user goes to the login url while signed in
         header("Location: index.php");
     }
 
-//checks if request has come through
-if (isset($_REQUEST["username"]) && isset($_REQUEST["password"])) {
+if (isset($_REQUEST["username"]) && isset($_REQUEST["password"])) { //checks if request has come through
 
     $username = $_REQUEST["username"];
     $password = $_REQUEST["password"];
 
     $user = fetchUser($username);
     if (is_null($user)) {
-        echo "Username doesnt exist";
+        $message = "username doesnt exist";
     } else {
 
         if ($password == $user->userPassword) {
             $_SESSION["user"] = $user;
         } else {
-            echo "Wrong password";
+            $message = "wrong password";
         }
-        
     }
-    header("Location: index.php");
+    header("Location: login.php?message=$message");
 }
+ob_end_flush();
 ?>

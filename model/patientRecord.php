@@ -6,6 +6,7 @@ class PatientRecord {
     public $bloodPressure;
     public $priority;
     public $note;
+    private $patientID;
 
     function __get($name) {
         return $this->$name;

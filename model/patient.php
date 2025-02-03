@@ -5,6 +5,8 @@ class Patient {
     public $sex;
     public $isBlack;
     public $NHSNumber;
+    private $userID;
+    private $doctorID;
 
     function __get($name) {
         return $this->$name;
