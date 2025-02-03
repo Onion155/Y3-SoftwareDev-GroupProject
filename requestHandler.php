@@ -12,13 +12,17 @@ if (isset($_GET['action'])) {
     switch ($action) {
         case "getPatients":
             $doctorID = $_SESSION['user']->id;
-            $_SESSION['patient'] = fetchPatients($doctorID)[0];
-            echo json_encode($_SESSION['patient']);
+            echo json_encode(fetchPatients($doctorID));
             break;
 
         case "getPatientRecords":
-            $id = $_SESSION['patient']->id;
-            echo json_encode(fetchPatientRecords($id));
+            $patientID = $_GET['patientid'];
+            if($_SESSION['user']->role === "doctor") {
+            $doctorID = $_SESSION['user']->id;
+            echo json_encode(fetchPatientRecords($patientID, $doctorID));
+            } else {
+                echo "UNSUPPORTED function: getPatientRecords() - User is not a doctor";
+            }
             break;
 
         case "getUsername":

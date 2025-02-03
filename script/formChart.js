@@ -1,24 +1,48 @@
-//Retrieves patient data through database->PHP(server)->javascript
+//API calls (database->PHP(server-side)->javascript(client-side))
+//Retrieves data from patients assigned to signed in doctor
 $.get("requestHandler.php", { action: 'getPatients' }, function (data, status) {
   console.log(JSON.parse(data));
-  let patient = JSON.parse(data);
-  //loadDDWithPatients(patient);
-  loadForm(patient);
+  let patients = JSON.parse(data); //store patients as JSON
+  loadDropDown(patients);  
 });
 
-//Retrieves patient record data through database->PHP(server)->javascript
-$.get("requestHandler.php", { action: 'getPatientRecords'}, function (data,status) {
-  console.log(JSON.parse(data));
-  let patientRecords = JSON.parse(data);
+//Retrieves username to display welcome text to user
+$.get("requestHandler.php", { action: 'getUsername'}, function (username) {
+  document.getElementById("welcome").innerHTML = `Welcome back ${username}!`;
+  })
+
+//Retrieves all patient records of a patient
+function fetchPatientRecords(selectedPatientID) {
+$.get("requestHandler.php", { action: 'getPatientRecords',
+                              patientid: selectedPatientID }, function (data) {
+  let patientRecords = JSON.parse(data); //store patient records as JSON
   loadChart(patientRecords);
 });
+}
 
-//Retrieves username for "Welcome [username"
-$.get("requestHandler.php", { action: 'getUsername'}, function (username) {
-document.getElementById("welcome").innerHTML = `Welcome back ${username}!`;
-})
+//Fill dropdown with patients assigned to doctor
+function loadDropDown(patients) {
+  let patientsDropDown = document.getElementById("patient-dropdown")
+  let out = patientsDropDown.innerHTML;
 
+  for(let p in patients) {
+    out += `<option value="${patients[p].id}">NHS: ${patients[p].NHSNumber}</option>"`;
+  }
+  patientsDropDown.innerHTML = out;
+  
+  loadPatientData();
 
+  patientsDropDown.addEventListener("change", loadPatientData);
+
+  function loadPatientData() {
+    let patientID = patientsDropDown.value;
+    let patient = patients.find(p => p.id === parseInt(patientID));
+    loadForm(patient);
+    fetchPatientRecords(patientID);
+  }
+}
+
+//Fill form with patient data
 function loadForm(patient) {
   document.getElementById("age").value = calculateAge(patient.DoB);
   if (patient.isBlack === true) {
@@ -45,8 +69,9 @@ function calculateAge(DoB) {
   return age;
 }
 
-// Create the chart
-function loadChart(patientRecords) {
+let egfrChart;
+
+function loadChart(patientRecords) { // Creates the eGFR readings graph chart
   var previousReadings = [];
   var readingsLabels = [];
   
@@ -54,46 +79,44 @@ function loadChart(patientRecords) {
     previousReadings[i] = patientRecords[i].eGFR;
     readingsLabels[i] = "Reading " + (i+1);
   }
-
+  console.log(previousReadings);
   ctx = document.getElementById("egfr-chart").getContext("2d");
-  egfrChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: readingsLabels,
-      datasets: [
-        {
-          label: "eGFR over Time",
-          data: previousReadings,
-          borderColor: "rgba(75, 192, 192, 1)",
-          fill: false,
-          tension: 0.1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: false,
-          title: {
-            display: true,
-            text: "eGFR (mL/min/1.73m²)",
+  if (!egfrChart) { //Create new chart if it doesn't exist
+    egfrChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        datasets: [
+          {
+            label: "eGFR over Time",
+            borderColor: "rgba(75, 192, 192, 1)",
+            fill: false,
+            tension: 0.1,
+          },
+        ],
+      },
+      options: { scales: { y: {
+            beginAtZero: false,
+            title: {
+              display: true,
+              text: "eGFR (mL/min/1.73m²)",
+            },
           },
         },
       },
-    },
-  });
+    });
+  }
+ 
+  
+  egfrChart.data.labels = readingsLabels
+  egfrChart.data.datasets[0].data = previousReadings;
+  egfrChart.update();
 }
 
-function displayeGFRresult(eGFR) {
-  // Display the result
-  document.getElementById(
-    "result"
-  ).innerHTML = `<h2>Estimated GFR: ${eGFR.toFixed(2)} mL/min/1.73m²</h2>`;
+function displayeGFRresult(eGFR) { // Display the result
+  document.getElementById("result").innerHTML = `<h2>Estimated GFR: ${eGFR.toFixed(2)} mL/min/1.73m²</h2>`;
 }
 
-function updateChart(newReading) {
-  // Add the new reading to the dataset
-
+function updateChart(newReading) {// Add the new reading to the dataset
   egfrChart.data.labels.push(
     "Reading " + (egfrChart.data.datasets[0].data.length + 1)
   );

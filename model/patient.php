@@ -1,6 +1,6 @@
 <?php
 class Patient {
-    private $id;
+    public $id;
     public $DoB;
     public $sex;
     public $isBlack;
