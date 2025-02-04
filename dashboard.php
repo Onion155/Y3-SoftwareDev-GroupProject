@@ -9,6 +9,8 @@ session_start();
             break;
         case "expert patient": //NOT DONE
             break;
-            default: header("Location: login.php");
+            
+            default: session_unset();
+            header("Location: login.php?message=unknown-role:page-not-found");
         }
 ?>

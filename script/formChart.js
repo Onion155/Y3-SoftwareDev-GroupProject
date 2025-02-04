@@ -7,18 +7,21 @@ $.get("requestHandler.php", { action: 'getPatients' }, function (data, status) {
 });
 
 //Retrieves username to display welcome text to user
-$.get("requestHandler.php", { action: 'getUsername'}, function (username) {
+$.get("requestHandler.php", { action: 'getUsername' }, function (username) {
   document.getElementById("welcome").innerHTML = `Welcome back ${username}!`;
   })
 
-//Retrieves all patient records of a patient
-function fetchPatientRecords(selectedPatientID) {
-$.get("requestHandler.php", { action: 'getPatientRecords',
-                              patientid: selectedPatientID }, function (data) {
+function fetchPatientRecords() { //Retrieves all patient records of a patient
+$.get("requestHandler.php", { action: 'getPatientRecords' }, function (data) {
   let patientRecords = JSON.parse(data); //store patient records as JSON
   loadChart(patientRecords);
 });
 }
+
+function setPatientIdSession(selectedPatientID) { //Sets session of patientid for the server to keep track of
+  $.post("requestHandler.php", { patientid: selectedPatientID });
+  }
+  
 
 //Fill dropdown with patients assigned to doctor
 function loadDropDown(patients) {
@@ -36,9 +39,10 @@ function loadDropDown(patients) {
 
   function loadPatientData() {
     let patientID = patientsDropDown.value;
+    setPatientIdSession(patientID);
     let patient = patients.find(p => p.id === parseInt(patientID));
     loadForm(patient);
-    fetchPatientRecords(patientID);
+    fetchPatientRecords();
   }
 }
 

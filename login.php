@@ -21,13 +21,13 @@ if (isset($_REQUEST["username"]) && isset($_REQUEST["password"])) { //checks if 
 
     $user = fetchUser($username);
     if (is_null($user)) {
-        $message = "username doesnt exist";
+        $message = "username-doesnt-exist";
     } else {
 
         if ($password == $user->userPassword) {
             $_SESSION["user"] = $user;
         } else {
-            $message = "wrong password";
+            $message = "wrong-password";
         }
     }
     header("Location: login.php?message=$message");
