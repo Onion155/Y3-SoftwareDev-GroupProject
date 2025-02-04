@@ -1,0 +1,14 @@
+DOCTOR: 
+username: marco
+password: 123
+
+EXPERT PATIENT:
+HAVEN'T IMPLEMENTED IN DATABASE
+
+PATIENTS UNDER marco:
+
+username: susan
+password: password123
+
+username: john
+password: 12345

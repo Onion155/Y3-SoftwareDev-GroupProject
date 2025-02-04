@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Will not apply to directories
+RewriteCond ${REQUEST_FILENAME} !-d
+
+# Check for files with .html
+RewriteCond %{REQUEST_FILENAME}\.html -f
+
+# Selected page with .html
+
+RewriteRule ^(.*)$ $1.php [NC,L]
