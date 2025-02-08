@@ -1,9 +1,11 @@
 <?php
-class User {
+class Account {
     private $id;
-    private $userName;
-    private $userPassword;
-    private $userEmail;
+    private $passwordHash;
+    private $email;
+    private $loginAttempts;
+    private $lastLockTime;
+    private $lastLoginTime;
     private $role;
 
     function __get($name) {

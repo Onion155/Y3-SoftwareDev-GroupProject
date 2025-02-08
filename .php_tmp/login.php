@@ -1,36 +1,106 @@
 <?php
 ob_start();
-require_once "./model/user.php";
+require_once "./model/account.php";
 require_once "./model/api/dataAccess-db.php";
 require_once "./view/login_view.html";
 session_start();
 
 if(isset($_REQUEST["signout"])) {
     session_unset();
-    header("Location: home.php");
-    }    
+    header("Location: index.php");
+}    
 
-    if(isset($_SESSION["user"])) { //If the user goes to the login url while signed in -> go to the dashboard
-        header("Location: dashboard.php");
-    }
-
-if (isset($_REQUEST["username"]) && isset($_REQUEST["password"])) { //checks if request has come through
-
-    $username = $_REQUEST["username"];
-    $password = $_REQUEST["password"];
-
-    $user = fetchUser($username);
-    if (is_null($user)) {
-        $message = "username-doesnt-exist";
-    } else {
-
-        if ($password == $user->userPassword) {
-            $_SESSION["user"] = $user;
-        } else {
-            $message = "wrong-password";
-        }
-    }
-    header("Location: login.php?message=$message");
+if(isset($_SESSION["account"])) { //If the user goes to the login url while signed in -> go to the dashboard
+    header("Location: dashboard.php");
 }
-ob_end_flush();
+
+
+if (isset($_POST["email"]) && isset($_POST["password"])) {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    echo validateLogin($email, $password);
+    //header("Location: login.php?message=$message");
+    ob_end_flush();
+} else {
+    echo "Please enter user and password";
+}
+
+//function
+function validateLogin($email, $password) {
+
+    //Checks if email format is valid
+    if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+        return "Invalid email address";
+    }
+
+    //Checks if email exists in the database
+    $account = fetchAccount($email);
+    if (is_null($account)) {
+    return "Email address doesn't exist";
+    }
+
+    //Checks login attempts and last time account was locked
+    if(checkLoginAttempts($account) === false) {
+        return "Your account has been locked for 24 hours";
+    }
+
+    //Checks if password is matching
+    $passwordHash = $account->passwordHash;
+    $loginAttempts = $account->loginAttempts;
+    if(!password_verify($password, $passwordHash)) {
+        setLoginAttempts($email, $loginAttempts + 1);
+        return "Incorrect passsword";
+    }
+
+    //Once all if statements have been passed
+    $_SESSION["account"] = $account;
+    return "You are logged in";
+}
+
+
+function checkLoginAttempts($account) {
+    $email = $account->email;
+    $lastLoginTime = new DateTime($account->lastLoginTime);
+    $lastLockTime = new DateTime($account->lastLockTime);
+    $loginAttempts = $account->loginAttempts;
+    $loginHour = 1; //User login attempts reset every 24 hours
+    $lockHour = 5; //User is locked for 24 hours
+    $loginAttemptsAllowed = 4; //How many attempts the user has before being locked out
+    $currentDateTime = new DateTime();
+    $formattedCurrentDateTime = $currentDateTime->format('Y-m-d H:i:s');
+   
+    
+    $hoursPastLogin = -($lastLoginTime->getTimestamp() - $currentDateTime->getTimestamp()) / 3600;
+    $hoursPastLock = -($lastLockTime->getTimestamp() - $currentDateTime->getTimestamp()) / 3600;
+
+    //sets lastLoginTime to current DateTime if user never logged in before
+    if(is_null($lastLoginTime)) { 
+        setLoginTime($email, $formattedCurrentDateTime);
+    }
+
+    //Checks if lock time is not enabled and its time to reset login attempts
+    if(!is_null($lastLockTime) && $hoursPastLogin >= $loginHour) {
+        setLoginTime($email, $formattedCurrentDateTime);
+        setLoginAttempts($email, 0); //Reset login attempts
+    }
+
+    //Enables lock time
+    //Checks if last lock time is disabled and if it exceeded loginAttemptsAllowed
+    if (is_null($lastLockTime) && $loginAttempts >= $loginAttemptsAllowed) {
+        setLockTime($email, $formattedCurrentDateTime);
+        return false;
+    }
+
+    //Disables lock time
+    //Checks if lock time is enabled and has exceeded the set lock hours
+    if ($hoursPastLock >= $lockHour) {
+        echo "lock time disabled";
+        setLockTime($email, null); //Disable lock time
+        setLoginAttempts($email, 0); //Reset login attempts 
+    }
+
+    
+return true;
+    
+}
 ?>

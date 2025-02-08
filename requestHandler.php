@@ -1,5 +1,5 @@
 <?php
-require_once "model/user.php";
+require_once "model/account.php";
 require_once "model/patient.php";
 require_once "model/patientRecord.php";
 require_once "model/api/dataAccess-db.php";
@@ -11,13 +11,13 @@ if (isset($_GET['action'])) {
 
     switch ($action) {
         case "getPatients":
-            $doctorID = $_SESSION['user']->id;
+            $doctorID = $_SESSION['account']->id;
             echo json_encode(fetchPatients($doctorID));
             break;
 
         case "getPatientRecords":
             $patientID = $_SESSION['patientid'];
-            if($_SESSION['user']->role === "doctor") {
+            if($_SESSION['account']->role === "doctor") {
             $doctorID = $_SESSION['user']->id;
             echo json_encode(fetchPatientRecords($patientID, $doctorID));
             } else {
@@ -26,7 +26,7 @@ if (isset($_GET['action'])) {
             break;
 
         case "getUsername":
-            echo $_SESSION['user']->userName;
+            echo $_SESSION['account']->email;
         break;
         default: throw new Exception("GET action name couldn't be found");
     }
