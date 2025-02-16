@@ -32,6 +32,9 @@ border-width: 2px;
 border-radius: 5px;
 }
 
+#login-error-message {
+    color: red;
+}
 
 body {
     font-family: Arial, sans-serif;

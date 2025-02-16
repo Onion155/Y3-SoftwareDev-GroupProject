@@ -1,33 +1,8 @@
 <?php
-ob_start();
+//ob_start();
 require_once "./model/account.php";
-require_once "./model/api/dataAccess-db.php";
-require_once "./view/login_view.html";
+require_once "./model/api/dataAccess-db.php";;
 session_start();
-
-
-if(isset($_REQUEST["signout"])) {
-    session_unset();
-    header("Location: index.php");
-}    
-
-if(isset($_SESSION["account"])) { //If the user goes to the login url while signed in -> go to the dashboard
-    header("Location: dashboard.php");
-}
-
-
-if (isset($_POST["email"]) && isset($_POST["password"])) {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $message = validateLogin($email, $password);
-    header("Location: login.php?message=$message");
-
-    
-} else {
-    echo "Please enter user and password";
-}
-ob_end_flush();
-
 
 //function
 function validateLogin($email, $password) {
@@ -61,7 +36,8 @@ function validateLogin($email, $password) {
     //Once all if statements have been passed
     setLoginAttempts($email, 0);
     $_SESSION["account"] = $account;
-    return "You are logged in";
+    header("Location: login.php");
+    exit();
 }
 
 
@@ -87,8 +63,6 @@ function checkLoginAttempts($account) {
     }
 
     //Checks if lock time is not enabled and its time to reset login attempts
-    echo $hoursPastLogin;
-    echo $loginHour;
     if(is_null($account->lastLockTime) && $hoursPastLogin >= $loginHour) {
         setLoginTime($email, $formattedCurrentDateTime);
         setLoginAttempts($email, 0); //Reset login attempts
@@ -117,4 +91,28 @@ function checkLoginAttempts($account) {
         return false;
     }
 }
+
+//Code starts here -----------------------------------------------------------------------------------------------
+if(isset($_REQUEST["signout"])) {
+    session_unset();
+    header("Location: index.php");
+}    
+
+if(isset($_SESSION["account"])) { //If the user goes to the login url while signed in -> go to the dashboard
+    header("Location: dashboard.php");
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST["email"]) && isset($_POST["password"])) {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $message = validateLogin($email, $password);
+} else {
+    $message = "Please enter user and password";
+}
+
+}
+//ob_end_flush();
+
+require_once "./view/login_view.php"
 ?>

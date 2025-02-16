@@ -1,12 +1,12 @@
 <?php
 class Patient {
-    public $id;
-    public $DoB;
-    public $sex;
-    public $isBlack;
-    public $NHSNumber;
-    private $userID;
-    private $doctorID;
+    private $id;
+    private $DoB;
+    private $sex;
+    private $isBlack;
+    private $NHSNumber;
+    private $userId;
+    private $doctorId;
 
     function __get($name) {
         return $this->$name;

@@ -1,12 +1,12 @@
 <?php
 class PatientRecord {
     private $id;
-    public $dateCreated;
-    public $eGFR;
-    public $bloodPressure;
-    public $priority;
-    public $note;
-    private $patientID;
+    private $dateCreated;
+    private $eGFR;
+    private $bloodPressure;
+    private $priority;
+    private $note;
+    private $patientId;
 
     function __get($name) {
         return $this->$name;
