@@ -12,9 +12,14 @@ header {
     justify-content: space-between;
     align-items: center;
     background: #fff;
-    padding: 15px 15px;
+    padding: 0 15px 0 15px;
     border-radius: 5px;
 
+}
+
+#logo {
+    height:90px;
+    width: auto;
 }
 
 #welcome {
@@ -29,7 +34,6 @@ border-radius: 5px;
 
 
 body {
-
     font-family: Arial, sans-serif;
     margin: 20px;
     background-color: #f5f5f5;
@@ -93,4 +97,22 @@ canvas {
     flex-direction: column;
     gap: 20px;
     
+}
+
+.doctor-container {
+    display: flex;
+    column-gap: 10px;
+    height: 600px;
+}
+
+.doctor-container #box-left {
+background-color: red;
+width: 50%;
+height: 100%;
+}
+
+.doctor-container #box-right {
+    background-color: #218838;
+    width: 50%;
+    height: 100%;
 }
