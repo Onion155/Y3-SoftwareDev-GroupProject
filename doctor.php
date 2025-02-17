@@ -13,4 +13,5 @@ for ($i = 0; $i < count($patientRecords); $i++) {
     $readingLabels[$i] = $patientRecords[$i]->dateCreated;
 }
 
+require_once "view/doctor_view.php";
 ?>

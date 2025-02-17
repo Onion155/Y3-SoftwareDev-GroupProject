@@ -109,13 +109,48 @@ canvas {
 }
 
 .doctor-container #box-left {
-background-color: red;
+background-color: gray;
 width: 50%;
 height: 100%;
 }
 
 .doctor-container #box-right {
-    background-color: #218838;
+    background-color: lightblue;
     width: 50%;
     height: 100%;
+}
+
+#table-container {
+    overflow-y: auto;
+    width: 350px;
+    max-height: 400px;
+}
+
+.table-content {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    
+}
+
+
+.table-content thead tr {
+    background-color:#218838;
+    font-weight: bold;
+    text-align: left;
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+.table-content th, td {
+    
+    color: white;
+    padding: 10px 13px;
+}
+
+table-content tbody tr {
+    
+    border-bottom: 1px solid #dddddd;
+    
 }

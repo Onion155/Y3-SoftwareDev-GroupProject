@@ -1,43 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>eGFR Calculator- Doctor</title>
-    <link rel="stylesheet" href="./style/styles.css">
+  <meta charset="UTF-8">
+  <title>eGFR Calculator- Doctor</title>
+  <link rel="stylesheet" href="./style/styles.css">
 </head>
+
 <body>
-    <header>
-        <img id="logo" src="other/logo.png" alt ="My Kidney Buddy mascot logo">
-        <h1>eGFR Calculator</h1>
+  <header>
+    <img id="logo" src="other/logo.png" alt="My Kidney Buddy mascot logo">
+    <h1>eGFR Calculator</h1>
     <select id="patient-dropdown" name="patients" required></select>
     <p id="welcome"></p>
     <form method="POST" action="./login.php">
-        <button name="signout" type="submit">Sign Out</button>
+      <button name="signout" type="submit">Sign Out</button>
     </form>
-    </header>
-            <div class="doctor-container">
-            <div id="box-left">
-            <canvas id="egfr-chart" width="400" height="200"></canvas>
-            </div>
-            <div id="box-right">
-              <table class="content-table">
-                <thead>
-                  <tr>
-                    <th>Date Created</th>
-                    <th>Blood Pressure</th>
-                    <th>eGFR</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td></td>
-                    <td><?=""?></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-        </div>
-        <!--
+  </header>
+  <div class="doctor-container">
+    <div id="box-left">
+      <canvas id="egfr-chart" width="400" height="200"></canvas>
+    </div>
+    <div id="box-right">
+      <div id="table-container">
+        <table class="table-content">
+          <thead>
+            <tr>
+              <th>Date Created</th>
+              <th>Blood Pressure</th>
+              <th>eGFR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($patientRecords as $patientRecord): ?>
+              <tr>
+                <td><?= $patientRecord->dateCreated ?></td>
+                <td><?= $patientRecord->bloodPressure ?></td>
+                <td><?= $patientRecord->eGFR ?></td>
+              </tr>
+            <?php endforeach ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--
     <form id="egfr-form">
         <label for="age">Age:</label>
         <input type="number" id="age" name="age" required>
@@ -64,11 +71,10 @@
 
     <div id="result"></div>
 -->
-    <script src= "https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    console.log(<?php $readingLabels; ?>)
-  ctx = document.getElementById("egfr-chart").getContext("2d");
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    ctx = document.getElementById("egfr-chart").getContext("2d");
     egfrChart = new Chart(ctx, {
       type: "line",
       data: {
@@ -83,7 +89,9 @@
           },
         ],
       },
-      options: { scales: { y: {
+      options: {
+        scales: {
+          y: {
             beginAtZero: false,
             title: {
               display: true,
@@ -94,6 +102,7 @@
       },
     });
 
-</script>
+  </script>
 </body>
+
 </html>
