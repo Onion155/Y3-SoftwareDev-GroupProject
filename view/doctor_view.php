@@ -19,7 +19,23 @@
             <div id="box-left">
             <canvas id="egfr-chart" width="400" height="200"></canvas>
             </div>
-            <div id="box-right"></div>
+            <div id="box-right">
+              <table class="content-table">
+                <thead>
+                  <tr>
+                    <th>Date Created</th>
+                    <th>Blood Pressure</th>
+                    <th>eGFR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td><?=""?></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
         </div>
         <!--
     <form id="egfr-form">
