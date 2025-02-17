@@ -42,10 +42,10 @@
   //Currently only inserts eGFR
   //The database supports priority, note, blood pressure
   //The database stores the latest current data every time patient data is inserted
-  function insertPatientRecord($patientId, $eGFR) {
+  function insertPatientRecord($patientId, $eGFR, $bloodPressure, $priority) {
     global $pdo;
-    $statement = $pdo->prepare('INSERT INTO patientRecord (patientId, eGFR) VALUES (?, ?)');
-    $statement->execute([$patientId, $eGFR]);
+    $statement = $pdo->prepare('INSERT INTO patientRecord (patientId, eGFR, bloodPressure, priority) VALUES (?, ROUND(?,2), ?, ?)');
+    $statement->execute([$patientId, $eGFR, $bloodPressure, $priority]);
   }
 
   //Login attempts, time user is locked out, and last time user logged in

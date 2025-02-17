@@ -108,9 +108,8 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     $password = $_POST["password"];
     $message = validateLogin($email, $password);
 } else {
-    $message = "Please enter user and password";
+    $message = "Please enter both email and password";
 }
-
 }
 //ob_end_flush();
 

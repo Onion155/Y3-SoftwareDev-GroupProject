@@ -13,7 +13,7 @@
             <input name="email" value="drmarco@gmail.com" type="text" placeholder="Enter your email" required>
             <input name="password" value= "123" type="password" placeholder="Enter your password" required>
             <?php if (isset($message)): ?>
-            <p id="login-error-message"><?=$message?></p>
+            <p id="error-message"><?=$message?></p>
         <?php endif ?>
             <button type="submit">Login</button>
         </form>

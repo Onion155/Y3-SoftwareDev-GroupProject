@@ -20,21 +20,22 @@
   <div class="doctor-container">
     <div id="box-left">
       <canvas id="egfr-chart" width="400" height="200"></canvas>
-      <textarea maxlength="600" placeholder="Type down your notes here... (max 600 characters)"><?= $patient->notes ?></textarea>
+      <textarea maxlength="600"
+        placeholder="Type down your notes here... (max 600 characters)"><?= $patient->notes ?></textarea>
     </div>
     <div id="box-right">
       <div id="table-container">
         <table class="table-content">
           <thead>
             <tr>
-              <th>Date Created</th>
+              <th>Date Created (yyyy-mm-dd)</th>
               <th>Blood Pressure (mmHg)</th>
               <th>eGFR (ml/min/1.73m<sup>2</sup>)</th>
               <th>eGFR Value</th>
             </tr>
           </thead>
           <tbody>
-            <?php for ($i=0; $i<count($patientRecords); $i++): ?>
+            <?php for ($i = 0; $i < count($patientRecords); $i++): ?>
               <tr>
                 <td><?= $patientRecords[$i]->dateCreated ?></td>
                 <td><?= $patientRecords[$i]->bloodPressure ?></td>
@@ -42,46 +43,34 @@
                 <td><?= $eGFRValue[$i] ?></td>
               </tr>
             <?php endfor ?>
-            <?php for ($i = 0; $i < 5 ; $i++): ?>
-              <tr>
-                <td>Dummy Data</td>
-                <td>00</td>
-                <td>11</td>
-                <td>0</td>
-              </tr>
-            <?php endfor ?>
           </tbody>
         </table>
       </div>
+      <div id="form-container">
+        <form id="egfr-form" method = "POST">
+          <div id="input-container">
+            <label for="creatinine">Serum Creatinine</label>
+            <div id="input-content">
+              <input type="text" id="creatinine" name="creatinine" required>
+              <text>micromol/l</text>
+            </div>
+          </div>
+          <div id="input-container">
+            <label for="blood-pressure">Blood Pressure</label>
+            <div id="input-content">
+              <input type="text" id="blood-pressure" name="blood-pressure" required>
+              <text>mmHg</text>
+            </div>
+          </div>
+          <?php if (isset($message)): ?>
+            <p id="error-message"><?= $message ?></p>
+          <?php endif ?>
+          <button type="submit">Create record</button>
+        </form>
+      </div>
+      <div id="result"></div>
     </div>
   </div>
-  <!--
-    <form id="egfr-form">
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required>
-
-        <label for="sex">Sex:</label>
-        <select id="sex" name="sex" required>
-            <option value="">Select...</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-        </select>
-
-        <label for="ethnicity">Ethnicity:</label>
-        <select id="ethnicity" name="ethnicity" required>
-            <option value="">Select...</option>
-            <option value="black">Black</option>
-            <option value="non-black">Non-Black</option>
-        </select>
-
-        <label for="creatinine">Serum Creatinine (micromol/l):</label>
-        <input type="number" step="0.01" id="creatinine" name="creatinine" required>
-        <br>
-        <button type="submit">Calculate eGFR</button>
-    </form>
-
-    <div id="result"></div>
--->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>

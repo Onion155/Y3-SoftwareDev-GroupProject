@@ -24,7 +24,8 @@ class Patient {
         $yeard = $aged->y; //Difference in year
         $monthd = $aged->m; //Difference in month
         $dayd = $aged->d; //Difference in day
-        if ($monthd < 0 || ($monthd === 0 && $dayd < 0)) {
+
+        if ($monthd < 0 || ($monthd == 0 && $dayd < 0)) {
           $age = $yeard - 1;
         } else {
           $age = $yeard; 
