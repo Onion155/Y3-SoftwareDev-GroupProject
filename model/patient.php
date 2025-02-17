@@ -4,6 +4,7 @@ class Patient {
     private $DoB;
     private $sex;
     private $isBlack;
+    private $notes;
     private $NHSNumber;
     private $userId;
     private $doctorId;

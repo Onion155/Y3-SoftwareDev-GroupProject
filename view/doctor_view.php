@@ -20,6 +20,7 @@
   <div class="doctor-container">
     <div id="box-left">
       <canvas id="egfr-chart" width="400" height="200"></canvas>
+      <textarea maxlength="600" placeholder="Type down your notes here... (max 600 characters)"><?= $patient->notes ?></textarea>
     </div>
     <div id="box-right">
       <div id="table-container">
@@ -27,18 +28,28 @@
           <thead>
             <tr>
               <th>Date Created</th>
-              <th>Blood Pressure</th>
-              <th>eGFR</th>
+              <th>Blood Pressure (mmHg)</th>
+              <th>eGFR (ml/min/1.73m<sup>2</sup>)</th>
+              <th>eGFR Value</th>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($patientRecords as $patientRecord): ?>
+            <?php for ($i=0; $i<count($patientRecords); $i++): ?>
               <tr>
-                <td><?= $patientRecord->dateCreated ?></td>
-                <td><?= $patientRecord->bloodPressure ?></td>
-                <td><?= $patientRecord->eGFR ?></td>
+                <td><?= $patientRecords[$i]->dateCreated ?></td>
+                <td><?= $patientRecords[$i]->bloodPressure ?></td>
+                <td><?= $patientRecords[$i]->eGFR ?></td>
+                <td><?= $eGFRValue[$i] ?></td>
               </tr>
-            <?php endforeach ?>
+            <?php endfor ?>
+            <?php for ($i = 0; $i < 5 ; $i++): ?>
+              <tr>
+                <td>Dummy Data</td>
+                <td>00</td>
+                <td>11</td>
+                <td>0</td>
+              </tr>
+            <?php endfor ?>
           </tbody>
         </table>
       </div>
@@ -90,6 +101,7 @@
         ],
       },
       options: {
+        maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: false,

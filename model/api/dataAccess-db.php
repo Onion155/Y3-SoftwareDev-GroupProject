@@ -22,10 +22,10 @@
   }
   }
 
-  function fetchPatients($patientId) {
+  function fetchPatients($doctorId) {
     global $pdo;
-    $statement = $pdo->prepare('SELECT * FROM patient WHERE id =  ?');
-    $statement->execute([$patientId]);
+    $statement = $pdo->prepare('SELECT * FROM patient WHERE doctorId =  ?');
+    $statement->execute([$doctorId]);
     $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
     return $result;
   }
