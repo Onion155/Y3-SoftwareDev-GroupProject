@@ -1,10 +1,18 @@
 <?php
+require_once "model/doctor.php";
+require_once "model/account.php";
 require_once "model/patient.php";
 require_once "model/patientRecord.php";
 require_once "model/api/dataAccess-db.php";
+session_abort();
+session_start();
 
+$account = $_SESSION["account"];
+$doctor = fetchDoctor($account->id);
+$patients = fetchPatients($doctor->id);
 $patient = fetchPatients(1)[0];
-$patientRecords = fetchPatientRecords(1);
+$_SESSION['patient-id'] = $patient->id;
+$patientRecords = fetchPatientRecords($patient->id);
 $previousReadings = [];
 $readingLabels = [];
 $eGFRValue = [];
@@ -15,9 +23,9 @@ for ($i=0; $i<count($patientRecords); $i++) {
     $eGFRValue[$i] = array_keys($patientRecords[$i]->getEGFRValuePair())[0];
 }
 
-//If doctor creates a record
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    //If doctor creates a record
     if (isset($_POST["creatinine"]) && isset($_POST["blood-pressure"]))
     {
         $creatinine = $_POST["creatinine"];

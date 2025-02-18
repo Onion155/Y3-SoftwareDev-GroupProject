@@ -1,12 +1,14 @@
 <?php
 class Patient {
     private $id;
+    private $firstName;
+    private $lastName;
     private $DoB;
     private $sex;
     private $isBlack;
     private $notes;
     private $NHSNumber;
-    private $userId;
+    private $accountId;
     private $doctorId;
 
     function __get($name) {
@@ -17,13 +19,13 @@ class Patient {
         $this->$name = $value;
       }
 
-      private function getAge() {
+      public function getAge() {
         $dob = new DateTime($this->DoB);
         $now = new DateTime();
-        $aged = $now->diff($dob);
-        $yeard = $aged->y; //Difference in year
-        $monthd = $aged->m; //Difference in month
-        $dayd = $aged->d; //Difference in day
+        $agediff = $now->diff($dob);
+        $yeard = $agediff->y; //Difference in year
+        $monthd = $agediff->m; //Difference in month
+        $dayd = $agediff->d; //Difference in day
 
         if ($monthd < 0 || ($monthd == 0 && $dayd < 0)) {
           $age = $yeard - 1;

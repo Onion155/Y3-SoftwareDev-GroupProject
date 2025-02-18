@@ -11,7 +11,7 @@ $.get("requestHandler.php", { action: 'getUsername' }, function (username) {
   document.getElementById("welcome").innerHTML = `Welcome back ${username}!`;
   })
 
-function fetchPatientRecords() { //Retrieves all patient records of a patient
+function saveDoctorNotes() { //Retrieves all patient records of a patient
 $.get("requestHandler.php", { action: 'getPatientRecords' }, function (data, status) {
   let patientRecords = JSON.parse(data); //store patient records as JSON
   loadChart(patientRecords);

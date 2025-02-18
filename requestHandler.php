@@ -15,6 +15,16 @@ if (isset($_GET['action'])) {
             echo json_encode(fetchPatients($doctorID));
             break;
 
+            case "setNotes":
+                $newNotes = $_GET['notes'];
+                if (!filter_var($newNotes, FILTER_SANITIZE_STRING)) {
+                    echo "Invalid notes";
+                } else {
+                    setNotes($_SESSION['patient-id'], $newNotes);
+                    echo "Notes saved";
+                }
+            break;
+
         case "getPatientRecords":
             $patientID = $_SESSION['patientid'];
             if($_SESSION['account']->role === "doctor") {
