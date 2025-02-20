@@ -1,7 +1,7 @@
 
 $('#doctor-notes').on('input', function() {
     updateNotes(this.value);
-    $('#notes-save-status').html("Saving");
+    $('#notes-save-status').text("Saving");
 
 }
 )
@@ -10,10 +10,9 @@ const updateNotes = debounce((notes) =>
     {
         $.get("requestHandler.php", { action: 'setNotes', notes: notes }, function(data, status) {
             if(status == "success") {
-                console.log(data);
-                $('#notes-save-status').html(data);
+                $('#notes-save-status').text(data);
             } else {
-                $('#notes-save-status').html("Save failed");
+                $('#notes-save-status').text("Save failed");
             }
         })
     }

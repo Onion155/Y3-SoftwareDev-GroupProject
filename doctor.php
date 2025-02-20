@@ -18,8 +18,9 @@ $readingLabels = [];
 $eGFRValue = [];
 
 for ($i=0; $i<count($patientRecords); $i++) {
-    $previousReadings[$i] = $patientRecords[$i]->eGFR;
-    $readingLabels[$i] = $patientRecords[$i]->dateCreated;
+    $egfrReadings[$i] = $patientRecords[$i]->eGFR;
+    $bpReadings[$i] = $patientRecords[$i]->bloodPressure;
+    $dateLabels[$i] = $patientRecords[$i]->dateCreated;
     $eGFRValue[$i] = array_keys($patientRecords[$i]->getEGFRValuePair())[0];
 }
 

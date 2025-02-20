@@ -91,39 +91,12 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    previousReadings = <?php echo json_encode($previousReadings) ?>;
-    readingLabels = <?php echo json_encode($readingLabels) ?>;
-
-    ctx = document.getElementById("egfr-chart").getContext("2d");
-    egfrChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: readingLabels,
-        datasets: [
-          {
-            label: "eGFR over Time",
-            borderColor: "rgba(75, 192, 192, 1)",
-            fill: false,
-            tension: 0.1,
-            data: previousReadings,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            beginAtZero: false,
-            title: {
-              display: true,
-              text: "eGFR (mL/min/1.73m²)",
-            },
-          },
-        },
-      },
-    });
-  </script>
-  <script src ="script/notes.js"></script>
+    egfrReadings = <?php echo json_encode($egfrReadings) ?>;
+    bpReadings = <?php echo json_encode($bpReadings) ?>;
+    dateLabels = <?php echo json_encode($dateLabels) ?>;
+</script>
+<script src="script/charts.js"></script>
+<script src ="script/notes.js"></script>
 </body>
 
 </html>
