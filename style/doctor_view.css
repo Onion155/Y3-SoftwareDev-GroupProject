@@ -26,7 +26,7 @@ header {
 }
 
 #patient-dropdown {
-	margin-inline: 10%;
+	width: 40%;
 	border-width: 2px;
 	border-radius: 5px;
 }
@@ -44,6 +44,7 @@ body {
 
 h1 {
 	color: #333;
+	margin: 0;
 }
 
 input,
@@ -81,7 +82,7 @@ button:hover {
 	height: 70px;
 	margin-top: 15px;
 	background-color:aliceblue;
-	max-width: 1315px;
+	max-width: 1515px;
 	border-bottom: 2px solid #218838;
 	border-radius: 5px;
 }
@@ -144,9 +145,41 @@ button:hover {
 	flex-direction: column;
 	background-color: lightblue;
 	padding: 30px;
-	width: 600px;
+	width: 800px;
 	height: 100%;
 }
+
+#box-right #action-container {
+    display: inline-flex;
+	justify-content: space-between;
+	align-items: center;
+    width: 100%;
+    background-color: white;
+    padding: 17px;
+    border-radius: 5px 5px 0px 0px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	margin-bottom: 15px;
+	border-bottom: 2px solid #218838;
+}
+
+#action-container p {
+	font-size: 1.3em;
+}
+
+#edit-button {
+	background-color: blue;
+	min-width: auto;
+	padding: 10px 10px;
+	border-radius: 10px;
+}
+
+#delete-button {
+	background-color: red;
+	min-width: auto;
+	padding: 10px 10px;
+	border-radius: 10px;
+}
+
 
 #box-right #table-container {
 	overflow-y: auto;

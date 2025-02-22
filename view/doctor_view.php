@@ -9,7 +9,9 @@
 
 <body>
   <header>
+<a href="./index.php">
     <img id="logo" src="other/logo.png" alt="My Kidney Buddy mascot logo">
+</a>
     <h1>eGFR Calculator</h1>
     <select id="patient-dropdown" name="patients" required>
     <?php foreach($patients as $p): ?>
@@ -43,6 +45,11 @@
           </div>
       </div>
       <div id="box-right">
+      <form method="POST" action="requestHandler.php?action=deletePatientRecords">
+        <div id="action-container">
+          <p>Patient Records</p>
+      <button id="delete-button" type="submit">Delete selected</button>
+        </div>
         <div id="table-container">
           <table class="table-content">
             <thead>
@@ -51,6 +58,7 @@
                 <th>Blood Pressure (mmHg)</th>
                 <th>eGFR (ml/min/1.73m<sup>2</sup>)</th>
                 <th>eGFR Value</th>
+                <th><input id="select_all_ids" type="checkbox"}"></th>
               </tr>
             </thead>
             <tbody>
@@ -60,13 +68,15 @@
                   <td><?= $patientRecords[$i]->bloodPressure ?></td>
                   <td><?= $patientRecords[$i]->eGFR ?></td>
                   <td><?= $eGFRValue[$i] ?></td>
+                  <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                 </tr>
               <?php endfor ?>
             </tbody>
           </table>
+          </form>
         </div>
         <div id="form-container">
-          <form id="egfr-form" method="POST">
+          <form id="egfr-form" method="POST" action="requestHandler.php?action=addPatientRecord">
             <div id="input-container">
               <label for="creatinine">Serum Creatinine</label>
               <div id="input-content">
@@ -81,18 +91,21 @@
                 <text>mmHg</text>
               </div>
             </div>
-            <?php if (isset($message)): ?>
-              <p id="error-message"><?= $message ?></p>
-            <?php endif ?>
             <button type="submit">Create record</button>
           </form>
         </div>
-        <div id="result"></div>
+        <p id="error-message"><?= $errorMessage ?></p>
       </div>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+
+  $("#select_all_ids").on('change', function() {
+    $(".checkbox_ids").prop('checked', $(this).prop('checked'))
+  });
+    </script>
   <script>
     egfrReadings = <?php echo json_encode($egfrReadings) ?>;
     bpReadings = <?php echo json_encode($bpReadings) ?>;
@@ -101,5 +114,4 @@
 <script src="script/charts.js"></script>
 <script src ="script/notes.js"></script>
 </body>
-
 </html>

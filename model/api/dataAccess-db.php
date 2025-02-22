@@ -72,6 +72,14 @@ function insertPatientRecord($patientId, $eGFR, $bloodPressure, $priority)
   $statement->execute([$patientId, $eGFR, $bloodPressure, $priority]);
 }
 
+function deletePatientRecord($id)
+{
+  global $pdo;
+  $statement = $pdo->prepare('DELETE FROM patientRecord WHERE (id = ?)');
+  $statement->execute([$id]);
+}
+
+
 //Login attempts, time user is locked out, and last time user logged in
 function setLoginAttempts($email, $loginAttempts)
 {
