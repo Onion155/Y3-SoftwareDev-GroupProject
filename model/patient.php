@@ -1,12 +1,15 @@
 <?php
 class Patient {
-    public $id;
-    public $DoB;
-    public $sex;
-    public $isBlack;
-    public $NHSNumber;
-    private $userID;
-    private $doctorID;
+    private $id;
+    private $firstName;
+    private $lastName;
+    private $DoB;
+    private $sex;
+    private $isBlack;
+    private $notes;
+    private $NHSNumber;
+    private $accountId;
+    private $doctorId;
 
     function __get($name) {
         return $this->$name;
@@ -15,6 +18,38 @@ class Patient {
       function __set($name,$value) {
         $this->$name = $value;
       }
+
+      public function getAge() {
+        $dob = new DateTime($this->DoB);
+        $now = new DateTime();
+        $agediff = $now->diff($dob);
+        $yeard = $agediff->y; //Difference in year
+        $monthd = $agediff->m; //Difference in month
+        $dayd = $agediff->d; //Difference in day
+
+        if ($monthd < 0 || ($monthd == 0 && $dayd < 0)) {
+          $age = $yeard - 1;
+        } else {
+          $age = $yeard; 
+        }
+        return $age;
+      }
     
+      function calculateEGFR($creatinine) {
+        $a = $creatinine/88.4;
+        $b = $this->getAge();
+
+        if ($this->sex == "female") {
+        $y = 0.742;
+        } else $y = 1;
+
+        if ($this->isBlack) {
+          $z = 1.21;
+        } else $z = 1;
+
+        echo ("a: $a, b: $b, y: $y, z: $z");
+        
+        return 186 * pow($a,-1.154) * pow($b,-0.203) * $y * $z;
+      }
 }
 ?>

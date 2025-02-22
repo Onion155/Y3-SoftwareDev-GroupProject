@@ -1,96 +1,226 @@
 * {
-    box-sizing: border-box; 
-    margin: 0;
-    padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 header {
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    padding: 15px 15px;
-    border-radius: 5px;
+	top: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #fff;
+	padding: 0 15px 0 15px;
+	border-radius: 5px;
+}
 
+#logo {
+	height: 90px;
+	width: auto;
 }
 
 #welcome {
-    min-width: 150px;
+	min-width: 150px;
 }
 
 #patient-dropdown {
-margin-inline: 10%;
-border-width: 2px;
-border-radius: 5px;
+	margin-inline: 10%;
+	border-width: 2px;
+	border-radius: 5px;
 }
 
+#error-message {
+	color: red;
+}
 
 body {
-
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f5f5f5;
-    height: 100vh;
+	font-family: Arial, sans-serif;
+	margin: 20px;
+	background-color: #f5f5f5;
+	height: 100vh;
 }
 
 h1 {
-    color: #333;
+	color: #333;
 }
 
-
-
-label {
-    display: block;
-    margin-top: 10px;
-}
-
-input, select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    box-sizing: border-box;
+input,
+select {
+	width: 100%;
+	padding: 8px;
+	margin-top: 5px;
+	box-sizing: border-box;
 }
 
 button {
-    min-width: 120px;
-    padding: 10px 26px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 50px;
-    transition: all 0.3s ease 0s;
+	min-width: 120px;
+	padding: 10px 26px;
+	background-color: #28a745;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	border-radius: 50px;
+	transition: all 0.3s ease 0s;
 }
 
-#creatinine {
-    margin-bottom: 15px;
-}
 
 button:hover {
-    background-color: #218838;
+	background-color: #218838;
 }
 
 #result {
-    margin-top: 20px;
-}
-
-canvas {
-    margin-top: 40px;
+	margin-top: 20px;
 }
 
 .login-container {
-    background-color: white;
-    padding: 20px 30px;
-    width: 40%;
+	background-color: white;
+	padding: 20px 30px;
+	width: 40%;
 }
 
 .login-form {
-    padding: 10px 0px;
+	padding: 10px 0px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+
+#box-top {
+	margin: 0 auto;
+	padding: 15px;
+	height: 70px;
+	margin-top: 15px;
+	background-color:aliceblue;
+	max-width: 1315px;
+	border-bottom: 2px solid #218838;
+	border-radius: 5px;
+}
+
+.box-bottom {
+	display: flex;
+	justify-content: center;
+	padding-top: 20px;
+	width: 100%;
+	column-gap: 20px;
+	height: 650px;
+}
+
+.box-bottom #box-left {
+	display: flex;
+	justify-content: center;
+    align-items: center;
+	flex-direction: column;
+	background-color: white;
+	padding: 15px;
+	width: 700px;
+	height: 100%
+}
+
+#box-left #egfr-chart {
+	max-height: 50%;
+	width: 45%;
+}
+
+#box-left #notes-container {
+	
+	margin-top: 25px;
+	width: 80%;
+	height: 30%;
+}
+
+#box-left textarea {
+	resize: none;
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+}
+
+.box-bottom #box-right {
+	display: flex;
+	justify-content: center;
+    align-items: center;
+	flex-direction: column;
+	background-color: lightblue;
+	padding: 30px;
+	width: 600px;
+	height: 100%;
+}
+
+#box-right #table-container {
+	overflow-y: auto;
+	width: 100%;
+	max-height: 400px;
+	border-radius: 5px 5px 0 0;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.table-content {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
+	text-align: center;
+}
+
+.table-content thead tr {
+	background-color: #218838;
+	font-weight: bold;
+	color: white;
+	position: sticky;
+	top: 0;
+}
+
+.table-content th,
+td {
+	padding: 10px 13px;
+}
+
+.table-content tbody tr {
+	background-color: white;
+	border-bottom: 1px solid #dddddd;
+}
+
+.table-content tbody tr:last-of-type {
+	border-bottom: 2px solid #218838;
+}
+
+#box-right #form-container {
+    display: inline-flex;
+
+	justify-content: center;
+    width: 100%;
+    background-color: white;
+    padding: 17px;
+    border-radius: 0 0 5px 5px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	margin-top: 15px;
+	border-top: 2px solid #218838;
+}
+
+#egfr-form {
+    display: inline-flex;
+	align-items: center;
+}
+
+
+#egfr-form #input-container {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    
+	flex-direction: column;
+}
+
+#egfr-form #input-content {
+    display: inline-flex;
+	align-items:end;
+	margin-right: 15px;
+	max-width: 195px;
+}
+
+#input-container text {
+	font-size: 0.9em;
+}
+
+#egfr-form button {
+padding: 10px;
 }
