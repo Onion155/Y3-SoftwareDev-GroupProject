@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>eGFR Calculator- Doctor</title>
-  <link rel="stylesheet" href="./style/styles.css">
+  <link rel="stylesheet" href="./style/doctor_view.css">
 </head>
 
 <body>
@@ -17,8 +17,8 @@
     <?php endforeach ?>
     </select>
     <p id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></p>
-    <form method="POST" action="./login.php">
-      <button name="signout" type="submit">Sign Out</button>
+    <form method="POST" action="./requestHandler.php?action=signout">
+      <button type="submit">Sign Out</button>
     </form>
   </header>
   <div class="box-container">
@@ -28,7 +28,10 @@
     </div>
     <div class="box-bottom">
       <div id="box-left">
-        <canvas id="egfr-chart" width="400" height="200"></canvas>
+        <div id="chart-container">
+        <canvas id="egfr-chart"></canvas>
+        <canvas id="bp-chart"></canvas>
+        </div>
         <div id="notes-container">
         <textarea id="doctor-notes" maxlength="600"
           placeholder="Type down your notes here... (max 600 characters)"><?= $patient->notes ?></textarea>

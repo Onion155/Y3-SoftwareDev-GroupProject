@@ -10,6 +10,10 @@ if (isset($_GET['action'])) {
     $action = $_GET['action'];
 
     switch ($action) {
+        case "signout":
+            session_unset();
+            header("Location: index.php");
+            break;
         case "getPatients":
             $doctorID = $_SESSION['account']->id;
             echo json_encode(fetchPatients($doctorID));
