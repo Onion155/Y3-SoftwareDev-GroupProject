@@ -30,9 +30,13 @@
     </div>
     <div class="box-bottom">
       <div id="box-left">
-        <div id="chart-container">
+      <div id="chart-container">
+        <?php if(!$isChartEmpty): ?>
         <canvas id="egfr-chart"></canvas>
         <canvas id="bp-chart"></canvas>
+        <?php else: ?>
+        <text>There is no data to load the graphs</text>
+        <?php endif ?>
         </div>
         <div id="notes-container">
         <textarea id="doctor-notes" maxlength="600"
@@ -48,6 +52,7 @@
       <form method="POST" action="requestHandler.php?action=deletePatientRecords">
         <div id="action-container">
           <p>Patient Records</p>
+          <text id="error-message"><?= $errorMessage ?></text>
       <button id="delete-button" type="submit">Delete selected</button>
         </div>
         <div id="table-container">
@@ -67,7 +72,7 @@
                   <td><?= $patientRecords[$i]->dateCreated ?></td>
                   <td><?= $patientRecords[$i]->bloodPressure ?></td>
                   <td><?= $patientRecords[$i]->eGFR ?></td>
-                  <td><?= $eGFRValue[$i] ?></td>
+                  <td><?= $egfrValue[$i] ?></td>
                   <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                 </tr>
               <?php endfor ?>
@@ -94,7 +99,6 @@
             <button type="submit">Create record</button>
           </form>
         </div>
-        <p id="error-message"><?= $errorMessage ?></p>
       </div>
     </div>
   </div>
@@ -110,8 +114,9 @@
     egfrReadings = <?php echo json_encode($egfrReadings) ?>;
     bpReadings = <?php echo json_encode($bpReadings) ?>;
     dateLabels = <?php echo json_encode($dateLabels) ?>;
+    document.getElementById("egfr-chart").innerText("hi");
 </script>
-<script src="script/charts.js"></script>
+<script src ="script/charts.js"></script>
 <script src ="script/notes.js"></script>
 </body>
 </html>

@@ -82,14 +82,20 @@ if (isset($_POST['egfr'])) {
 }
 
 function verifyRecords($patient, $creatinine, $bloodPressure) {
-    if (!filter_var($creatinine, FILTER_SANITIZE_NUMBER_FLOAT)) {
+    if (!filter_var($creatinine, FILTER_VALIDATE_FLOAT) && !filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
+        return "Invalid creatinine and blood pressure";
+    }
+    else if ($creatinine < 0 && $bloodPressure < 0) {
+        return "Creatinine and blood pressure can't be negative";
+    }
+    else if (!filter_var($creatinine, FILTER_VALIDATE_FLOAT)) {
         return "Invalid creatinine";
     }
     else if ($creatinine < 0) {
         return "Creatinine can't be negative";
     }
 
-    if(!filter_var($bloodPressure, FILTER_SANITIZE_NUMBER_FLOAT)) {
+    if(!filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
         return "Invalid blood pressure";
     }
     else if ($bloodPressure < 0) {

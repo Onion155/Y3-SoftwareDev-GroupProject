@@ -1,7 +1,7 @@
 
 $('#doctor-notes').on('input', function() {
     updateNotes(this.value);
-    $('#notes-save-status').text("Saving");
+    $('#notes-save-status').text("Saving...");
 
 }
 )

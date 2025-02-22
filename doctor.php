@@ -15,13 +15,18 @@ $_SESSION["patient"] = $patient;
 $patientRecords = fetchPatientRecords($patient->id);
 $previousReadings = [];
 $readingLabels = [];
-$eGFRValue = [];
+$egfrValue = [];
 
+$isChartEmpty = false;
+if(!empty($patientRecords)) {
 for ($i=0; $i<count($patientRecords); $i++) {
     $egfrReadings[$i] = $patientRecords[$i]->eGFR;
     $bpReadings[$i] = $patientRecords[$i]->bloodPressure;
     $dateLabels[$i] = $patientRecords[$i]->dateCreated;
-    $eGFRValue[$i] = array_keys($patientRecords[$i]->getEGFRValuePair())[0];
+    $egfrValue[$i] = array_keys($patientRecords[$i]->getEGFRValuePair())[0];
+}
+} else {
+    $isChartEmpty = true;
 }
 
 if(isset($_SESSION["error-message"])) {
