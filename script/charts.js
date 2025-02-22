@@ -7,8 +7,8 @@ egfrChart = new Chart(ctx, {
       {
         label: "eGFR",
         borderColor: "rgba(75, 192, 192, 1)",
-        fill: false,
-        tension: 0.1,
+        fill: true,
+        tension: 0.3,
         data: egfrReadings,
       },
     ],
@@ -26,8 +26,7 @@ egfrChart = new Chart(ctx, {
       x: {
   ticks: {
     autoSkip: true,
-    maxTicksLimit: 10,
-    maxRotation: 45,
+    maxTicksLimit: 6,
     minRotation: 45,
   },
 },
@@ -44,11 +43,12 @@ egfrChart = new Chart(ctx, {
       {
         label: "Blood Pressure",
         borderColor: "rgb(192, 75, 75)",
-        fill: false,
-        tension: 0.1,
+        fill: true,
+        tension: 0.5,
         data: bpReadings,
       },
     ],
+
   },
   options: {
     maintainAspectRatio: false,
@@ -63,8 +63,7 @@ egfrChart = new Chart(ctx, {
       x: {
   ticks: {
     autoSkip: true,
-    maxTicksLimit: 10,
-    maxRotation: 90,
+    maxTicksLimit: 6,
     minRotation: 45,
   },
 },

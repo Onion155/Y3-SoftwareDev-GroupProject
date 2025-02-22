@@ -1,5 +1,4 @@
 <?php
-//ob_start();
 require_once "./model/account.php";
 require_once "./model/api/dataAccess-db.php";;
 session_start();
@@ -93,11 +92,6 @@ function checkLoginAttempts($account) {
 }
 
 //Code starts here -----------------------------------------------------------------------------------------------
-if(isset($_REQUEST["signout"])) {
-    session_unset();
-    header("Location: index.php");
-}    
-
 if(isset($_SESSION["account"])) { //If the user goes to the login url while signed in -> go to the dashboard
     header("Location: dashboard.php");
 }
@@ -111,7 +105,6 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     $message = "Please enter both email and password";
 }
 }
-//ob_end_flush();
 
 require_once "./view/login_view.php"
 ?>
