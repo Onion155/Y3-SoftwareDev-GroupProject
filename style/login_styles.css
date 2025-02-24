@@ -1,34 +1,5 @@
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
-
-header {
-	top: 0;
-	left: 0;
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background: #fff;
-	padding: 0 15px 0 15px;
-	border-radius: 5px;
-}
-
 #error-message {
 	color: red;
-}
-
-body {
-	font-family: Arial, sans-serif;
-	margin: 20px;
-	background-color: #f5f5f5;
-	height: 100vh;
-}
-
-h1 {
-	color: #333;
 }
 
 input,
@@ -55,10 +26,16 @@ button:hover {
 	background-color: #218838;
 }
 
-.login-container {
-	background-color: white;
-	padding: 20px 30px;
-	width: 40%;
+dialog::backdrop {
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+dialog {
+	padding: 0;
+}
+
+.wrapper {
+	padding: 16px;	
 }
 
 .login-form {

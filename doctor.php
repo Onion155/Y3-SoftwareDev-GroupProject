@@ -31,9 +31,9 @@ for ($i=0; $i<count($patientRecords); $i++) {
 
 if(isset($_SESSION["error-message"])) {
 $errorMessage = $_SESSION["error-message"];
+unset($_SESSION["error-message"]);
 } else {
 $errorMessage = null;
 }
-unset($_SESSION["error-message"]);
 require_once "view/doctor_view.php";
 ?>

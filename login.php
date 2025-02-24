@@ -1,9 +1,19 @@
 <?php
 require_once "./model/account.php";
 require_once "./model/api/dataAccess-db.php";;
-session_start();
 
-//function
+//Code starts here -----------------------------------------------------------------------------------------------
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST["email"]) && isset($_POST["password"])) {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $_SESSION["error-message"] = validateLogin($email, $password);
+} else {
+    $_SESSION["error-message"] = "Please enter both email and password";
+}
+}
+
+//Functions -----------------------------------------------------------------------------------------------------------
 function validateLogin($email, $password) {
 
     //Checks if email format is valid
@@ -35,7 +45,7 @@ function validateLogin($email, $password) {
     //Once all if statements have been passed
     setLoginAttempts($email, 0);
     $_SESSION["account"] = $account;
-    header("Location: login.php");
+    header("Location: dashboard.php");
     exit();
 }
 
@@ -90,21 +100,4 @@ function checkLoginAttempts($account) {
         return false;
     }
 }
-
-//Code starts here -----------------------------------------------------------------------------------------------
-if(isset($_SESSION["account"])) { //If the user goes to the login url while signed in -> go to the dashboard
-    header("Location: dashboard.php");
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-if (isset($_POST["email"]) && isset($_POST["password"])) {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $message = validateLogin($email, $password);
-} else {
-    $message = "Please enter both email and password";
-}
-}
-
-require_once "./view/login_view.php"
 ?>

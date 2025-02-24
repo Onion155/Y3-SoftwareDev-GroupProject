@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Kidney Buddy</title>
-    <link rel="stylesheet" href="./style/home_view.css">
+    <link rel="stylesheet" href="./style/home_styles.css">
+    <link rel="stylesheet" href="./style/login_styles.css">
 </head>
 <body>
-
     <div class="header">
         <img src="other\logo.png" alt="Logo" class="logo">
         <h1>My Kidney Buddy</h1>
-        <a href="login.php" class="login-btn">Log in</a>
+<?php if(!isset($_SESSION["account"])): ?>
+        <button onclick="showDialog()" class="login-btn">Log in</button>
+<?php require_once "entity/login_dialog.php" ?>
+<?php else: ?>
+    <a href="dashboard.php" class="login-btn">Go to dashboard</a>
+
+<?php endif; ?>
     </div>
 
     <div class="content">

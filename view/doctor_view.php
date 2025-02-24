@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>eGFR Calculator- Doctor</title>
-  <link rel="stylesheet" href="./style/doctor_view.css">
+  <link rel="stylesheet" href="./style/doctor_styles.css">
 </head>
 
 <body>
@@ -114,7 +114,6 @@
     egfrReadings = <?php echo json_encode($egfrReadings) ?>;
     bpReadings = <?php echo json_encode($bpReadings) ?>;
     dateLabels = <?php echo json_encode($dateLabels) ?>;
-    document.getElementById("egfr-chart").innerText("hi");
 </script>
 <script src ="script/charts.js"></script>
 <script src ="script/notes.js"></script>
