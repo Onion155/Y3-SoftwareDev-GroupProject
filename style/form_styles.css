@@ -1,0 +1,79 @@
+#error-message {
+	color: red;
+}
+
+input,
+select {
+
+	padding: 8px;
+	margin-top: 5px;
+	box-sizing: border-box;
+}
+
+button {
+	min-width: 120px;
+	padding: 10px 26px;
+	background-color: #28a745;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	border-radius: 50px;
+	transition: all 0.3s ease 0s;
+}
+
+
+button:hover {
+	background-color: #218838;
+}
+
+dialog::backdrop {
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+dialog {
+	background: white;
+	border-radius: 20px;
+	border: 0;
+	padding: 0;
+	
+}
+
+.wrapper {
+	width: 450px;
+	padding: 0 16px;	
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 40px;
+}
+
+.form input, select {
+	height: 40px;
+	width: 100%;
+	margin-bottom: 20px;
+	font-size: 16px;
+	padding: 0 12px;
+	border-radius: 5px;
+	border: 1px solid lightgray;
+}
+
+.form .form-row {
+	display: flex;
+	justify-content: space-between;
+}
+
+.form .form-container{
+	width: 47%;
+}
+
+#checkbox {
+	height: 20px;
+	width: 20px;
+	float: left;
+}
+
+.link {
+margin-top: 20px;
+}

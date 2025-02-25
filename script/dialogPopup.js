@@ -1,6 +1,3 @@
-const dialog = document.getElementById("dialog")
-const wrapper = document.querySelector(".wrapper")
-
 function showDialog() {
     dialog.showModal()
 }
