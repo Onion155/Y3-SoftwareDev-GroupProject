@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Patient Page - MyKidneyBuddy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="images/MyKidneyBuddyLogo.png" alt="MyKidneyBuddy Logo">
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="patient.html">Patient Page</a>
+      <a href="#">Expert Patient</a>
+    </nav>
+  </header>
+
+  <!-- Patient Info -->
+  <section class="patient-info">
+    <h2>Patient Number: 39439373834</h2>
+  </section>
+
+  <!-- Graphs Section -->
+  <section class="graphs-section">
+    <div class="graph-container">
+      <h3>eGFR Analysis</h3>
+      <canvas id="egfrGraph"></canvas>
+    </div>
+    <div class="graph-container">
+      <h3>Blood Analysis</h3>
+      <canvas id="bloodGraph"></canvas>
+    </div>
+    <div class="summary-container">
+      <h3>Summary of Graphs</h3>
+      <p>The graphs above show historical and newly added data. Use the "Add Data" button to include new records for analysis.</p>
+    </div>
+  </section>
+
+  <!-- Add Data Button -->
+  <section class="add-data-section">
+    <button class="add-data-button" onclick="openAddDataModal()">Add Data</button>
+  </section>
+
+  <!-- Modal for Adding Data -->
+  <div id="addDataModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAddDataModal()">&times;</span>
+      <h3>Add New Data</h3>
+      <form id="addDataForm">
+        <label for="egfrInput">eGFR Level:</label>
+        <input type="number" id="egfrInput" name="egfrInput" required>
+        <label for="bloodInput">Potassium Level:</label>
+        <input type="number" step="0.1" id="bloodInput" name="bloodInput" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 MyKidneyBuddy. All rights reserved.</p>
+  </footer>
+
+  <!-- Include Chart.js and Custom JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="expert-patient-graphs.js"></script>
+</body>
+
+</html>

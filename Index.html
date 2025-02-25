@@ -1,45 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-        header, footer {
-            background-color: #333;
-            color: white;
-            padding: 1em 0;
-        }
-        main {
-            padding: 2em;
-        }
-    </style>
-    <script>
-        var 
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyKidneyBuddy</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Chronic Kidney Diseases (CKD)</h1>
-    </header>
-    <main>
-        <h2>What is CKD? </h2>
-        <p> it is a long-term condition in which the kidneys do not function properly, leading
-            to impaired functionality. Various conditions can cause CKD. Most of the time, CKD does not produce
-            symptoms and may remain undetectable until it has reached an advanced stage. Additionally, CKD may not
-            necessarily progress to kidney failure. However, patients at any stage of CKD face an increased risk of
-            developing bloolcardiovascular diseases, such as heart disease or stroke.</p>
-    </main>
-    <footer>
-        <p>&copy; 2025 Group 18</p>
-    </footer>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="logo">
+      <img src="images/mykidneybuddylogo.png" alt="MyKidneyBuddy Logo">
+    </div>
+    <h1>MyKidneyBuddy</h1>
+    <button class="login-button">Login</button>
+  </header>
+
+  <!-- Main Section -->
+  <main class="main">
+    <!-- Welcome Section -->
+    <section class="welcome">
+      <h2>Your Health, Anywhere, Anytime</h2>
+      <p>
+        MyKidneyBuddy is a secure, web-based platform tailored to help you monitor and understand your kidney health with ease. Whether you're at home, at work, or on the go, you can conveniently access tools to track your Chronic Kidney Disease (CKD) journey. Our platform simplifies complex medical information, providing personalized insights and clear explanations to empower you to take control of your health. With MyKidneyBuddy, you can view your eGFR, understand your CKD stage, and access helpful resources—all in one easy-to-use platform. We are here to support you every step of the way, making your health journey more manageable and less overwhelming.
+      </p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <h2>Why Use MyKidneyBuddy?</h2>
+      <div class="feature-cards">
+        <div class="card">
+          <img src="images/My kidney buddy (1).png" alt="Secure Access">
+          <h3>Access Anywhere</h3>
+          <p>Log in securely from any device to track your eGFR and view easy-to-read graphs and summaries.</p>
+        </div>
+        <div class="card">
+          <img src="images/My kidney buddy (2).png" alt="Data Insights">
+          <h3>Understand Your Data</h3>
+          <p>Visualize your kidney health trends and gain insights into your CKD results with simple explanations.</p>
+        </div>
+        <div class="card">
+          <img src="images/My kidney buddy (3).png" alt="Expert Resources">
+          <h3>Expert Resources</h3>
+          <p>Access resources and personalized advice to help you manage your kidney health effectively.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+      <h2>What Our Users Say</h2>
+      <div class="testimonial">
+        <p>
+          "MyKidneyBuddy has been a game-changer for me. I love how easy it is to track my kidney health and understand what my results mean. Highly recommend!"
+        </p>
+        <h4>- Sarah T., CKD Patient</h4>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+      <h2>Take Charge of Your Kidney Health Today</h2>
+      <p>Start your journey towards better kidney health with MyKidneyBuddy.</p>
+      <button class="cta-button">Get Started</button>
+    </section>
+  </main>
 </body>
 </html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor's Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="doctor-graphs.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="images/MyKidneyBuddyLogo.png" alt="MyKidneyBuddy Logo">
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="patient.html">Patient Page</a>
+            <a href="expert-patient.html">Expert Patient</a>
+            <a href="doctor.html" class="active">Doctor</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="search-container">
+            <input type="text" id="searchPatient" placeholder="Search Patient">
+        </div>
+
+        <h1>Patient Number: <span id="patientNumber">Not Selected</span></h1>
+
+        <div class="dashboard">
+            <div class="graph-container">
+                <h2>Graph of eGFR</h2>
+                <canvas id="eGFRChart"></canvas>
+            </div>
+
+            <div class="patient-data">
+                <h2>Patient Data</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Serum Creatinine (mg/dL)</th>
+                            <th>eGFR</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientTableBody">
+                        <!-- Preloaded data will be inserted here -->
+                    </tbody>
+                </table>
+                <button id="addDataBtn">Add Data</button>
+            </div>
+
+            <div class="patient-notes">
+                <h2>Patient Data / Past Notes</h2>
+                <p id="pastNotes">
+                    <!-- Past notes will be dynamically inserted -->
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2025 MyKidneyBuddy. All rights reserved.
+    </footer>
+
+</body>
+</html>

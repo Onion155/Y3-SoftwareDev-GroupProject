@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eGFR Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <!-- ✅ jsPDF Library Added -->
+    <script defer src="./calculator.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/mykidneybuddylogo.PNG" alt="MyKidneyBuddy Logo">
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="patient.html">Patient Page</a>
+            <a href="expert-patient.html">Expert Patient</a>
+            <a href="doctor.html">Doctor</a>
+            <button id="darkModeToggle">🌙 Toggle Dark Mode</button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="calculator-container">
+            <div class="input-section">
+                <h2>eGFR Calculator</h2>
+                <form id="egfrForm">
+                    <label for="patientNumber">Patient Number</label>
+                    <input type="text" id="patientNumber" value="39439373834" readonly>
+
+                    <label for="creatinine">Creatinine Level (µmol/L)</label>
+                    <input type="number" id="creatinine" value="85" required>
+
+                    <label for="age">Age (Years)</label>
+                    <input type="number" id="age" value="45" required>
+
+                    <label for="sex">Sex</label>
+                    <select id="sex" required>
+                        <option value="male" selected>Male</option>
+                        <option value="female">Female</option>
+                    </select>
+
+                    <label for="ethnicity">Ethnicity</label>
+                    <select id="ethnicity" required>
+                        <option value="nonAfricanAmerican" selected>Non-African-American</option>
+                        <option value="africanAmerican">African-American</option>
+                    </select>
+
+                    <button type="button" id="calculateBtn">Calculate</button>
+                </form>
+            </div>
+
+            <div class="result-section">
+                <h2>Calculated eGFR</h2>
+                <div id="egfrResult">-</div>
+                <p id="egfrStatus">--</p> <!-- Status Message Added -->
+            </div>
+
+            <div class="graph-section">
+                <h2>eGFR Trend</h2>
+                <canvas id="egfrTrendChart"></canvas>
+                
+                <label for="dateFilter">Filter by Date:</label>
+                <select id="dateFilter">
+                    <option value="all">All Data</option>
+                    <option value="last6months">Last 6 Months</option>
+                    <option value="last1year">Last 1 Year</option>
+                </select>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <button id="calculateBtnBottom">Calculate</button>
+        <button id="returnBtn">Return</button>
+        <button id="exportBtn">Export Data</button> <!-- ✅ Export Button Added -->
+        <button id="downloadReportBtn">Download Report (PDF)</button> <!-- ✅ Download Report Button -->
+    </footer>
+</body>
+</html>
