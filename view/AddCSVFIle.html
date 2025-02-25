@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV</title>
+</head>
+<body>
+    <input type="file" id="csvFileInput" accept=".csv" />
+    <button onclick="handleFileUpload()">Upload</button>
+
+    <script> // this needs to be done in a seperate script for the time being it can stay as java script because you can only access it as a doctor witch enough security
+        // Example patient database 
+        const patientDatabase = {}; // this needs to be connected to he php data base 
+
+        // Function to add data to a patient
+        function addDataToPatient(patientID, data) {
+            // Check if the patient already exists in the database
+            if (!patientDatabase[patientID]) {
+                // If not, create a new entry for the patient with an array of data entries
+                patientDatabase[patientID] = [];
+            }
+            // Add the new data entry to the patient's array
+            patientDatabase[patientID].push({
+                Gender: data.Gender,
+                Ethnicity: data.Ethnicity,
+                Age: data.Age,
+                Creatinine: data.Creatinine
+            });
+            console.log(`Data for patient ${patientID} has been added.`); // this is just for testing purposes 
+        }
+
+        // Function to parse CSV data
+        function parseCSV(csv) { // this breaks the data up in the csv file
+            const lines = csv.split('\n');
+            const headers = lines[0].split(',');
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const row = lines[i].split(',');
+                if (row.length === headers.length) {
+                    const entry = {};
+                    for (let j = 0; j < headers.length; j++) {
+                        entry[headers[j].trim()] = row[j].trim();
+                    }
+                    data.push(entry);
+                }
+            }
+            return data;
+        }
+
+        // Function to add data to patients, it sends the data to the correct patient
+        function addDataToPatients(csvData) {
+            const patientsData = parseCSV(csvData); 
+
+            patientsData.forEach(patient => {
+                const patientID = patient['PatientID'];
+                addDataToPatient(patientID, patient);
+            });
+        }
+
+        // Function to handle file upload
+        function handleFileUpload() {
+            const fileInput = document.getElementById('csvFileInput');
+            const file = fileInput.files[0];
+            const reader = new FileReader(); // this is a java specific function, need to do research on php version
+
+            reader.onload = function(event) {
+                const csvData = event.target.result;
+                addDataToPatients(csvData);
+                console.log(patientDatabase); // Display the updated patient database
+            };
+
+            if (file) {
+                reader.readAsText(file);
+            } else {
+                alert('Please select a CSV file to upload.');
+            }
+}
+    </script>
+</body>
+</html>
