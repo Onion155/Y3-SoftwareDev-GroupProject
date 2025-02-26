@@ -17,7 +17,6 @@
 <?php require_once "entity/login_dialog.php" ?>
 <?php else: ?>
     <a href="dashboard.php" class="login-btn">Go to dashboard</a>
-
 <?php endif; ?>
     </div>
 

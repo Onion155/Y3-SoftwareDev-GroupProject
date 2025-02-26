@@ -35,5 +35,6 @@ unset($_SESSION["error-message"]);
 } else {
 $errorMessage = null;
 }
-require_once "view/doctor_view.php";
+require_once "view/doctorSearch_view.php"
+//require_once "view/doctorPatient_view.php";
 ?>

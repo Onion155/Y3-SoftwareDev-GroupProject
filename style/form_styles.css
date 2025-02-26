@@ -1,4 +1,4 @@
-#error-message {
+.error-message {
 	color: red;
 }
 
@@ -39,7 +39,7 @@ dialog {
 	
 }
 
-.wrapper {
+.form-wrapper {
 	width: 450px;
 	padding: 0 16px;	
 }
@@ -59,6 +59,16 @@ dialog {
 	border-radius: 5px;
 	border: 1px solid lightgray;
 }
+
+.form-checkbox {
+	margin-top: 15px;
+}
+.form-checkbox input {
+	height: initial;
+	width: auto;
+	margin: initial;
+}
+
 
 .form .form-row {
 	display: flex;
