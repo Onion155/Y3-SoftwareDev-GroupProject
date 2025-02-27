@@ -16,15 +16,15 @@ if (isset($_GET['action'])) {
 
 switch ($action) {
     case "login":
-        if (isset($_POST["email"]) && isset($_POST["password"])) {
             $email = htmlspecialchars($_POST["email"]);
             $password = $_POST["password"];
-            echo validateLogin($email, $password);
-        } else {
-            echo "Please enter both email and password";
-        }
+            validateLogin($email, $password);
         break;
-
+    case "signup":
+        $email = htmlspecialchars($_POST["signup-email"]);
+        $password = $_POST["signup-password"];
+        $confirmPassword = $_POST["confirm-password"];
+        validateSignup($email, $password, $confirmPassword);
     case "signout":
         session_unset();
         header("Location: index.php");
@@ -40,7 +40,7 @@ switch ($action) {
             $creatinine = $_POST["creatinine"];
             $bloodPressure = $_POST["blood-pressure"];
             $patient = $_SESSION["patient"];
-            $_SESSION["error-message"] = verifyRecords($patient, $creatinine, $bloodPressure);
+            $_SESSION["error-message"] = validateRecords($patient, $creatinine, $bloodPressure);
             header("Location: dashboard.php");
         } else {
             $_SESSION["error-message"] = "Please enter both creatinine and blood pressure";
@@ -144,19 +144,19 @@ function validateLogin($email, $password) {
     $passwordHash = $account->passwordHash;
     $loginAttempts = $account->loginAttempts;
     if(!password_verify($password, $passwordHash)) {
-        setLoginAttempts($email, $loginAttempts + 1);
+        updateLoginAttempts($email, $loginAttempts + 1);
         $account = fetchAccount($email); //Refetches account
         return "Incorrect passsword";
     }
 
     //Once all if statements have been passed
-    setLoginAttempts($email, 0);
+    updateLoginAttempts($email, 0);
     $_SESSION["account"] = $account;
     echo "success";
 }
 
 
-function checkLoginAttempts($account) {
+function isAccountLocked($account) {
     $email = $account->email;
     $lastLoginTime = new DateTime($account->lastLoginTime);
     $lastLockTime = new DateTime($account->lastLockTime);
@@ -168,42 +168,31 @@ function checkLoginAttempts($account) {
     $currentDateTime = new DateTime();
     $formattedCurrentDateTime = $currentDateTime->format('Y-m-d H:i:s');
    
-    
     $hoursPastLogin = -($lastLoginTime->getTimestamp() - $currentDateTime->getTimestamp()) / 3600;
     $hoursPastLock = -($lastLockTime->getTimestamp() - $currentDateTime->getTimestamp()) / 3600;
 
     //sets lastLoginTime to current DateTime if user never logged in before
     if(is_null($account->lastLoginTime)) { 
-        setLoginTime($email, $formattedCurrentDateTime);
+        updateLoginTime($email, $formattedCurrentDateTime);
     }
-
     //Checks if lock time is not enabled and its time to reset login attempts
     if(is_null($account->lastLockTime) && $hoursPastLogin >= $loginHour) {
-        setLoginTime($email, $formattedCurrentDateTime);
-        setLoginAttempts($email, 0); //Reset login attempts
+        updateLoginTime($email, $formattedCurrentDateTime);
+        updateLoginAttempts($email, 0); //Reset login attempts
     }
-
     //Checks if exceeded lock time limit
     if ($hoursPastLock >= $lockHour) {
-        setLockTime($email, null); //Disables lock time
-        setLoginAttempts($email, 0); //Reset login attempts
+        updateLockTime($email, null); //Disables lock time
+        updateLoginAttempts($email, 0); //Reset login attempts
         return true;
-        
     }
-    
     //Enables lock time 
     //Checks if it exceeded loginAttemptsAllowed
     if ($loginAttempts >= $loginAttemptsAllowed) {
-        setLockTime($email, $formattedCurrentDateTime); //Enables lock time
+        updateLockTime($email, $formattedCurrentDateTime); //Enables lock time
         return false;
     }
-  
-
 
     if($hoursPastLock == null) {
         return true;
-    } else {
-        return false;
-    }
-}
-?>
+   

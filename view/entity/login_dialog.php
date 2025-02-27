@@ -26,7 +26,7 @@
 						Added by the doctor? <a
 							href="#"
 							onclick="showLoginDialog(false); showSignupDialog(true);"
-							>Link by creating an account</a>
+							>Create an account using your email</a>
 					</div>
 				</form>
 			</div>

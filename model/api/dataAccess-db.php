@@ -72,30 +72,34 @@ function insertPatientRecord($patientId, $eGFR, $bloodPressure, $priority)
   $statement->execute([$patientId, $eGFR, $bloodPressure, $priority]);
 }
 
-function deletePatientRecord($id)
-{
+function deletePatientRecord($id) {
   global $pdo;
   $statement = $pdo->prepare('DELETE FROM patientRecord WHERE (id = ?)');
   $statement->execute([$id]);
 }
 
+function updateAccount ($email, $password) {
+  global $pdo;
+  $statement = $pdo->prepare('UPDATE account SET password = ? WHERE (email = ?)');
+  $statement->execute([$password, $email]);
+}
 
 //Login attempts, time user is locked out, and last time user logged in
-function setLoginAttempts($email, $loginAttempts)
+function updateLoginAttempts($email, $loginAttempts)
 {
   global $pdo;
   $statement = $pdo->prepare('UPDATE account SET loginAttempts = ? WHERE (email = ?)');
   $statement->execute([$loginAttempts, $email]);
 }
 
-function setLoginTime($email, $loginTime)
+function updateLoginTime($email, $loginTime)
 {
   global $pdo;
   $statement = $pdo->prepare('UPDATE account SET lastLoginTime = ? WHERE (email = ?)');
   $statement->execute([$loginTime, $email]);
 }
 
-function setLockTime($email, $lockTime)
+function updateLockTime($email, $lockTime)
 {
   global $pdo;
   $statement = $pdo->prepare('UPDATE account SET lastLockTime = ? WHERE (email = ?)');
