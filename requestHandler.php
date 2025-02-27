@@ -99,7 +99,7 @@ if (isset($_POST['egfr'])) {
     insertPatientRecord($patientID, $eGFR);
 }
 
-function verifyRecords($patient, $creatinine, $bloodPressure)
+function validateRecords($patient, $creatinine, $bloodPressure)
 {
     if (!filter_var($creatinine, FILTER_VALIDATE_FLOAT) && !filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
         return "Invalid creatinine and blood pressure";
@@ -123,36 +123,31 @@ function verifyRecords($patient, $creatinine, $bloodPressure)
 }
 function validateLogin($email, $password) {
 
-    //Checks if email format is valid
-    if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
-        return "Invalid email address";
+    if (empty($email) || empty($password)) {
+        echo "Please fill in the fields";
+        exit();
+    } else if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+        echo "Entered email is invalid";
+        exit();
+    } else {
+        $account = fetchAccount($email);
     }
 
-    //Checks if email exists in the database
-    $account = fetchAccount($email);
-    if (is_null($account)) {
-    return "Email address doesn't exist";
+    if (empty($account)) {
+        echo "Account doesn't exist";
+        exit();
+    } else if (isAccountLocked($account)) {
+        echo "Your account has been temporarily locked";
+        exit();
+    } else if (!password_verify($password, $account->password)) {
+        echo "Password is incorrect";
+        updateLoginAttempts($email, $account->loginAttempts + 1);
+        exit();
+    } else {
+        updateLoginAttempts($email, 0);
+        $_SESSION["account"] = $account;
+        echo "success";
     }
-
-    //Checks login attempts and last time account was locked
-    if(checkLoginAttempts($account) === false) {
-        return "Your account has been locked for 24 hours";
-    }
-
-    $account = fetchAccount($email); //Updates account to fetch latest login attempts
-    //Checks if password is matching
-    $passwordHash = $account->passwordHash;
-    $loginAttempts = $account->loginAttempts;
-    if(!password_verify($password, $passwordHash)) {
-        updateLoginAttempts($email, $loginAttempts + 1);
-        $account = fetchAccount($email); //Refetches account
-        return "Incorrect passsword";
-    }
-
-    //Once all if statements have been passed
-    updateLoginAttempts($email, 0);
-    $_SESSION["account"] = $account;
-    echo "success";
 }
 
 
@@ -184,15 +179,16 @@ function isAccountLocked($account) {
     if ($hoursPastLock >= $lockHour) {
         updateLockTime($email, null); //Disables lock time
         updateLoginAttempts($email, 0); //Reset login attempts
-        return true;
+        return false;
     }
     //Enables lock time 
     //Checks if it exceeded loginAttemptsAllowed
     if ($loginAttempts >= $loginAttemptsAllowed) {
         updateLockTime($email, $formattedCurrentDateTime); //Enables lock time
-        return false;
+        return true;
     }
 
     if($hoursPastLock == null) {
-        return true;
-   
+        return false;
+    }
+}
