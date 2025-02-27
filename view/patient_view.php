@@ -12,7 +12,7 @@
 <a href="./index.php">
     <img id="logo" src="other/logo.png" alt="My Kidney Buddy mascot logo">
 </a>
-    <h1>eGFR Calculator</h1>
+    <h1>Your eGFR Results</h1>
     <p id="welcome"><?= "Welcome $patient->firstName $patient->lastName" ?></p>
     <form method="POST" action="./requestHandler.php?action=signout">
       <button type="submit">Sign Out</button>
