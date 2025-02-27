@@ -78,7 +78,7 @@ function deletePatientRecord($id) {
   $statement->execute([$id]);
 }
 
-function updateAccount ($email, $password) {
+function updatePassword ($email, $password) {
   global $pdo;
   $statement = $pdo->prepare('UPDATE account SET password = ? WHERE (email = ?)');
   $statement->execute([$password, $email]);

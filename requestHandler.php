@@ -127,13 +127,13 @@ function validateLogin($email, $password) {
         echo "Please fill in the fields";
         exit();
     } else if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
-        echo "Entered email is invalid";
+        echo "Email is invalid";
         exit();
     } else {
         $account = fetchAccount($email);
     }
 
-    if (empty($account)) {
+    if (empty($account) || empty($account->passwordHash)) {
         echo "Account doesn't exist";
         exit();
     } else if (isAccountLocked($account)) {
@@ -150,6 +150,31 @@ function validateLogin($email, $password) {
     }
 }
 
+function validateSignup($email, $password, $confirmPassword) {
+
+    if (empty($email) || empty($password) || empty($confirmPassword)) {
+        echo "Please fill in the fields";
+        exit();
+    } else if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+        echo "Email is invalid";
+        exit();
+    } else {
+        $account = fetchAccount($email);
+    }
+
+    if (empty($account)) {
+        echo "Email has not been assigned";
+        exit();
+    } else if (!empty($account->passwordHash)) {
+        echo "Account is already signed up";
+        exit();
+    } else {
+        updatePassword($email, $password);
+        $account = fetchAccount($email);
+        $_SESSION["account"] = $account;
+        echo "success";
+    }
+}
 
 function isAccountLocked($account) {
     $email = $account->email;
