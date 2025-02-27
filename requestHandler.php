@@ -137,7 +137,7 @@ function validateLogin($email, $password) {
         echo "Account doesn't exist";
         exit();
     } else if (isAccountLocked($account)) {
-        echo "Your account has been temporarily locked";
+        echo "This account has been temporarily locked";
         exit();
     } else if (!password_verify($password, $account->password)) {
         echo "Password is incorrect";
@@ -151,6 +151,11 @@ function validateLogin($email, $password) {
 }
 
 function validateSignup($email, $password, $confirmPassword) {
+
+    $uppercase = preg_match('@[A-Z]@', $password);
+    $lowercase = preg_match('@[a-z]@', $password);
+    $number    = preg_match('@[0-9]@', $password);
+    $specialChars = preg_match('@[^\w]@', $password);
 
     if (empty($email) || empty($password) || empty($confirmPassword)) {
         echo "Please fill in the fields";
@@ -168,8 +173,18 @@ function validateSignup($email, $password, $confirmPassword) {
     } else if (!empty($account->passwordHash)) {
         echo "Account is already signed up";
         exit();
+    } else if ($password !== $confirmPassword) {
+        echo "Passwords do not match";
+        exit();
+    }
+    else if (strlen($password) > 64) {
+        echo "Password is too long";
+        exit();
+    } else if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+        echo "Password should be at least 8 characters, contain at least one upper case letter, one number, and one special character";
+        exit();
     } else {
-        updatePassword($email, $password);
+        updatePassword($email, password_hash($password, PASSWORD_DEFAULT));
         $account = fetchAccount($email);
         $_SESSION["account"] = $account;
         echo "success";
