@@ -5,9 +5,9 @@ session_start();
     switch ($_SESSION["account"]->role) {
         case "doctor": require_once "doctor.php";
             break;
-        case "patient": require_once "./view/patient_view.html";
+        case "patient": require_once "patient.php";
             break;
-        case "expert patient": //NOT DONE
+        case "expert patient": require_once "expPatient.php";
             break;
 
             default: session_unset();

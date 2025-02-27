@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Doctor Dashboard</title>
+  <title>Expert Patient Dashboard</title>
   <link rel="stylesheet" href="./style/doctor_view.css">
 </head>
 
@@ -13,21 +13,12 @@
     <img id="logo" src="other/logo.png" alt="My Kidney Buddy mascot logo">
 </a>
     <h1>eGFR Calculator</h1>
-    <select id="patient-dropdown" name="patients" required>
-    <?php foreach($patients as $p): ?>
-    <option value=<?= $p->id ?></option>Patient ID: <?= $p->id ?> | NHS: <?= $p->NHSNumber ?></option>
-    <?php endforeach ?>
-    </select>
-    <p id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></p>
+    <p id="welcome"><?= "Welcome $patient->firstName $patient->lastName" ?></p>
     <form method="POST" action="./requestHandler.php?action=signout">
       <button type="submit">Sign Out</button>
     </form>
   </header>
   <div class="box-container">
-    <div id="box-top">
-      <p>Patient name: <?= "$patient->firstName $patient->lastName" ?> | NHS number: <?= $patient->NHSNumber?></p>
-      <p>Age: <?= $patient->getAge() ?> | Sex: <?= $patient->sex ?> | Ethnicity: <?= ($patient->isBlack == 1) ? "black" : "not black" ?></p>
-    </div>
     <div class="box-bottom">
       <div id="box-left">
       <div id="chart-container">
@@ -38,15 +29,6 @@
         <text>There is no data to load the graphs</text>
         <?php endif ?>
         </div>
-        <div id="notes-container">
-        <textarea id="doctor-notes" maxlength="600"
-          placeholder="Type down your notes here... (max 600 characters)"><?= $patient->notes ?></textarea>
-          <?php if($patient->notes !== ''): ?>
-          <text id="notes-save-status">Notes loaded</text>
-          <?php else: ?>
-            <text id="notes-save-status">There aren't any notes to load</text>
-          <?php endif ?>
-          </div>
       </div>
       <div id="box-right">
       <form method="POST" action="requestHandler.php?action=deletePatientRecords">
@@ -105,18 +87,11 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-
-  $("#select_all_ids").on('change', function() {
-    $(".checkbox_ids").prop('checked', $(this).prop('checked'))
-  });
-    </script>
-  <script>
     egfrReadings = <?php echo json_encode($egfrReadings) ?>;
     bpReadings = <?php echo json_encode($bpReadings) ?>;
     dateLabels = <?php echo json_encode($dateLabels) ?>;
-    document.getElementById("egfr-chart")
+    document.getElementById("egfr-chart");
 </script>
 <script src ="script/charts.js"></script>
-<script src ="script/notes.js"></script>
 </body>
 </html>

@@ -52,6 +52,19 @@ function fetchPatients($doctorId)
   return $result;
 }
 
+function fetchPatient($accountId)
+{
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE accountId =  ?');
+  $statement->execute([$accountId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0];
+  }
+}
+
 //Fetches all patient records of a patient
 function fetchPatientRecords($patientId)
 {
