@@ -21,10 +21,11 @@ switch ($action) {
             validateLogin($email, $password);
         break;
     case "signup":
-        $email = htmlspecialchars($_POST["signup-email"]);
-        $password = $_POST["signup-password"];
-        $confirmPassword = $_POST["confirm-password"];
+        $email = htmlspecialchars($_POST["email"]);
+        $password = $_POST["password"];
+        $confirmPassword = $_POST["confirmPassword"];
         validateSignup($email, $password, $confirmPassword);
+        break;
     case "signout":
         session_unset();
         header("Location: index.php");
@@ -169,7 +170,7 @@ function validateSignup($email, $password, $confirmPassword) {
     if (empty($account)) {
         echo "Email has not been assigned";
         exit();
-    } else if (!empty($account->passwordHash)) {
+    } else if (!is_null($account->passwordHash)) {
         echo "Account is already signed up";
         exit();
     } else if ($password !== $confirmPassword) {

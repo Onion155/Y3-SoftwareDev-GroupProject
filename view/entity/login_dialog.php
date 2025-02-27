@@ -9,7 +9,6 @@
 						value="drmarco@gmail.com"
 						type="text"
 						placeholder="Enter your email"
-						required
 					/>
 					<label for="login-password">Password</label>
 					<input
@@ -18,9 +17,8 @@
 						value="123"
 						type="password"
 						placeholder="Enter your password"
-						required
 					/>
-					<p class="error-message"></p>
+					<p class="error-message" id="login-error-message"></p>
 					<button onclick="postLoginDetails()">Log in</button>
 					<div class="link">
 						Added by the doctor? <a
@@ -46,7 +44,7 @@ $.post("requestHandler.php", {
 	password: $("#password").val()
 }, function (message) {
 	if(message == "success") window.location.href = "dashboard.php";
-	else $(".error-message").text(message);
+	else $("#login-error-message").text(message);
 });
 }
 </script>
