@@ -132,14 +132,13 @@ function validateLogin($email, $password) {
     } else {
         $account = fetchAccount($email);
     }
-
-    if (empty($account) || empty($account->passwordHash)) {
+    if (empty($account) || is_null($account->passwordHash)) {
         echo "Account doesn't exist";
         exit();
     } else if (isAccountLocked($account)) {
         echo "This account has been temporarily locked";
         exit();
-    } else if (!password_verify($password, $account->password)) {
+    } else if (!password_verify($password, $account->passwordHash)) {
         echo "Password is incorrect";
         updateLoginAttempts($email, $account->loginAttempts + 1);
         exit();
