@@ -30,7 +30,10 @@ switch ($action) {
         session_unset();
         header("Location: index.php");
         break;
-
+    case "addPatient":
+        $data = json_decode($_POST["patientData"]);
+        validatePatient($data);
+        break;
     case "getPatients":
         $doctorID = $_SESSION['account']->id;
         echo json_encode(fetchPatients($doctorID));
@@ -100,6 +103,15 @@ if (isset($_POST['egfr'])) {
     insertPatientRecord($patientID, $eGFR);
 }
 
+function validatePatient($data) {
+    foreach ($data as $key => $value) {
+        if (empty($value)) {
+            echo "All fields are required";
+            exit();
+        }
+    }
+    print_r($data);
+}
 function validateRecords($patient, $creatinine, $bloodPressure)
 {
     if (!filter_var($creatinine, FILTER_VALIDATE_FLOAT) && !filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
