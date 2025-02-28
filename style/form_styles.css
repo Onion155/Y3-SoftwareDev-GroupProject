@@ -31,23 +31,24 @@ dialog::backdrop {
 	backdrop-filter: blur(7px);
 }
 
-dialog {
+.dialog {
 	background: white;
 	border-radius: 20px;
+	margin: auto;
 	border: 0;
 	padding: 0;
-	
 }
 
 .form-wrapper {
 	width: 450px;
-	padding: 0 16px;	
+	padding: 16px;	
 }
 
 .form {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 40px;
+
+	margin: 40px 0;
 }
 
 .form input, select {
@@ -61,12 +62,15 @@ dialog {
 }
 
 .form-checkbox {
-	margin-top: 15px;
+	margin: 16px 0;
 }
 .form-checkbox input {
 	height: initial;
 	width: auto;
 	margin: initial;
+}
+.form-checkbox label {
+	font-size: 0.9em;
 }
 
 

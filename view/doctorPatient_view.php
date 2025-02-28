@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Doctor Dashboard</title>
+  <title>Calculate eGFR</title>
   <link rel="stylesheet" href="./style/record_styles.css">
 </head>
 

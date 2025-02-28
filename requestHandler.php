@@ -122,58 +122,58 @@ function validatePatient($data) {
         }
     }
 
-$firstName = filter_var($data->firstName, FILTER_SANITIZE_STRING);
-$lastName =filter_var($data->lastName, FILTER_SANITIZE_STRING);
-$nhsNum = $data->nhs;
-$dob = $data->dob;
-$ethnicity = $data->ethnicity;
-$sex = $data->sex;
-$email = $data->email;
-$role =$data->role;
+    $firstName = filter_var($data->firstName, FILTER_SANITIZE_STRING);
+    $lastName =filter_var($data->lastName, FILTER_SANITIZE_STRING);
+    $nhsNum = $data->nhs;
+    $dob = $data->dob;
+    $ethnicity = $data->ethnicity;
+    $sex = $data->sex;
+    $email = $data->email;
+    $role =$data->role;
 
-if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
-    echo "Email is invalid";
-    exit();
-} else if (!filter_var($nhsNum, FILTER_VALIDATE_INT) || strlen($nhsNum) != 10) {
-    echo "NHS number is invalid";
-    exit();
-} else if (!empty(fetchPatientWithNHS($nhsNum))) {
-    echo "NHS number is already taken";
-    exit();
-} else if  (!validateDate($dob, "Y-m-d")) {
-    echo "Invalid date format";
-    exit();
-} else {
-    $patient = new Patient();
-    $patient->DoB = $dob;
-    $age = $patient->getAge();
-
-    $account = fetchAccount($email);
-}
-
-if ($age < 18) {
-    echo "Patient is too young (pediatric version coming soon)";
-    exit();
-} else if (!($sex == "male" || $sex == "female")) {
-    echo "Sex is invalid";
-    exit();
-} else if (!($ethnicity == "black" || $ethnicity == "other")) {
-    echo "Ethnicity is invalid";
-    exit();
-} else if (!($role == "patient" || $role == "expert patient")) {
-    echo $role;
-        echo "Role is invalid";
+    if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+        echo "Email is invalid";
         exit();
-} else if (!empty($account) || isset($account->passwordHash)) {
-    echo "Email already taken";
-    exit();
-} else {
-    insertAccount($email, null, $role);
-    $accountId = fetchAccount($email)->id;
-    $doctorId = $_SESSION["doctor"]->id;
-    insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
-    
-}
+    } else if (!filter_var($nhsNum, FILTER_VALIDATE_INT) || strlen($nhsNum) != 10) {
+        echo "NHS number is invalid";
+        exit();
+    } else if (!empty(fetchPatientWithNHS($nhsNum))) {
+        echo "NHS number is already taken";
+        exit();
+    } else if  (!validateDate($dob, "Y-m-d")) {
+        echo "Invalid date format";
+        exit();
+    } else {
+        $patient = new Patient();
+        $patient->DoB = $dob;
+        $age = $patient->getAge();
+
+        $account = fetchAccount($email);
+    }
+
+    if ($age < 18) {
+        echo "Patient is too young (pediatric version coming soon)";
+        exit();
+    } else if (!($sex == "male" || $sex == "female")) {
+        echo "Sex is invalid";
+        exit();
+    } else if (!($ethnicity == "black" || $ethnicity == "other")) {
+        echo "Ethnicity is invalid";
+        exit();
+    } else if (!($role == "patient" || $role == "expert patient")) {
+        echo $role;
+            echo "Role is invalid";
+            exit();
+    } else if (!empty($account) || isset($account->passwordHash)) {
+        echo "Email already taken";
+        exit();
+    } else {
+        insertAccount($email, null, $role);
+        $accountId = fetchAccount($email)->id;
+        $doctorId = $_SESSION["doctor"]->id;
+        insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
+        echo "success";    
+    }
 
 }
 
@@ -250,10 +250,10 @@ function validateSignup($email, $password, $confirmPassword) {
     }
 
     if (empty($account)) {
-        echo "Email has not been assigned";
+        echo "This email has not been assigned";
         exit();
     } else if (!is_null($account->passwordHash)) {
-        echo "Account is already signed up";
+        echo "Email is already signed up";
         exit();
     } else if ($password !== $confirmPassword) {
         echo "Passwords do not match";

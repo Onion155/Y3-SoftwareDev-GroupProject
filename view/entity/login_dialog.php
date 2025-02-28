@@ -44,7 +44,13 @@ $.post("requestHandler.php", {
 	password: $("#password").val()
 }, function (message) {
 	if(message == "success") window.location.href = "dashboard.php";
-	else $("#login-error-message").text(message);
+	else {
+		if(message != "Please fill in the fields") {
+			$("#email").val("");
+			$("#password").val("");
+		}
+		$("#login-error-message").text(message);
+	}
 });
 }
 </script>

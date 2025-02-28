@@ -68,7 +68,7 @@
             action: "addPatient",
             patientData: JSON.stringify(patientData)
         }, function (message) {
-            if (message == "success") $(".error-message").text(message);
+            if (message == "success") window.location.href = "dashboard.php";
             else $(".error-message").text(message);
         });
     }
