@@ -23,6 +23,18 @@ function fetchAccount($email)
   }
 }
 
+function fetchPatientWithNHS($nhsNum)
+{
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE NHSNumber = ?');
+  $statement->execute([$nhsNum]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0];
+  }
+}
 function fetchDoctor($accountId)
 {
   global $pdo;
@@ -74,10 +86,17 @@ function fetchPatientRecords($patientId)
   $result = $statement->fetchALL(PDO::FETCH_CLASS, 'PatientRecord');
   return $result;
 }
+function insertAccount($email, $password, $role) {
+  global $pdo;
+  $statement = $pdo->prepare('INSERT INTO account (email, passwordHash, role) VALUES (?, ?, ?)');
+  $statement->execute([$email, $password, $role]);
+}
 
-//Currently only inserts eGFR
-//The database supports priority, note, blood pressure
-//The database stores the latest current data every time patient data is inserted
+function insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity, $sex) {
+  global $pdo;
+  $statement = $pdo->prepare('INSERT INTO patient (accountId, doctorId, firstName, lastName, DoB, NHSNumber, isBlack, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+  $statement->execute([$accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity == "black" ? true : false, $sex]);
+}
 function insertPatientRecord($patientId, $eGFR, $bloodPressure, $priority)
 {
   global $pdo;
@@ -85,30 +104,34 @@ function insertPatientRecord($patientId, $eGFR, $bloodPressure, $priority)
   $statement->execute([$patientId, $eGFR, $bloodPressure, $priority]);
 }
 
-function deletePatientRecord($id)
-{
+function deletePatientRecord($id) {
   global $pdo;
   $statement = $pdo->prepare('DELETE FROM patientRecord WHERE (id = ?)');
   $statement->execute([$id]);
 }
 
+function updatePassword ($email, $password) {
+  global $pdo;
+  $statement = $pdo->prepare('UPDATE account SET passwordHash = ? WHERE (email = ?)');
+  $statement->execute([$password, $email]);
+}
 
 //Login attempts, time user is locked out, and last time user logged in
-function setLoginAttempts($email, $loginAttempts)
+function updateLoginAttempts($email, $loginAttempts)
 {
   global $pdo;
   $statement = $pdo->prepare('UPDATE account SET loginAttempts = ? WHERE (email = ?)');
   $statement->execute([$loginAttempts, $email]);
 }
 
-function setLoginTime($email, $loginTime)
+function updateLoginTime($email, $loginTime)
 {
   global $pdo;
   $statement = $pdo->prepare('UPDATE account SET lastLoginTime = ? WHERE (email = ?)');
   $statement->execute([$loginTime, $email]);
 }
 
-function setLockTime($email, $lockTime)
+function updateLockTime($email, $lockTime)
 {
   global $pdo;
   $statement = $pdo->prepare('UPDATE account SET lastLockTime = ? WHERE (email = ?)');
