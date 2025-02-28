@@ -262,8 +262,8 @@ function validateSignup($email, $password, $confirmPassword) {
     else if (strlen($password) > 64) {
         echo "Password is too long";
         exit();
-    } else if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-        echo "Password should be at least 8 characters, contain at least one upper case letter, one number, and one special character";
+    } else if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 12) {
+        echo "Password should be at least 12 characters, contain at least one upper case letter, one number, and one special character";
         exit();
     } else {
         updatePassword($email, password_hash($password, PASSWORD_DEFAULT));
