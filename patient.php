@@ -7,7 +7,7 @@ session_abort();
 session_start();
 
 $account = $_SESSION["account"];
-$patient = fetchPatient($account->id);
+$patient = fetchPatientWithAccountId($account->id);
 $patientRecords = fetchPatientRecords($patient->id);
 $previousReadings = [];
 $readingLabels = [];

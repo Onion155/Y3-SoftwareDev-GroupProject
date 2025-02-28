@@ -25,6 +25,32 @@
     </form>
   </header>
   <button onclick="showPatientDialog(true)">Add Patient</button>
+        <div id="table-container">
+          <table class="table-content">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>NHS Number</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php for ($i = 0; $i < count($patients); $i++): ?>
+                <tr>
+                  <td><?= $patients[$i]->firstName ?></td>
+                  <td><?= $patients[$i]->lastName ?></td>
+                  <td><?= $patients[$i]->NHSNumber ?></td>
+                  <td>
+                    <form method="POST" action="./requestHandler.php?action=setPatientSession">
+                      <button type="submit">Calculate eGFR</button>
+                      <input type="hidden" name="patientId" value="<?= $patients[$i]->id ?>">
+                    </form>
+                  </td>
+                </tr>
+              <?php endfor ?>
+            </tbody>
+          </table>
   <?php require_once "entity/patient_dialog.php" ?>
     </body>
     </html>

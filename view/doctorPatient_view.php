@@ -19,6 +19,9 @@
     <?php endforeach ?>
     </select>
     <p id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></p>
+    <form method="POST" action="./requestHandler.php?action=unsetPatientSession">
+      <button type="submit">Go to patient search</button>
+    </form>
     <form method="POST" action="./requestHandler.php?action=signout">
       <button type="submit">Sign Out</button>
     </form>

@@ -64,11 +64,24 @@ function fetchPatients($doctorId)
   return $result;
 }
 
-function fetchPatient($accountId)
+function fetchPatientWithAccountId($accountId)
 {
   global $pdo;
   $statement = $pdo->prepare('SELECT * FROM patient WHERE accountId =  ?');
   $statement->execute([$accountId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0];
+  }
+}
+
+function fetchPatient($patientId)
+{
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE id =  ?');
+  $statement->execute([$patientId]);
   $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
   if (count($result) == 0) {
     return null;

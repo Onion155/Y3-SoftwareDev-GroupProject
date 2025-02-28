@@ -31,6 +31,15 @@ switch ($action) {
         session_unset();
         header("Location: index.php");
         break;
+    case "setPatientSession":
+        $id = $_POST["patientId"];
+        $_SESSION["patient"] = fetchPatient($id);
+        header("Location: dashboard.php");
+        break;
+    case "unsetPatientSession":
+        unset($_SESSION["patient"]); 
+        header("Location: dashboard.php");
+        break;
     case "addPatient":
         $data = json_decode($_POST["patientData"]);
         validatePatient($data);

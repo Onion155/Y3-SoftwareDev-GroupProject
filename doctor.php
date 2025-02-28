@@ -7,37 +7,38 @@ require_once "model/api/dataAccess-db.php";
 session_abort();
 session_start();
 
-$account = $_SESSION["account"];
 $doctor = fetchDoctor($account->id);
-
-$patients = fetchPatients($doctor->id);
-$patient = fetchPatients(1)[0];
-$patientRecords = fetchPatientRecords($patient->id);
-$previousReadings = [];
-$readingLabels = [];
-$egfrValue = [];
-
 $_SESSION["doctor"] = $doctor;
-$_SESSION["patient"] = $patient;
 
-$isChartEmpty = false;
-if(!empty($patientRecords)) {
-for ($i=0; $i<count($patientRecords); $i++) {
-    $egfrReadings[$i] = $patientRecords[$i]->eGFR;
-    $bpReadings[$i] = $patientRecords[$i]->bloodPressure;
-    $dateLabels[$i] = $patientRecords[$i]->dateCreated;
-    $egfrValue[$i] = array_keys($patientRecords[$i]->getEGFRValuePair())[0];
-}
-} else {
-    $isChartEmpty = true;
-}
+if (isset($_SESSION["patient"])) {
+    $patient = $_SESSION["patient"];
+    $patientRecords = fetchPatientRecords($patient->id);
+    $previousReadings = [];
+    $readingLabels = [];
+    $egfrValue = [];
 
-if(isset($_SESSION["error-message"])) {
-$errorMessage = $_SESSION["error-message"];
-unset($_SESSION["error-message"]);
+    $isChartEmpty = false;
+    if(!empty($patientRecords)) {
+    for ($i=0; $i<count($patientRecords); $i++) {
+        $egfrReadings[$i] = $patientRecords[$i]->eGFR;
+        $bpReadings[$i] = $patientRecords[$i]->bloodPressure;
+        $dateLabels[$i] = $patientRecords[$i]->dateCreated;
+        $egfrValue[$i] = array_keys($patientRecords[$i]->getEGFRValuePair())[0];
+    }
+    } else {
+        $isChartEmpty = true;
+    }
+
+    if(isset($_SESSION["error-message"])) {
+    $errorMessage = $_SESSION["error-message"];
+    unset($_SESSION["error-message"]);
+    } else {
+    $errorMessage = null;
+    }
+    require_once "view/doctorPatient_view.php";
+
 } else {
-$errorMessage = null;
+    $patients = fetchPatients($doctor->id);
+    require_once "view/doctorSearch_view.php";
 }
-//require_once "view/doctorSearch_view.php"
-require_once "view/doctorPatient_view.php";
 ?>
