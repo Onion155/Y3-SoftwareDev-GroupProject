@@ -23,6 +23,18 @@ function fetchAccount($email)
   }
 }
 
+function fetchPatientWithNHS($nhsNum)
+{
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE NHSNumber = ?');
+  $statement->execute([$nhsNum]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0];
+  }
+}
 function fetchDoctor($accountId)
 {
   global $pdo;
@@ -61,10 +73,17 @@ function fetchPatientRecords($patientId)
   $result = $statement->fetchALL(PDO::FETCH_CLASS, 'PatientRecord');
   return $result;
 }
+function insertAccount($email, $password, $role) {
+  global $pdo;
+  $statement = $pdo->prepare('INSERT INTO account (email, passwordHash, role) VALUES (?, ?, ?)');
+  $statement->execute([$email, $password, $role]);
+}
 
-//Currently only inserts eGFR
-//The database supports priority, note, blood pressure
-//The database stores the latest current data every time patient data is inserted
+function insertPatient($firstName, $lastName, $dob, $nhs, $ethnicity, $sex) {
+  global $pdo;
+  $statement = $pdo->prepare('INSERT INTO patient (firstName, lastName, DoB, NHSNumber, isBlack, sex) VALUES (?, ?, ?, ?, ?, ?)');
+  $statement->execute([$firstName, $lastName, $dob, $nhs, $ethnicity == "black" ? true : false, $sex]);
+}
 function insertPatientRecord($patientId, $eGFR, $bloodPressure, $priority)
 {
   global $pdo;
@@ -80,7 +99,7 @@ function deletePatientRecord($id) {
 
 function updatePassword ($email, $password) {
   global $pdo;
-  $statement = $pdo->prepare('UPDATE account SET password = ? WHERE (email = ?)');
+  $statement = $pdo->prepare('UPDATE account SET passwordHash = ? WHERE (email = ?)');
   $statement->execute([$password, $email]);
 }
 

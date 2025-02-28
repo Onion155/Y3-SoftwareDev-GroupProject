@@ -104,14 +104,71 @@ if (isset($_POST['egfr'])) {
 }
 
 function validatePatient($data) {
+
     foreach ($data as $key => $value) {
         if (empty($value)) {
             echo "All fields are required";
             exit();
         }
     }
-    print_r($data);
+
+$firstName = filter_var($data->firstName, FILTER_SANITIZE_STRING);
+$lastName =filter_var($data->lastName, FILTER_SANITIZE_STRING);
+$nhsNum = $data->nhs;
+$dob = $data->dob;
+$ethnicity = $data->ethnicity;
+$sex = $data->sex;
+$email = $data->email;
+$role =$data->role;
+
+if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+    echo "Email is invalid";
+    exit();
+} else if (!filter_var($nhsNum, FILTER_VALIDATE_INT) || strlen($nhsNum) != 10) {
+    echo "NHS number is invalid";
+    exit();
+} else if (!empty(fetchPatientWithNHS($nhsNum))) {
+    echo "NHS number is already taken";
+    exit();
+} else if  (!validateDate($dob, "Y-m-d")) {
+    echo "Invalid date format";
+    exit();
+} else {
+    $patient = new Patient();
+    $patient->DoB = $dob;
+    $age = $patient->getAge();
+
+    $account = fetchAccount($email);
 }
+
+if ($age < 18) {
+    echo "Patient is too young (pediatric version coming soon)";
+    exit();
+} else if (!($sex == "male" || $sex == "female")) {
+    echo "Sex is invalid";
+    exit();
+} else if (!($ethnicity == "black" || $ethnicity == "other")) {
+    echo "Ethnicity is invalid";
+    exit();
+} else if (!($role == "patient" || $role == "expert patient")) {
+    echo $role;
+        echo "Role is invalid";
+        exit();
+} else if (!empty($account) || !is_null($account->passwordHash)) {
+    echo "Email already taken";
+    exit();
+} else {
+    insertPatient($firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
+    insertAccount($email, null, $role);
+}
+
+}
+
+function validateDate($dateString, $format) {
+	$date = DateTime::createFromFormat($format, $dateString); 
+	return $date && $date->format($format) === $dateString; 
+} 
+
 function validateRecords($patient, $creatinine, $bloodPressure)
 {
     if (!filter_var($creatinine, FILTER_VALIDATE_FLOAT) && !filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {

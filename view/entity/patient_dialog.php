@@ -55,14 +55,14 @@
         event.preventDefault();
 
         const patientData = {
-            firstName: $("first-name").val(),
+            firstName: $("#first-name").val(),
             lastName: $("#last-name").val(),
             email: $("#email").val(),
             dob: $("#dob").val(),
             nhs: $("#nhs").val(),
             ethnicity: $("#ethnicity").val(),
             sex: $("#sex").val(),
-            role: $("#expert").is(":checked") ? "expert" : "patient"
+            role: $("#expert").is(":checked") ? "expert patient" : "patient"
         };
         $.post("requestHandler.php", {
             action: "addPatient",
