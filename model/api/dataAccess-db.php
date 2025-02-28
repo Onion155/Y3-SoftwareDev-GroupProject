@@ -79,10 +79,10 @@ function insertAccount($email, $password, $role) {
   $statement->execute([$email, $password, $role]);
 }
 
-function insertPatient($firstName, $lastName, $dob, $nhs, $ethnicity, $sex) {
+function insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity, $sex) {
   global $pdo;
-  $statement = $pdo->prepare('INSERT INTO patient (firstName, lastName, DoB, NHSNumber, isBlack, sex) VALUES (?, ?, ?, ?, ?, ?)');
-  $statement->execute([$firstName, $lastName, $dob, $nhs, $ethnicity == "black" ? true : false, $sex]);
+  $statement = $pdo->prepare('INSERT INTO patient (accountId, doctorId, firstName, lastName, DoB, NHSNumber, isBlack, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+  $statement->execute([$accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity == "black" ? true : false, $sex]);
 }
 function insertPatientRecord($patientId, $eGFR, $bloodPressure, $priority)
 {

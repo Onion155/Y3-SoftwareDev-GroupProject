@@ -1,6 +1,7 @@
 <?php
 require_once "model/account.php";
 require_once "model/patient.php";
+require_once "model/doctor.php";
 require_once "model/patientRecord.php";
 require_once "model/api/dataAccess-db.php";
 
@@ -154,12 +155,15 @@ if ($age < 18) {
     echo $role;
         echo "Role is invalid";
         exit();
-} else if (!empty($account) || !is_null($account->passwordHash)) {
+} else if (!empty($account) || isset($account->passwordHash)) {
     echo "Email already taken";
     exit();
 } else {
-    insertPatient($firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
     insertAccount($email, null, $role);
+    $accountId = fetchAccount($email)->id;
+    $doctorId = $_SESSION["doctor"]->id;
+    insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
+    
 }
 
 }
