@@ -31,16 +31,20 @@ button:hover {
 	background-color: #218838;
 }
 
-#red-button {
+#delete-button {
 	background-color: red;
+	float: right;
 	min-width: auto;
+	margin: 8px;
 	padding: 10px 10px;
 	border-radius: 10px;
 }
 
-#blue-button {
-	background-color: blue;
+#cancel-button {
+	background-color: #218838;
+	float: right;
 	min-width: auto;
+	margin: 8px;
 	padding: 10px 10px;
 	border-radius: 10px;
 }

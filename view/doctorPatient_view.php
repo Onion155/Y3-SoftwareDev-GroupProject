@@ -15,9 +15,6 @@
 </a>
     <h1>eGFR Calculator</h1>
     <p id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></p>
-    <form method="POST" action="./requestHandler.php?action=unsetPatientSession">
-      <button type="submit">Go to patient search</button>
-    </form>
     <form method="POST" action="./requestHandler.php?action=signout">
       <button type="submit">Sign Out</button>
     </form>
@@ -57,7 +54,7 @@
           <div class="content">
             <a href="#" onclick="showAddDialog(true)">Calculate</a>
             <a id="edit" href="#" onclick="showEditDialog(true)">Edit selected</a>
-            <a id="delete" href="#">Delete selected</a>
+            <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
             </div>
           </div>
         </div>
@@ -73,7 +70,11 @@
               </tr>
             </thead>
             <tbody>
-              <?php for ($i = 0; $i < count($patientRecords); $i++): ?>
+            <form id="egfr-form" method="POST" action="requestHandler.php?action=deletePatientRecords">
+              <?php
+              require_once "entity/deleteRecord_dialog.php";
+              for ($i = 0; $i < count($patientRecords); $i++):
+              ?>
                 <tr class="record-row">
                 <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                   <td><?= $patientRecords[$i]->dateCreated ?></td>
@@ -82,14 +83,17 @@
                   <td><?= $egfrValue[$i] ?></td>
                 </tr>
               <?php endfor ?>
+              </form>
             </tbody>
           </table>
           </form>
         </div>
+        <form method="POST" action="./requestHandler.php?action=unsetPatientSession">
+          <button type="submit" id="return-button" >Return to search</button>
+       </form>
       </div>
     </div>
   </div>
-  <?php require_once "entity/deleteRecord_dialog.php" ?>
   <?php require_once "entity/editRecord_dialog.php" ?>
   <?php require_once "entity/addRecord_dialog.php" ?>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

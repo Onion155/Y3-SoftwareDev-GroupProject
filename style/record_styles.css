@@ -294,6 +294,11 @@ padding: 10px;
 	display: inline-block;
 }
 
+#return-button {
+	margin-top: 20px;
+	float: right;
+}
+
 #edit {
 	pointer-events: none;
 	color: grey;

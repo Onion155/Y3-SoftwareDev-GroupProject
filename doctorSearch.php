@@ -11,4 +11,4 @@ $doctor = fetchDoctor($account->id);
 $_SESSION["doctor"] = $doctor;
 $patients = fetchPatients($doctor->id);
 require_once "view/doctorSearch_view.php";
-?>
+?>x
