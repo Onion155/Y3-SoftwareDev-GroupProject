@@ -95,22 +95,8 @@ switch ($action) {
             echo "UNSUPPORTED function: getPatientRecords() - User is not a doctor";
         }
         break;
-
-    case "getUsername":
-        echo $_SESSION["account"]->email;
-        break;
     default:
         throw new Exception("GET action name couldn't be found");
-}
-
-if (isset($_POST['patientid'])) {
-    $_SESSION['patientid'] = $_POST['patientid'];
-}
-
-if (isset($_POST['egfr'])) {
-    $eGFR = $_POST['egfr'];
-    $patientID = $_SESSION['patientid'];
-    insertPatientRecord($patientID, $eGFR);
 }
 
 function validatePatient($data) {

@@ -56,6 +56,14 @@
         <div id="action-container">
           <p>Patient Records</p>
           <text id="error-message"><?= $errorMessage ?></text>
+          <div class="dropdown">
+          <button>Actions</button>
+          <div class="content">
+            <a href="#">Calculate record</a>
+            <a href="#">Edit record</a>
+            <a href="#">Delete record</a>
+            </div>
+          </div>
       <button id="delete-button" type="submit">Delete selected</button>
         </div>
         <div id="table-container">

@@ -51,6 +51,6 @@
               <?php endfor ?>
             </tbody>
           </table>
-  <?php require_once "entity/patient_dialog.php" ?>
+  <?php require_once "entity/addPatient_dialog.php" ?>
     </body>
     </html>
