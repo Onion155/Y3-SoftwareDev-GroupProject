@@ -14,11 +14,6 @@
     <img id="logo" src="other/logo.png" alt="My Kidney Buddy mascot logo">
 </a>
     <h1>eGFR Calculator</h1>
-    <select id="patient-dropdown" name="patients" required>
-    <?php foreach($patients as $p): ?>
-    <option value=<?= $p->id ?></option>Patient ID: <?= $p->id ?> | NHS: <?= $p->NHSNumber ?></option>
-    <?php endforeach ?>
-    </select>
     <p id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></p>
     <form method="POST" action="./requestHandler.php?action=unsetPatientSession">
       <button type="submit">Go to patient search</button>
@@ -61,7 +56,7 @@
           <button>Actions</button>
           <div class="content">
             <a href="#" onclick="showAddDialog(true)">Calculate</a>
-            <a href="#">Edit selected</a>
+            <a id="edit" href="#">Edit selected</a>
             <a href="#">Delete selected</a>
             </div>
           </div>
@@ -79,7 +74,7 @@
             </thead>
             <tbody>
               <?php for ($i = 0; $i < count($patientRecords); $i++): ?>
-                <tr id="record-row">
+                <tr class="record-row">
                 <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                   <td><?= $patientRecords[$i]->dateCreated ?></td>
                   <td><?= $patientRecords[$i]->bloodPressure ?></td>
@@ -119,11 +114,26 @@
   <script>
 
   $("#select_all_ids").on('change', function() {
-    $(".checkbox_ids").prop('checked', $(this).prop('checked'));
+    $(".checkbox_ids").prop('checked', $(this).prop('checked')).trigger('change')
   });
 
-  $("#record-row").on('click', function() {
-    $(".checkbox_ids").prop('checked', $(this).prop('checked'));
+  $(".checkbox_ids").on('change', function() {
+    var num = $(".checkbox_ids:checked").length
+    if(num == 1) {
+      $("#edit").addClass("enabled")
+    } else {
+      $("#edit").removeClass("enabled")
+    }
+  });
+
+  $(".record-row").on('click', function(e) {
+    if (!$(e.target).is("input.checkbox_ids")) {
+    $(".record-row").not(this).removeClass("active")
+    $(this).toggleClass("active")
+    var isActive = $(this).hasClass("active")
+    $("#select_all_ids").prop('checked', false).trigger('change')
+    $(this).find("input.checkbox_ids").prop('checked', isActive).trigger('change')
+    }
   });
   
     </script>

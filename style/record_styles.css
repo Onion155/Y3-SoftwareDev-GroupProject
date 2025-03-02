@@ -203,6 +203,19 @@ button:hover {
 	position: sticky;
 	top: 0;
 }
+.table-content .record-row:hover {
+	background-color: rgb(244, 244, 255);
+}
+.table-content .record-row.active {
+	background-color: rgb(210, 210, 255);
+}
+
+#select_all_ids,
+.checkbox_ids {
+	height: 18px;
+	width: 18px;
+}
+
 
 .table-content th,
 td {
@@ -236,7 +249,6 @@ td {
     display: inline-flex;
 	align-items: center;
 }
-
 
 #egfr-form #input-container {
     display: flex;
@@ -294,4 +306,14 @@ padding: 10px;
 
 .dropdown {
 	display: inline-block;
+}
+
+#edit {
+	pointer-events: none;
+	color: grey;
+}
+
+#edit.enabled {
+	pointer-events: initial;
+	color: black;
 }
