@@ -26,7 +26,6 @@
     <div class="content">
     <a id="header" href="#" onclick="submitForm()">Go to patient records</a>
       <a href="#" onclick="showAddDialog(true)">Add patient</a>
-      <a id="edit" href="#" onclick="showEditDialog(true)">Edit patient</a>
       <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete patient(s)</a>
     </div>
   </div>
@@ -56,6 +55,7 @@
         </form>
       </tbody>
     </table>
+    <?php require_once "entity/editPatient_dialog.php" ?>
     <?php require_once "entity/addPatient_dialog.php" ?>
     <script>
       function submitForm() {

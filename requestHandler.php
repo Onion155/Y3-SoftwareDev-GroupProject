@@ -130,7 +130,6 @@ switch ($action) {
 }
 
 function validatePatient($data) {
-
     foreach ($data as $key => $value) {
         if (empty($value)) {
             echo "All fields are required";

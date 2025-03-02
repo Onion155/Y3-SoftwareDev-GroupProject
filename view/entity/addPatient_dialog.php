@@ -21,7 +21,7 @@
             <div class="form-row">
                 <div class="form-container">
                     <label for="sex">Sex</label>
-                    <select id="sex" id="sex" name="sex" class="dropdown">
+                    <select id="sex" name="sex" class="dropdown">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>
@@ -36,7 +36,7 @@
             </div>
             <span class="form-checkbox">
                 <input name="expert" id="expert" type="checkbox">
-                <label for="expert">The add can record, edit, and delete their eGFR records</label>
+                <label for="expert">The patient can record, edit, and delete their eGFR records</label>
             </span>
             <p class="error-message"></p>
             <button onclick="postAddDetails()">Add Patient</button>
