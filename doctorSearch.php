@@ -7,8 +7,12 @@ require_once "model/api/dataAccess-db.php";
 session_abort();
 session_start();
 
+if (!isset($_SESSION["account"])) {
+    header("Location: index.php");
+}
+
 $doctor = fetchDoctor($account->id);
 $_SESSION["doctor"] = $doctor;
 $patients = fetchPatients($doctor->id);
 require_once "view/doctorSearch_view.php";
-?>x
+?>

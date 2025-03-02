@@ -299,22 +299,22 @@ padding: 10px;
 	float: right;
 }
 
-#edit {
-	pointer-events: none;
-	color: grey;
-}
-
+#header,
+#edit,
 #delete {
 	pointer-events: none;
 	color: grey;
 }
-
-#edit.enabled {
+#header.enabled,
+#edit.enabled,
+#delete.enabled {
 	pointer-events: initial;
 	color: black;
 }
 
-#delete.enabled {
-	pointer-events: initial;
-	color: black;
+
+#patient-dropdown {
+	float: right;
+	width: auto;
+	margin: 20px;
 }

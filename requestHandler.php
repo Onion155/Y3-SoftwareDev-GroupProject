@@ -32,7 +32,7 @@ switch ($action) {
         header("Location: index.php");
         break;
     case "setPatientSession":
-        $id = $_POST["patientId"];
+        $id = $_POST["patient-id"];
         $_SESSION["patient"] = fetchPatient($id);
         header("Location: doctorPatient.php");
         break;
@@ -47,6 +47,20 @@ switch ($action) {
     case "getPatients":
         $doctorID = $_SESSION['account']->id;
         echo json_encode(fetchPatients($doctorID));
+        break;
+    
+    case "deletePatients":
+        if (isset($_POST["checkbox"])) {
+            $ids = $_POST["checkbox"];
+            foreach ($ids as $id) {
+                deletePatient($id);
+            }
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            $_SESSION["error-message"] = "No patients were selected";
+            header("Location: dashboard.php");
+        }
         break;
 
     case "addPatientRecord":
@@ -106,13 +120,13 @@ switch ($action) {
         $patientID = $_SESSION["patient"]->id;
         if ($_SESSION["account"]->role === "doctor") {
             $doctorID = $_SESSION["user"]->id;
-            echo json_encode(fetchPatientRecords($patientID, $doctorID));
+            echo json_encode(fetchPatientRecords($patientID));
         } else {
             echo "UNSUPPORTED function: getPatientRecords() - User is not a doctor";
         }
         break;
     default:
-        throw new Exception("GET action name couldn't be found");
+        throw new Exception("GET action name couldn't be found: $action");
 }
 
 function validatePatient($data) {

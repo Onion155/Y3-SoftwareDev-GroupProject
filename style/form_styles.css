@@ -30,22 +30,19 @@ button {
 button:hover {
 	background-color: #218838;
 }
-
 #delete-button {
 	background-color: red;
-	float: right;
-	min-width: auto;
-	margin: 8px;
-	padding: 10px 10px;
-	border-radius: 10px;
 }
-
 #cancel-button {
-	background-color: #218838;
+	background-color:#218838;
+}
+#delete-button,
+#cancel-button {
 	float: right;
 	min-width: auto;
-	margin: 8px;
+	margin: 16px 8px;
 	padding: 10px 10px;
+	width: 150px;
 	border-radius: 10px;
 }
 

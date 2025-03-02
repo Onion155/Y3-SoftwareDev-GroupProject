@@ -52,9 +52,9 @@
       <div class="dropdown">
           <button>Actions</button>
           <div class="content">
-            <a href="#" onclick="showAddDialog(true)">Calculate</a>
-            <a id="edit" href="#" onclick="showEditDialog(true)">Edit selected</a>
-            <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
+            <a href="#" onclick="showAddDialog(true)">Add record</a>
+            <a id="edit" href="#" onclick="showEditDialog(true)">Edit record</a>
+            <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete record(s)</a>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@
             <tbody>
             <form id="egfr-form" method="POST" action="requestHandler.php?action=deletePatientRecords">
               <?php
-              require_once "entity/deleteRecord_dialog.php";
+              require_once "entity/delete_dialog.php";
               for ($i = 0; $i < count($patientRecords); $i++):
               ?>
                 <tr class="record-row">

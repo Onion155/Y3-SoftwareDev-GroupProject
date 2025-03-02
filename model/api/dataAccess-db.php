@@ -90,6 +90,12 @@ function fetchPatient($patientId)
   }
 }
 
+function deletePatient($id) {
+  global $pdo;
+  $statement = $pdo->prepare('DELETE FROM patient WHERE (id = ?)');
+  $statement->execute([$id]);
+}
+
 //Fetches all patient records of a patient
 function fetchPatientRecords($patientId)
 {
