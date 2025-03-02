@@ -166,20 +166,6 @@ button:hover {
 	font-size: 1.3em;
 }
 
-#edit-button {
-	background-color: blue;
-	min-width: auto;
-	padding: 10px 10px;
-	border-radius: 10px;
-}
-
-#delete-button {
-	background-color: red;
-	min-width: auto;
-	padding: 10px 10px;
-	border-radius: 10px;
-}
-
 
 #box-right #table-container {
 	overflow-y: auto;
@@ -313,7 +299,17 @@ padding: 10px;
 	color: grey;
 }
 
+#delete {
+	pointer-events: none;
+	color: grey;
+}
+
 #edit.enabled {
+	pointer-events: initial;
+	color: black;
+}
+
+#delete.enabled {
 	pointer-events: initial;
 	color: black;
 }

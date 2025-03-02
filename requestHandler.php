@@ -63,6 +63,21 @@ switch ($action) {
             header("Location: doctorPatient.php");
         break;
 
+        case "editPatientRecord":
+            $creatinine = $_POST["creatinine"];
+            $bloodPressure = $_POST["blood-pressure"];
+            $recordId = $_POST["record-id"];
+            $patient = $_SESSION["patient"];
+            $message = validateRecord($creatinine, $bloodPressure);
+            if ($message == "success") {
+                $eGFR = $patient->calculateEGFR($creatinine);
+                updatePatientRecord($recordId, $eGFR, $bloodPressure);
+            } else {
+                $_SESSION["error-message"] = $message;  
+            }
+            header("Location: doctorPatient.php");
+        break;
+
     case "deletePatientRecords":
         if (isset($_POST["checkbox"])) {
             $ids = $_POST["checkbox"];

@@ -56,8 +56,8 @@
           <button>Actions</button>
           <div class="content">
             <a href="#" onclick="showAddDialog(true)">Calculate</a>
-            <a id="edit" href="#">Edit selected</a>
-            <a href="#">Delete selected</a>
+            <a id="edit" href="#" onclick="showEditDialog(true)">Edit selected</a>
+            <a id="delete" href="#">Delete selected</a>
             </div>
           </div>
         </div>
@@ -77,8 +77,8 @@
                 <tr class="record-row">
                 <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                   <td><?= $patientRecords[$i]->dateCreated ?></td>
-                  <td><?= $patientRecords[$i]->bloodPressure ?></td>
-                  <td><?= $patientRecords[$i]->eGFR ?></td>
+                  <td><?= round($patientRecords[$i]->bloodPressure,2) ?></td>
+                  <td><?= round($patientRecords[$i]->eGFR,2) ?></td>
                   <td><?= $egfrValue[$i] ?></td>
                 </tr>
               <?php endfor ?>
@@ -86,44 +86,34 @@
           </table>
           </form>
         </div>
-        <div id="form-container">
-          <form id="egfr-form" method="POST" action="requestHandler.php?action=addPatientRecord">
-            <div id="input-container">
-              <label for="creatinine">Serum Creatinine</label>
-              <div id="input-content">
-                <input type="text" id="creatinine" name="creatinine" required>
-                <text>micromol/l</text>
-              </div>
-            </div>
-            <div id="input-container">
-              <label for="blood-pressure">Blood Pressure</label>
-              <div id="input-content">
-                <input type="text" id="blood-pressure" name="blood-pressure" required>
-                <text>mmHg</text>
-              </div>
-            </div>
-            <button type="submit">Create record</button>
-          </form>
-        </div>
       </div>
     </div>
   </div>
+  <?php require_once "entity/deleteRecord_dialog.php" ?>
+  <?php require_once "entity/editRecord_dialog.php" ?>
   <?php require_once "entity/addRecord_dialog.php" ?>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
 
-  $("#select_all_ids").on('change', function() {
-    $(".checkbox_ids").prop('checked', $(this).prop('checked')).trigger('change')
-  });
-
-  $(".checkbox_ids").on('change', function() {
+    $(".checkbox_ids").on('change', function() {
     var num = $(".checkbox_ids:checked").length
+    if(num > 0) {
+      $("#delete").addClass("enabled")
+    } else {
+      $("#delete").removeClass("enabled")
+    }
+    
     if(num == 1) {
       $("#edit").addClass("enabled")
+      $("#record-id").val($(this).val());
     } else {
       $("#edit").removeClass("enabled")
     }
+  });
+
+  $("#select_all_ids").on('change', function() {
+    $(".checkbox_ids").prop('checked', $(this).prop('checked')).trigger('change')
   });
 
   $(".record-row").on('click', function(e) {

@@ -117,6 +117,13 @@ function insertPatientRecord($patientId, $eGFR, $bloodPressure)
   $statement->execute([$patientId, $eGFR, $bloodPressure]);
 }
 
+function updatePatientRecord($recordId, $eGFR, $bloodPressure)
+{
+  global $pdo;
+  $statement = $pdo->prepare('UPDATE patientRecord SET eGFR = ?, bloodPressure = ? WHERE id = ?');
+  $statement->execute([$eGFR, $bloodPressure, $recordId]);
+}
+
 function deletePatientRecord($id) {
   global $pdo;
   $statement = $pdo->prepare('DELETE FROM patientRecord WHERE (id = ?)');
