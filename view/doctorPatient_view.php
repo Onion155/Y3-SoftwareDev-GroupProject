@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Calculate eGFR</title>
   <link rel="stylesheet" href="./style/record_styles.css">
+  <link rel="stylesheet" href="./style/form_styles.css">
 </head>
 
 <body>
@@ -56,35 +57,34 @@
         <div id="action-container">
           <p>Patient Records</p>
           <text id="error-message"><?= $errorMessage ?></text>
-          <div class="dropdown">
+      <div class="dropdown">
           <button>Actions</button>
           <div class="content">
-            <a href="#">Calculate record</a>
-            <a href="#">Edit record</a>
-            <a href="#">Delete record</a>
+            <a href="#" onclick="showAddDialog(true)">Calculate</a>
+            <a href="#">Edit selected</a>
+            <a href="#">Delete selected</a>
             </div>
           </div>
-      <button id="delete-button" type="submit">Delete selected</button>
         </div>
         <div id="table-container">
           <table class="table-content">
             <thead>
               <tr>
+              <th><input id="select_all_ids" type="checkbox"}"></th>
                 <th>Date Created (yyyy-mm-dd)</th>
                 <th>Blood Pressure (mmHg)</th>
                 <th>eGFR (ml/min/1.73m<sup>2</sup>)</th>
-                <th>eGFR Value</th>
-                <th><input id="select_all_ids" type="checkbox"}"></th>
+                <th>eGFR Value</th>  
               </tr>
             </thead>
             <tbody>
               <?php for ($i = 0; $i < count($patientRecords); $i++): ?>
-                <tr>
+                <tr id="record-row">
+                <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                   <td><?= $patientRecords[$i]->dateCreated ?></td>
                   <td><?= $patientRecords[$i]->bloodPressure ?></td>
                   <td><?= $patientRecords[$i]->eGFR ?></td>
                   <td><?= $egfrValue[$i] ?></td>
-                  <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                 </tr>
               <?php endfor ?>
             </tbody>
@@ -113,13 +113,19 @@
       </div>
     </div>
   </div>
+  <?php require_once "entity/addRecord_dialog.php" ?>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
 
   $("#select_all_ids").on('change', function() {
-    $(".checkbox_ids").prop('checked', $(this).prop('checked'))
+    $(".checkbox_ids").prop('checked', $(this).prop('checked'));
   });
+
+  $("#record-row").on('click', function() {
+    $(".checkbox_ids").prop('checked', $(this).prop('checked'));
+  });
+  
     </script>
   <script>
     egfrReadings = <?php echo json_encode($egfrReadings) ?>;

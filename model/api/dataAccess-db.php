@@ -110,11 +110,11 @@ function insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhs,
   $statement = $pdo->prepare('INSERT INTO patient (accountId, doctorId, firstName, lastName, DoB, NHSNumber, isBlack, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
   $statement->execute([$accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity == "black" ? true : false, $sex]);
 }
-function insertPatientRecord($patientId, $eGFR, $bloodPressure, $priority)
+function insertPatientRecord($patientId, $eGFR, $bloodPressure)
 {
   global $pdo;
-  $statement = $pdo->prepare('INSERT INTO patientRecord (patientId, eGFR, bloodPressure, priority) VALUES (?, ROUND(?,2), ?, ?)');
-  $statement->execute([$patientId, $eGFR, $bloodPressure, $priority]);
+  $statement = $pdo->prepare('INSERT INTO patientRecord (patientId, eGFR, bloodPressure) VALUES (?, ROUND(?,2), ?)');
+  $statement->execute([$patientId, $eGFR, $bloodPressure]);
 }
 
 function deletePatientRecord($id) {

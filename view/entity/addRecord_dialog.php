@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Search patients</title>
-  <link rel="stylesheet" href="./style/record_styles.css">
-  <link rel="stylesheet" href="./style/form_styles.css">
-</head>
-
-<body>
-
 <dialog class="dialog" id="add-dialog">
     <div class="add-container form-wrapper">
         <h2>Calculate eGFR</h2>
@@ -36,25 +24,6 @@
 <script>
 const addDialog = document.getElementById("add-dialog");
 const addWrapper = document.querySelector(".add-container");
-addDialog.showModal();
-const showaddDialog = (show) => show ? addDialog.showModal() : addDialog.close();
+const showAddDialog = (show) => show ? addDialog.showModal() : addDialog.close();
 addDialog.addEventListener("click", (e) => !addWrapper.contains(e.target) && addDialog.close());
-
-function postaddDetails() {
-event.preventDefault();
-$.post("requestHandler.php", {
-action: "addPatientRecord",
-email: $("#email").val(),
-password: $("#password").val()
-}, function (message) {
-if(message == "success") window.location.href = "dashboard.php";
-else {
-if(message != "Please fill in the fields") {
-    $("#email").val("");
-    $("#password").val("");
-}
-$("#add-error-message").text(message);
-}
-});
-}
 </script>
