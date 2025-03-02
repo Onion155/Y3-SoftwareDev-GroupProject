@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Calculate eGFR</title>
   <link rel="stylesheet" href="./style/record_styles.css">
+  <link rel="stylesheet" href="./style/form_styles.css">
 </head>
 
 <body>
@@ -13,15 +14,7 @@
     <img id="logo" src="other/logo.png" alt="My Kidney Buddy mascot logo">
 </a>
     <h1>eGFR Calculator</h1>
-    <select id="patient-dropdown" name="patients" required>
-    <?php foreach($patients as $p): ?>
-    <option value=<?= $p->id ?></option>Patient ID: <?= $p->id ?> | NHS: <?= $p->NHSNumber ?></option>
-    <?php endforeach ?>
-    </select>
     <p id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></p>
-    <form method="POST" action="./requestHandler.php?action=unsetPatientSession">
-      <button type="submit">Go to patient search</button>
-    </form>
     <form method="POST" action="./requestHandler.php?action=signout">
       <button type="submit">Sign Out</button>
     </form>
@@ -56,62 +49,87 @@
         <div id="action-container">
           <p>Patient Records</p>
           <text id="error-message"><?= $errorMessage ?></text>
-      <button id="delete-button" type="submit">Delete selected</button>
+      <div class="dropdown">
+          <button>Actions</button>
+          <div class="content">
+            <a href="#" onclick="showAddDialog(true)">Add record</a>
+            <a id="edit" href="#" onclick="showEditDialog(true)">Edit record</a>
+            <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete record(s)</a>
+            </div>
+          </div>
         </div>
         <div id="table-container">
           <table class="table-content">
             <thead>
               <tr>
+              <th><input id="select_all_ids" type="checkbox"}"></th>
                 <th>Date Created (yyyy-mm-dd)</th>
                 <th>Blood Pressure (mmHg)</th>
                 <th>eGFR (ml/min/1.73m<sup>2</sup>)</th>
-                <th>eGFR Value</th>
-                <th><input id="select_all_ids" type="checkbox"}"></th>
+                <th>eGFR Value</th>  
               </tr>
             </thead>
             <tbody>
-              <?php for ($i = 0; $i < count($patientRecords); $i++): ?>
-                <tr>
+            <form id="egfr-form" method="POST" action="requestHandler.php?action=deletePatientRecords">
+              <?php
+              require_once "entity/delete_dialog.php";
+              for ($i = 0; $i < count($patientRecords); $i++):
+              ?>
+                <tr class="record-row">
+                <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                   <td><?= $patientRecords[$i]->dateCreated ?></td>
-                  <td><?= $patientRecords[$i]->bloodPressure ?></td>
-                  <td><?= $patientRecords[$i]->eGFR ?></td>
+                  <td><?= round($patientRecords[$i]->bloodPressure,2) ?></td>
+                  <td><?= round($patientRecords[$i]->eGFR,2) ?></td>
                   <td><?= $egfrValue[$i] ?></td>
-                  <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                 </tr>
               <?php endfor ?>
+              </form>
             </tbody>
           </table>
           </form>
         </div>
-        <div id="form-container">
-          <form id="egfr-form" method="POST" action="requestHandler.php?action=addPatientRecord">
-            <div id="input-container">
-              <label for="creatinine">Serum Creatinine</label>
-              <div id="input-content">
-                <input type="text" id="creatinine" name="creatinine" required>
-                <text>micromol/l</text>
-              </div>
-            </div>
-            <div id="input-container">
-              <label for="blood-pressure">Blood Pressure</label>
-              <div id="input-content">
-                <input type="text" id="blood-pressure" name="blood-pressure" required>
-                <text>mmHg</text>
-              </div>
-            </div>
-            <button type="submit">Create record</button>
-          </form>
-        </div>
+        <form method="POST" action="./requestHandler.php?action=unsetPatientSession">
+          <button type="submit" id="return-button" >Return to search</button>
+       </form>
       </div>
     </div>
   </div>
+  <?php require_once "entity/editRecord_dialog.php" ?>
+  <?php require_once "entity/addRecord_dialog.php" ?>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
 
-  $("#select_all_ids").on('change', function() {
-    $(".checkbox_ids").prop('checked', $(this).prop('checked'))
+    $(".checkbox_ids").on('change', function() {
+    var num = $(".checkbox_ids:checked").length
+    if(num > 0) {
+      $("#delete").addClass("enabled")
+    } else {
+      $("#delete").removeClass("enabled")
+    }
+    
+    if(num == 1) {
+      $("#edit").addClass("enabled")
+      $("#record-id").val($(this).val());
+    } else {
+      $("#edit").removeClass("enabled")
+    }
   });
+
+  $("#select_all_ids").on('change', function() {
+    $(".checkbox_ids").prop('checked', $(this).prop('checked')).trigger('change')
+  });
+
+  $(".record-row").on('click', function(e) {
+    if (!$(e.target).is("input.checkbox_ids")) {
+    $(".record-row").not(this).removeClass("active")
+    $(this).toggleClass("active")
+    var isActive = $(this).hasClass("active")
+    $("#select_all_ids").prop('checked', false).trigger('change')
+    $(this).find("input.checkbox_ids").prop('checked', isActive).trigger('change')
+    }
+  });
+  
     </script>
   <script>
     egfrReadings = <?php echo json_encode($egfrReadings) ?>;

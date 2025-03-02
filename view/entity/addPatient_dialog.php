@@ -1,7 +1,7 @@
-<dialog class="dialog" id="patient-dialog">
-    <div class="patient-container form-wrapper">
+<dialog class="dialog" id="add-dialog">
+    <div class="add-container form-wrapper">
         <h2>Create Patient</h2>
-        <form class="patient-form form" method="POST">
+        <form class="add-form form" method="POST">
             <div class="form-row">
                 <div class="form-container">
                     <label for="first-name">First Name</label>
@@ -21,7 +21,7 @@
             <div class="form-row">
                 <div class="form-container">
                     <label for="sex">Sex</label>
-                    <select id="sex" id="sex" name="sex" class="dropdown">
+                    <select id="sex" name="sex" class="dropdown">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>
@@ -39,19 +39,19 @@
                 <label for="expert">The patient can record, edit, and delete their eGFR records</label>
             </span>
             <p class="error-message"></p>
-            <button onclick="postPatientDetails()">Add patient</button>
+            <button onclick="postAddDetails()">Add Patient</button>
     </div>
     </form>
     </div>
 </dialog>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    const patientDialog = document.getElementById("patient-dialog");
-    const patientWrapper = document.querySelector(".patient-container");
-    const showPatientDialog = (show) => show ? patientDialog.showModal() : patientDialog.close();
-    patientDialog.addEventListener("click", (e) => !patientWrapper.contains(e.target) && patientDialog.close());
+    const addDialog = document.getElementById("add-dialog");
+    const addWrapper = document.querySelector(".add-container");
+    const showAddDialog = (show) => show ? addDialog.showModal() : addDialog.close();
+    addDialog.addEventListener("click", (e) => !addWrapper.contains(e.target) && addDialog.close());
 
-    function postPatientDetails() {
+    function postAddDetails() {
         event.preventDefault();
 
         const patientData = {

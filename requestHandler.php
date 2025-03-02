@@ -32,7 +32,7 @@ switch ($action) {
         header("Location: index.php");
         break;
     case "setPatientSession":
-        $id = $_POST["patientId"];
+        $id = $_POST["patient-id"];
         $_SESSION["patient"] = fetchPatient($id);
         header("Location: doctorPatient.php");
         break;
@@ -48,18 +48,48 @@ switch ($action) {
         $doctorID = $_SESSION['account']->id;
         echo json_encode(fetchPatients($doctorID));
         break;
+    
+    case "deletePatients":
+        if (isset($_POST["checkbox"])) {
+            $ids = $_POST["checkbox"];
+            foreach ($ids as $id) {
+                deletePatient($id);
+            }
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            $_SESSION["error-message"] = "No patients were selected";
+            header("Location: dashboard.php");
+        }
+        break;
 
     case "addPatientRecord":
-        if (isset($_POST["creatinine"]) && isset($_POST["blood-pressure"])) {
             $creatinine = $_POST["creatinine"];
             $bloodPressure = $_POST["blood-pressure"];
             $patient = $_SESSION["patient"];
-            $_SESSION["error-message"] = validateRecords($patient, $creatinine, $bloodPressure);
+            $message = validateRecord($creatinine, $bloodPressure);
+            if ($message == "success") {
+                $eGFR = $patient->calculateEGFR($creatinine);
+                insertPatientRecord($patient->id, $eGFR, $bloodPressure);
+            } else {
+                $_SESSION["error-message"] = $message;  
+            }
             header("Location: doctorPatient.php");
-        } else {
-            $_SESSION["error-message"] = "Please enter both creatinine and blood pressure";
+        break;
+
+        case "editPatientRecord":
+            $creatinine = $_POST["creatinine"];
+            $bloodPressure = $_POST["blood-pressure"];
+            $recordId = $_POST["record-id"];
+            $patient = $_SESSION["patient"];
+            $message = validateRecord($creatinine, $bloodPressure);
+            if ($message == "success") {
+                $eGFR = $patient->calculateEGFR($creatinine);
+                updatePatientRecord($recordId, $eGFR, $bloodPressure);
+            } else {
+                $_SESSION["error-message"] = $message;  
+            }
             header("Location: doctorPatient.php");
-        }
         break;
 
     case "deletePatientRecords":
@@ -90,31 +120,16 @@ switch ($action) {
         $patientID = $_SESSION["patient"]->id;
         if ($_SESSION["account"]->role === "doctor") {
             $doctorID = $_SESSION["user"]->id;
-            echo json_encode(fetchPatientRecords($patientID, $doctorID));
+            echo json_encode(fetchPatientRecords($patientID));
         } else {
             echo "UNSUPPORTED function: getPatientRecords() - User is not a doctor";
         }
         break;
-
-    case "getUsername":
-        echo $_SESSION["account"]->email;
-        break;
     default:
-        throw new Exception("GET action name couldn't be found");
-}
-
-if (isset($_POST['patientid'])) {
-    $_SESSION['patientid'] = $_POST['patientid'];
-}
-
-if (isset($_POST['egfr'])) {
-    $eGFR = $_POST['egfr'];
-    $patientID = $_SESSION['patientid'];
-    insertPatientRecord($patientID, $eGFR);
+        throw new Exception("GET action name couldn't be found: $action");
 }
 
 function validatePatient($data) {
-
     foreach ($data as $key => $value) {
         if (empty($value)) {
             echo "All fields are required";
@@ -182,9 +197,11 @@ function validateDate($dateString, $format) {
 	return $date && $date->format($format) === $dateString; 
 } 
 
-function validateRecords($patient, $creatinine, $bloodPressure)
+function validateRecord($creatinine, $bloodPressure)
 {
-    if (!filter_var($creatinine, FILTER_VALIDATE_FLOAT) && !filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
+    if (empty( $creatinine ) || empty( $bloodPressure )) {
+        return "Please enter both creatinine and blood pressure";
+    } else if (!filter_var($creatinine, FILTER_VALIDATE_FLOAT) && !filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
         return "Invalid creatinine and blood pressure";
     } else if ($creatinine < 0 && $bloodPressure < 0) {
         return "Creatinine and blood pressure can't be negative";
@@ -192,17 +209,13 @@ function validateRecords($patient, $creatinine, $bloodPressure)
         return "Invalid creatinine";
     } else if ($creatinine < 0) {
         return "Creatinine can't be negative";
-    }
-
-    if (!filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
+    } else if (!filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
         return "Invalid blood pressure";
     } else if ($bloodPressure < 0) {
         return "Blood pressure can't be negative";
+    } else {
+        return "success";
     }
-    $eGFR = $patient->calculateEGFR($creatinine);
-    insertPatientRecord($patient->id, $eGFR, $bloodPressure, "medium");
-    header("Location: dashboard.php");
-    exit();
 }
 function validateLogin($email, $password) {
 

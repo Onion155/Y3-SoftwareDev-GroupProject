@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<title>Calculate eGFR</title>
-		<link rel="stylesheet" href="./style/record_styles.css" />
-		<link rel="stylesheet" href="./style/form_styles.css" />
-	</head>
-	<body>
-		<dialog class="dialog" id="delete-dialog">
+<dialog class="dialog" id="delete-dialog">
 			<div class="delete-container form-wrapper">
 				<h2>User Confirmation</h2>
 				<div class="form">
@@ -29,10 +20,9 @@
 			</div>
 		</dialog>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script>
-			const deleteDialog = document.getElementById("delete-dialog");
-			const deleteWrapper = document.querySelector(".delete-container");
-			deleteDialog.showModal();
-		</script>
-	</body>
-</html>
+        <script>
+            const deleteDialog = document.getElementById("delete-dialog");
+            const deleteWrapper = document.querySelector(".delete-container");
+            const showDeleteDialog = (show) => show ? deleteDialog.showModal() : deleteDialog.close();
+            deleteDialog.deleteEventListener("click", (e) => !deleteWrapper.contains(e.target) && deleteDialog.close());
+        </script>

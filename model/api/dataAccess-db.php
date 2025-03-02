@@ -90,6 +90,12 @@ function fetchPatient($patientId)
   }
 }
 
+function deletePatient($id) {
+  global $pdo;
+  $statement = $pdo->prepare('DELETE FROM patient WHERE (id = ?)');
+  $statement->execute([$id]);
+}
+
 //Fetches all patient records of a patient
 function fetchPatientRecords($patientId)
 {
@@ -110,11 +116,18 @@ function insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhs,
   $statement = $pdo->prepare('INSERT INTO patient (accountId, doctorId, firstName, lastName, DoB, NHSNumber, isBlack, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
   $statement->execute([$accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity == "black" ? true : false, $sex]);
 }
-function insertPatientRecord($patientId, $eGFR, $bloodPressure, $priority)
+function insertPatientRecord($patientId, $eGFR, $bloodPressure)
 {
   global $pdo;
-  $statement = $pdo->prepare('INSERT INTO patientRecord (patientId, eGFR, bloodPressure, priority) VALUES (?, ROUND(?,2), ?, ?)');
-  $statement->execute([$patientId, $eGFR, $bloodPressure, $priority]);
+  $statement = $pdo->prepare('INSERT INTO patientRecord (patientId, eGFR, bloodPressure) VALUES (?, ROUND(?,2), ?)');
+  $statement->execute([$patientId, $eGFR, $bloodPressure]);
+}
+
+function updatePatientRecord($recordId, $eGFR, $bloodPressure)
+{
+  global $pdo;
+  $statement = $pdo->prepare('UPDATE patientRecord SET eGFR = ?, bloodPressure = ? WHERE id = ?');
+  $statement->execute([$eGFR, $bloodPressure, $recordId]);
 }
 
 function deletePatientRecord($id) {
