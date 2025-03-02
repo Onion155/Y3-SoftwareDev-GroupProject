@@ -34,7 +34,7 @@ switch ($action) {
     case "setPatientSession":
         $id = $_POST["patientId"];
         $_SESSION["patient"] = fetchPatient($id);
-        header("Location: dashboard.php");
+        header("Location: doctorPatient.php");
         break;
     case "unsetPatientSession":
         unset($_SESSION["patient"]); 
@@ -55,10 +55,10 @@ switch ($action) {
             $bloodPressure = $_POST["blood-pressure"];
             $patient = $_SESSION["patient"];
             $_SESSION["error-message"] = validateRecords($patient, $creatinine, $bloodPressure);
-            header("Location: dashboard.php");
+            header("Location: doctorPatient.php");
         } else {
             $_SESSION["error-message"] = "Please enter both creatinine and blood pressure";
-            header("Location: dashboard.php");
+            header("Location: doctorPatient.php");
         }
         break;
 
@@ -68,11 +68,11 @@ switch ($action) {
             foreach ($ids as $id) {
                 deletePatientRecord($id);
             }
-            header("Location: dashboard.php");
+            header("Location: doctorPatient.php");
             exit();
         } else {
             $_SESSION["error-message"] = "No patient records were selected";
-            header("Location: dashboard.php");
+            header("Location: doctorPatient.php");
         }
         break;
         

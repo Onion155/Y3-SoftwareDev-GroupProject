@@ -5,7 +5,7 @@ session_start();
 $account = $_SESSION["account"];
     switch ($account->role) {
         case "doctor":
-            require_once "doctor.php";
+            require_once "doctorSearch.php";
             break;
         case "patient": require_once "patient.php";
             break;

@@ -1,17 +1,14 @@
 <?php
 require_once "model/doctor.php";
-require_once "model/account.php";
 require_once "model/patient.php";
 require_once "model/patientRecord.php";
 require_once "model/api/dataAccess-db.php";
-session_abort();
+
 session_start();
 
-$doctor = fetchDoctor($account->id);
-$_SESSION["doctor"] = $doctor;
-
 if (isset($_SESSION["patient"])) {
-    $patient = $_SESSION["patient"];
+$patient = $_SESSION["patient"];
+    $doctor = $_SESSION["doctor"];
     $patientRecords = fetchPatientRecords($patient->id);
     $previousReadings = [];
     $readingLabels = [];
@@ -36,9 +33,7 @@ if (isset($_SESSION["patient"])) {
     $errorMessage = null;
     }
     require_once "view/doctorPatient_view.php";
-
 } else {
-    $patients = fetchPatients($doctor->id);
-    require_once "view/doctorSearch_view.php";
+    header("Location: dashboard.php");
 }
-?>
+    ?>
