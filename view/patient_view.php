@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Patient Dashboard</title>
-  <link rel="stylesheet" href="./style/doctor_view.css">
+  <link rel="stylesheet" href="./style/record_styles.css">
 </head>
 
 <body>
