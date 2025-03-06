@@ -281,32 +281,6 @@ td {
 	border-top: 2px solid #218838;
 }
 
-#egfr-form {
-	padding-top: 20px;
-    display: inline-flex;
-	align-items: center;
-}
-
-#egfr-form #input-container {
-    display: flex;
-	flex-direction: column;
-}
-
-#egfr-form #input-content {
-    display: inline-flex;
-	align-items: center;
-	margin-right: 15px;
-	max-width: 195px;
-}
-
-#input-container text {
-	font-size: 0.9em;
-	margin-left: 8px;
-}
-
-#egfr-form button {
-padding: 10px;
-}
 
 .dropdown button {
 	background-color:#e9e9e9;

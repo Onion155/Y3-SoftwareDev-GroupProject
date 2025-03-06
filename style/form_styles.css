@@ -27,17 +27,24 @@ button {
 	transition: all 0.3s ease 0s;
 }
 
-#delete-button {
+.red-button {
 	background-color: red;
 }
-#cancel-button {
+.red-button:hover {
+	background-color: rgb(218, 74, 74);
+}
+
+.green-button {
 	background-color:#218838;
 }
-#delete-button,
-#cancel-button {
-	float: right;
+.green-button:hover {
+	background-color:#2f703d;
+}
+.red-button,
+.green-button {
+	float: left;
 	min-width: auto;
-	margin: 16px 8px;
+	margin: 0px 8px 16px 0px;
 	padding: 10px 10px;
 	width: 150px;
 	border-radius: 10px;
@@ -65,7 +72,7 @@ dialog::backdrop {
 	display: flex;
 	flex-direction: column;
 
-	margin: 40px 0;
+	margin: 35px 0;
 }
 
 .form input, select {
@@ -108,4 +115,37 @@ dialog::backdrop {
 
 .link {
 margin-top: 20px;
+}
+
+#egfr-form {
+	padding-top: 20px;
+    display: inline-flex;
+	align-items: center;
+}
+
+#egfr-form #input-container {
+    display: flex;
+	flex-direction: column;
+
+}
+
+#input-content {
+    display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-right: 15px;
+}
+
+#input-content input {
+	width: 200px;
+}
+
+#input-container text {
+	font-size: 0.9em;
+	margin-left: 8px;
+}
+
+#egfr-form button {
+padding: 10px;
 }
