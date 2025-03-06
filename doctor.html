@@ -24,41 +24,46 @@
 
     <main>
         <div class="search-container">
-            <input type="text" id="searchPatient" placeholder="Search Patient">
+            <input type="text" id="searchPatient" placeholder="Search Patient by ID">
+            <button id="searchBtn">🔍 Search</button>
         </div>
 
         <h1>Patient Number: <span id="patientNumber">Not Selected</span></h1>
 
         <div class="dashboard">
             <div class="graph-container">
-                <h2>Graph of eGFR</h2>
+                <h2>eGFR & Blood Pressure Trends</h2>
                 <canvas id="eGFRChart"></canvas>
             </div>
 
             <div class="patient-data">
-                <h2>Patient Data</h2>
+                <h2>Patient Records</h2>
                 <table>
                     <thead>
                         <tr>
                             <th>Date</th>
+                            <th>Blood Pressure (mmHg)</th>
                             <th>Serum Creatinine (mg/dL)</th>
                             <th>eGFR</th>
                             <th>Notes</th>
                         </tr>
                     </thead>
                     <tbody id="patientTableBody">
-                        <!-- Preloaded data will be inserted here -->
+                        <!-- Patient data dynamically inserted here -->
                     </tbody>
                 </table>
-                <button id="addDataBtn">Add Data</button>
+                <button id="addDataBtn">➕ Add Record</button>
             </div>
 
             <div class="patient-notes">
-                <h2>Patient Data / Past Notes</h2>
-                <p id="pastNotes">
-                    <!-- Past notes will be dynamically inserted -->
-                </p>
+                <h2>Patient Notes & History</h2>
+                <p id="pastNotes">Select a patient to view past notes.</p>
             </div>
+        </div>
+
+        <div class="actions">
+            <button id="exportBtn">⬇️ Export Data (CSV)</button>
+            <button id="downloadReportBtn">📄 Download Report (PDF)</button>
         </div>
     </main>
 
