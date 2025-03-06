@@ -3,21 +3,32 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Calculate eGFR</title>
+  <title>Patient Records</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style/record_styles.css">
   <link rel="stylesheet" href="./style/form_styles.css">
 </head>
 
 <body>
   <header>
+	
 <a href="./index.php">
     <img id="logo" src="other/logo.png" alt="My Kidney Buddy mascot logo">
 </a>
-    <h1>eGFR Calculator</h1>
-    <p id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></p>
-    <form method="POST" action="./requestHandler.php?action=signout">
-      <button type="submit">Sign Out</button>
+<div class="header-container">
+	<div class="header-content">
+    <h1>My Kidney Buddy</h1>
+    <h2 id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></h2>
+	</div>
+	<div class="navigation-menu">
+		<a href="./index.php">
+		<h2>Home</h2>
+		</a>
+	<form method="POST" action="./requestHandler.php?action=signout">
+      <button class="signout-button" type="submit"><h2>Sign out</h2></button>
     </form>
+</div>
+</div>
   </header>
   <div class="box-container">
     <div id="box-top">
