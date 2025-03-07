@@ -5,7 +5,9 @@ body {
 
 :root {
 	--primary: #00CC3D;
+	--primary-rgb: 0,204,61;
 	--secondary: #B1FFDF;
+	--secondary-rgb: 177,255,223;
 	--accent: #64D0F8;
 	--background: #F7FBFF;
 	--text-black: #02353C;
@@ -147,54 +149,32 @@ button:hover {
 	height: 700px;
 }
 
+.box-bottom h2 {
+	color: var(--primary);
+	margin-bottom: 25px;
+}
+
 .box-bottom #box-left {
-	display: flex;
-	justify-content: center;
-    align-items: center;
-	flex-direction: column;
-	background-color: white;
+	background-color: rgba(var(--secondary-rgb),0.1);
+	border-radius: 15px;
 	padding: 15px;
-	width: 700px;
+	width: 350px;
 	height: 100%
 }
 
-#box-left #chart-container {
-	background-color: wheat;
-	display: inline-flex;
-	width: 100%;
-	height: 60%;
-}
-
-#box-left #egfr-chart {
-	max-height: 100%;
-	max-width: 50%;
-
-}
-#box-left #bp-chart {
-	max-height: 100%;
-	max-width: 50%;
-}
-
-#box-left #notes-container {
-	
-	margin-top: 25px;
-	width: 80%;
-	height: 30%;
-}
 
 #box-left textarea {
+	background-color: rgba(255,255,255,0.7);
+	border: 1px solid var(--primary);
 	resize: none;
 	width: 100%;
-	height: 100%;
+	height: 70%;
 	padding: 10px;
 }
 
 .box-bottom #box-right {
-	display: flex;
-	justify-content: center;
-    align-items: center;
-	flex-direction: column;
-	background-color: lightblue;
+	background-color: rgba(var(--primary-rgb),0.1);
+	border-radius: 15px;
 	padding: 30px;
 	width: 800px;
 	height: 100%;
@@ -342,4 +322,14 @@ td {
 	float: right;
 	width: auto;
 	margin: 20px;
+}
+
+#egfr-chart {
+	max-height: 100%;
+	max-width: 50%;
+
+}
+#bp-chart {
+	max-height: 100%;
+	max-width: 50%;
 }
