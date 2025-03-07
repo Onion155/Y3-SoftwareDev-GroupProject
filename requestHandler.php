@@ -108,10 +108,12 @@ switch ($action) {
         
     case "setNotes":
         $newNotes = $_GET["notes"];
+        $id = $_SESSION["patient"]->id;
         if (!filter_var($newNotes, FILTER_SANITIZE_STRING)) {
             echo "Invalid notes";
         } else {
-            setNotes($_SESSION["patient"]->id, $newNotes);
+            setNotes($id, $newNotes);
+            $_SESSION["patient"] = fetchPatient($id);
             echo "Notes saved";
         }
         break;
