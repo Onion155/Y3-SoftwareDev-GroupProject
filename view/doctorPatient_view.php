@@ -31,21 +31,15 @@
 </div>
   </header>
   <div class="box-container">
-    <div id="box-top">
-      <p>Patient name: <?= "$patient->firstName $patient->lastName" ?> | NHS number: <?= $patient->NHSNumber?></p>
-      <p>Age: <?= $patient->getAge() ?> | Sex: <?= $patient->sex ?> | Ethnicity: <?= ($patient->isBlack == 1) ? "black" : "not black" ?></p>
-    </div>
     <div class="box-bottom">
       <div id="box-left">
-      <div id="chart-container">
-        <?php if(!$isChartEmpty): ?>
-        <canvas id="egfr-chart"></canvas>
-        <canvas id="bp-chart"></canvas>
-        <?php else: ?>
-        <text>There is no data to load the graphs</text>
-        <?php endif ?>
-        </div>
-        <div id="notes-container">
+      <div id="info-container">
+        <p>Patient name: <?= "$patient->firstName $patient->lastName" ?></p>
+        <p>NHS: <?= $patient->NHSNumber?></p>
+        <p>Age: <?= $patient->getAge() ?> | Sex: <?= $patient->sex ?> | Ethnicity: <?= ($patient->isBlack == 1) ? "black" : "not black" ?></p>
+      </div>
+      <div id="notes-container">
+		<h2>Notes</h2>
         <textarea id="doctor-notes" maxlength="600"
           placeholder="Type down your notes here... (max 600 characters)"><?= $patient->notes ?></textarea>
           <?php if($patient->notes !== ''): ?>
@@ -53,21 +47,14 @@
           <?php else: ?>
             <text id="notes-save-status">There aren't any notes to load</text>
           <?php endif ?>
-          </div>
+      </div>
       </div>
       <div id="box-right">
+		<h2>Patient Records</h2>
       <form method="POST" action="requestHandler.php?action=deletePatientRecords">
         <div id="action-container">
           <p>Patient Records</p>
           <text id="error-message"><?= $errorMessage ?></text>
-      <div class="dropdown">
-          <button>Actions</button>
-          <div class="content">
-            <a href="#" onclick="showAddDialog(true)">Add record</a>
-            <a id="edit" href="#" onclick="showEditDialog(true)">Edit record</a>
-            <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete record(s)</a>
-            </div>
-          </div>
         </div>
         <div id="table-container">
           <table class="table-content">
@@ -99,11 +86,34 @@
           </table>
           </form>
         </div>
+        <div class="dropdown">
+          <button>Actions</button>
+          <div class="content">
+            <a href="#" onclick="showAddDialog(true)">Add record</a>
+            <a id="edit" href="#" onclick="showEditDialog(true)">Edit record</a>
+            <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete record(s)</a>
+            </div>
+          </div>
         <form method="POST" action="./requestHandler.php?action=unsetPatientSession">
           <button type="submit" id="return-button" >Return to search</button>
        </form>
       </div>
     </div>
+      <?php if(!$isChartEmpty): ?>
+        <div id="chart-container">
+        <h2>eGFR History Chart</h2>
+      <canvas id="egfr-chart"></canvas>
+      </div>
+      <div id="chart-container">
+      <h2>Blood Pressure History Chart</h2>
+      <canvas id="bp-chart"></canvas> 
+      </div>
+      <?php else: ?>
+      <text>There is no data to load the graphs</text>
+      <?php endif ?>
+      <span id="bottom-text">
+      <p>© 2025 My Kidney Buddy. All rights reserved.</p>
+      </span>
   </div>
   <?php require_once "entity/editRecord_dialog.php" ?>
   <?php require_once "entity/addRecord_dialog.php" ?>
