@@ -63,18 +63,9 @@ switch ($action) {
         }
         break;
 
-    case "addPatientRecord":
-            $creatinine = $_POST["creatinine"];
-            $bloodPressure = $_POST["blood-pressure"];
-            $patient = $_SESSION["patient"];
-            $message = validateRecord($creatinine, $bloodPressure);
-            if ($message == "success") {
-                $eGFR = $patient->calculateEGFR($creatinine);
-                insertPatientRecord($patient->id, $eGFR, $bloodPressure);
-            } else {
-                $_SESSION["error-message"] = $message;  
-            }
-            header("Location: doctorPatient.php");
+    case "addRecord":
+        $data = json_decode($_POST["recordData"]);
+        validateRecord($data);
         break;
 
         case "editPatientRecord":
@@ -82,7 +73,7 @@ switch ($action) {
             $bloodPressure = $_POST["blood-pressure"];
             $recordId = $_POST["record-id"];
             $patient = $_SESSION["patient"];
-            $message = validateRecord($creatinine, $bloodPressure);
+           //$message = validateRecord($creatinine, $bloodPressure);
             if ($message == "success") {
                 $eGFR = $patient->calculateEGFR($creatinine);
                 updatePatientRecord($recordId, $eGFR, $bloodPressure);
@@ -164,7 +155,6 @@ function validatePatient($data) {
         $patient = new Patient();
         $patient->DoB = $dob;
         $age = $patient->getAge();
-
         $account = fetchAccount($email);
     }
 
@@ -199,24 +189,29 @@ function validateDate($dateString, $format) {
 	return $date && $date->format($format) === $dateString; 
 } 
 
-function validateRecord($creatinine, $bloodPressure)
-{
-    if (empty( $creatinine ) || empty( $bloodPressure )) {
-        return "Please enter both creatinine and blood pressure";
-    } else if (!filter_var($creatinine, FILTER_VALIDATE_FLOAT) && !filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
-        return "Invalid creatinine and blood pressure";
-    } else if ($creatinine < 0 && $bloodPressure < 0) {
-        return "Creatinine and blood pressure can't be negative";
-    } else if (!filter_var($creatinine, FILTER_VALIDATE_FLOAT)) {
-        return "Invalid creatinine";
-    } else if ($creatinine < 0) {
-        return "Creatinine can't be negative";
-    } else if (!filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
-        return "Invalid blood pressure";
-    } else if ($bloodPressure < 0) {
-        return "Blood pressure can't be negative";
+function validateRecord($data){
+    foreach ($data as $key => $value) {
+        if (empty($value)) {
+            echo "All fields are required";
+            exit();
+        }
+    }
+
+    $creatinine = $data->creatinine;
+    $bloodPressure = $data->bloodPressure;
+
+    if ($creatinine < 0 || !filter_var($creatinine, FILTER_VALIDATE_FLOAT)) {
+        echo "Invalid creatinine value";
+        exit();
+    } if ($bloodPressure < 0 || !filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
+        echo "Invalid blood pressure value";
+        exit();
     } else {
-        return "success";
+        $patient = $_SESSION["patient"];
+        $eGFR = $patient->calculateEGFR($creatinine);
+        insertPatientRecord($patient->id, $eGFR, $bloodPressure);
+        echo "success";
+        exit();
     }
 }
 function validateLogin($email, $password) {

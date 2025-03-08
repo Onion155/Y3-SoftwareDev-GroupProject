@@ -30,9 +30,7 @@
 
 <script>
     const signupDialog = document.getElementById("signup-dialog");
-    const signupWrapper = document.querySelector(".signup-container");
     const showSignupDialog = (show) => show ? signupDialog.showModal() : signupDialog.close();
-    signupDialog.addEventListener("click", (e) => !signupWrapper.contains(e.target) && signupDialog.close());
 
 function postSignupDetails() {
 	event.preventDefault();

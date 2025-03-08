@@ -49,7 +49,7 @@
     const addDialog = document.getElementById("add-dialog");
     const addWrapper = document.querySelector(".add-container");
     const showAddDialog = (show) => show ? addDialog.showModal() : addDialog.close();
-    addDialog.addEventListener("click", (e) => !addWrapper.contains(e.target) && addDialog.close());
+    addDialog.addEventListener("click", (e) => !addWrapper.contains(e.target) && (addDialog.close(), $(".error-message").text(message));
 
     function postAddDetails() {
         event.preventDefault();
@@ -73,4 +73,3 @@
         });
     }
 </script>
-</div>

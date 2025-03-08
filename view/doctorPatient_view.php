@@ -52,10 +52,6 @@
       <div id="box-right">
 		<h2>Patient Records</h2>
       <form method="POST" action="requestHandler.php?action=deletePatientRecords">
-        <div id="action-container">
-          <p>Patient Records</p>
-          <text id="error-message"><?= $errorMessage ?></text>
-        </div>
         <div id="table-container">
           <table class="table-content">
             <thead>

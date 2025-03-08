@@ -26,5 +26,22 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script>
 const editDialog = document.getElementById("edit-dialog");
-const showEditDialog = (show) => show ? editDialog.showModal() : editDialog.close();
+const showEditDialog = (show) => show ? editDialog.showModal() : (editDialog.close(), $(".error-message").text(message));
+
+    function postAddDetails() {
+        event.preventDefault();
+
+        const recordData = {
+            recordId: $("#record-id").val(),
+            creatinine: $("#creatinine").val(),
+            bloodPressure: $("#blood-pressure").val(),
+        };
+        $.post("requestHandler.php", {
+            action: "editRecord",
+            recordData: JSON.stringify(recordData)
+        }, function (message) {
+            if (message == "success") window.location.href = "dashboard.php";
+            else $(".error-message").text(message);
+        });
+    }
 </script>

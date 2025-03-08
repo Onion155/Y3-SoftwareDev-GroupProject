@@ -46,8 +46,6 @@ class Patient {
         if ($this->isBlack) {
           $z = 1.21;
         } else $z = 1;
-
-        echo ("a: $a, b: $b, y: $y, z: $z");
         
         return 186 * pow($a,-1.154) * pow($b,-0.203) * $y * $z;
       }
