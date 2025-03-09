@@ -11,24 +11,23 @@
 
 <body>
   <header>
-	
-<a href="./index.php">
-    <img id="logo" src="other/logo.png" alt="My Kidney Buddy mascot logo">
-</a>
-<div class="header-container">
-	<div class="header-content">
-    <h1>My Kidney Buddy</h1>
-    <h2 id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></h2>
-	</div>
-	<div class="navigation-menu">
-		<a href="./index.php">
-		<h2>Home</h2>
-		</a>
-	<form method="POST" action="./requestHandler.php?action=signout">
-      <button class="signout-button" type="submit"><h2>Sign out</h2></button>
-    </form>
-</div>
-</div>
+    <a href="./index.php">
+        <img id="logo" src="other/logo.png" alt="My Kidney Buddy mascot logo">
+    </a>
+    <div class="header-container">
+      <div class="header-content">
+        <h1>My Kidney Buddy</h1>
+        <h2 id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></h2>
+      </div>
+      <div class="navigation-menu">
+        <a href="./index.php">
+        <h2>Home</h2>
+        </a>
+        <form method="POST" action="./requestHandler.php?action=signout">
+          <button class="signout-button" type="submit"><h2>Sign out</h2></button>
+        </form>
+      </div>
+    </div>
   </header>
   <div class="box-container">
     <div class="box-bottom">
@@ -96,17 +95,17 @@
        </form>
       </div>
     </div>
-      <?php if(!$isChartEmpty): ?>
+      <?php if(sizeof($egfrReadings) > 2): ?>
         <div id="chart-container">
         <h2>eGFR History Chart</h2>
       <canvas id="egfr-chart"></canvas>
       </div>
+      <?php endif ?>
+      <?php if(sizeof($bpReadings) > 2): ?>
       <div id="chart-container">
       <h2>Blood Pressure History Chart</h2>
       <canvas id="bp-chart"></canvas> 
       </div>
-      <?php else: ?>
-      <text>There is no data to load the graphs</text>
       <?php endif ?>
       <span id="bottom-text">
       <p>© 2025 My Kidney Buddy. All rights reserved.</p>
