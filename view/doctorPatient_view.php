@@ -36,7 +36,8 @@
       <div id="info-container">
         <p>Patient name: <?= "$patient->firstName $patient->lastName" ?></p>
         <p>NHS: <?= $patient->NHSNumber?></p>
-        <p>Age: <?= $patient->getAge() ?> | Sex: <?= $patient->sex ?> | Ethnicity: <?= ($patient->isBlack == 1) ? "black" : "not black" ?></p>
+        <p>Age: <?= $patient->getAge() ?> | Sex: <?= $patient->sex ?></p>
+        <p>Ethnicity: <?= ($patient->isBlack == 1) ? "black" : "not black" ?></p>
       </div>
       <div id="notes-container">
 		<h2>Notes</h2>
@@ -87,7 +88,7 @@
           <div class="content">
             <a href="#" onclick="showAddDialog(true)">Add record</a>
             <a id="edit" href="#" onclick="showEditDialog(true)">Edit record</a>
-            <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete record(s)</a>
+            <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
             </div>
           </div>
         <form method="POST" action="./requestHandler.php?action=unsetPatientSession">

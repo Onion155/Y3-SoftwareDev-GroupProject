@@ -260,8 +260,8 @@ td {
 .dropdown button {
     background-color: var(--text-black);
     color: var(--text-white);
-	width: 180px;
-	border-radius: 8px;
+	width: 170px;
+	border-radius: 20px;
 	padding: 10px 15px;
 	pointer-events: none;
 }
@@ -276,8 +276,9 @@ td {
 .dropdown .content {
 	display: none;
 	position: absolute;
+	border-radius: 5px;
 	background-color: var(--text-black);
-	min-width: 100px;
+	width: 170px;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 	z-index: 1001;
 }
@@ -286,18 +287,17 @@ td {
 	display: block;
 }
 
-.dropdown a:hover {
-	background-color: white;
-    color: var(--text-black);
-}
+
 
 .dropdown {
 	display: inline-block;
 }
 
 #return-button {
+	background-color: var(--accent);
 	margin-top: 20px;
-	float: right;
+	border-radius: 10px;
+	float: left;
 }
 
 #header,
@@ -313,6 +313,13 @@ td {
     color: var(--text-white);
 }
 
+.dropdown a:hover,
+#header.enabled:hover,
+#edit.enabled:hover,
+#delete.enabled:hover {
+	background-color: white;
+    color: var(--text-black);
+}
 
 #patient-dropdown {
 	float: right;

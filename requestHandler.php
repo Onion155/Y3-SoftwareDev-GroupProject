@@ -65,22 +65,12 @@ switch ($action) {
 
     case "addRecord":
         $data = json_decode($_POST["recordData"]);
-        validateRecord($data);
+        validateRecord($data,"add");
         break;
 
-        case "editPatientRecord":
-            $creatinine = $_POST["creatinine"];
-            $bloodPressure = $_POST["blood-pressure"];
-            $recordId = $_POST["record-id"];
-            $patient = $_SESSION["patient"];
-           //$message = validateRecord($creatinine, $bloodPressure);
-            if ($message == "success") {
-                $eGFR = $patient->calculateEGFR($creatinine);
-                updatePatientRecord($recordId, $eGFR, $bloodPressure);
-            } else {
-                $_SESSION["error-message"] = $message;  
-            }
-            header("Location: doctorPatient.php");
+        case "editRecord":
+            $data = json_decode($_POST["recordData"]);
+            validateRecord($data,"edit");
         break;
 
     case "deletePatientRecords":
@@ -189,7 +179,7 @@ function validateDate($dateString, $format) {
 	return $date && $date->format($format) === $dateString; 
 } 
 
-function validateRecord($data){
+function validateRecord($data, $action){
     foreach ($data as $key => $value) {
         if (empty($value)) {
             echo "All fields are required";
@@ -199,6 +189,7 @@ function validateRecord($data){
 
     $creatinine = $data->creatinine;
     $bloodPressure = $data->bloodPressure;
+    if ($action == "edit") $recordId = $data->recordId;
 
     if ($creatinine < 0 || !filter_var($creatinine, FILTER_VALIDATE_FLOAT)) {
         echo "Invalid creatinine value";
@@ -209,7 +200,11 @@ function validateRecord($data){
     } else {
         $patient = $_SESSION["patient"];
         $eGFR = $patient->calculateEGFR($creatinine);
-        insertPatientRecord($patient->id, $eGFR, $bloodPressure);
+        if ($action == "add") {
+          insertPatientRecord($patient->id, $eGFR, $bloodPressure);
+        } else if ($action == "edit") {
+            updatePatientRecord($recordId, $eGFR, $bloodPressure);
+        }
         echo "success";
         exit();
     }
