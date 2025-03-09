@@ -71,6 +71,7 @@ dialog::backdrop {
 .form {
 	display: flex;
 	flex-direction: column;
+	width: auto;
 
 	margin: 35px 0;
 }

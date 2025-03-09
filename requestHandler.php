@@ -32,7 +32,7 @@ switch ($action) {
         header("Location: index.php");
         break;
     case "setPatientSession":
-        $id = $_POST["patient-id"];
+        $id = $_POST["recordId"];
         $_SESSION["patient"] = fetchPatient($id);
         header("Location: doctorPatient.php");
         break;
