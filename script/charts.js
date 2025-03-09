@@ -27,7 +27,6 @@ egfrChart = new Chart(ctx, {
   ticks: {
     autoSkip: true,
     maxTicksLimit: 6,
-    minRotation: 45,
   },
 },
     },
@@ -64,7 +63,6 @@ egfrChart = new Chart(ctx, {
   ticks: {
     autoSkip: true,
     maxTicksLimit: 6,
-    minRotation: 45,
   },
 },
     },

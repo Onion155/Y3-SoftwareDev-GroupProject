@@ -32,9 +32,7 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 const loginDialog = document.getElementById("login-dialog");
-const loginWrapper = document.querySelector(".login-container");
 const showLoginDialog = (show) => show ? loginDialog.showModal() : loginDialog.close();
-loginDialog.addEventListener("click", (e) => !loginWrapper.contains(e.target) && loginDialog.close());
 
 function postLoginDetails() {
 	event.preventDefault();

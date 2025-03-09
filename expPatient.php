@@ -26,11 +26,6 @@ for ($i=0; $i<count($patientRecords); $i++) {
     $isChartEmpty = true;
 }
 
-if(isset($_SESSION["error-message"])) {
-$errorMessage = $_SESSION["error-message"];
-} else {
-$errorMessage = null;
-}
-unset($_SESSION["error-message"]);
+
 require_once "view/expPatient_view.php";
 ?>

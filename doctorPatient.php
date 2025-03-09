@@ -26,12 +26,6 @@ $patient = $_SESSION["patient"];
         $isChartEmpty = true;
     }
 
-    if(isset($_SESSION["error-message"])) {
-    $errorMessage = $_SESSION["error-message"];
-    unset($_SESSION["error-message"]);
-    } else {
-    $errorMessage = null;
-    }
     require_once "view/doctorPatient_view.php";
 } else {
     header("Location: dashboard.php");

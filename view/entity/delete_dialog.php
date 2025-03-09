@@ -7,22 +7,18 @@
 						recovered.
 					</p>
 				</div>
-				<div id="button-row">
+					<button type="submit" class="red-button">Delete</button>
 					<button
 						type="reset"
-						id="cancel-button"
+						class="green-button"
 						onclick="showDeleteDialog(false)"
 					>
 						Cancel
 					</button>
-					<button type="submit" id="delete-button">Delete</button>
-				</div>
 			</div>
 		</dialog>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             const deleteDialog = document.getElementById("delete-dialog");
-            const deleteWrapper = document.querySelector(".delete-container");
             const showDeleteDialog = (show) => show ? deleteDialog.showModal() : deleteDialog.close();
-            deleteDialog.deleteEventListener("click", (e) => !deleteWrapper.contains(e.target) && deleteDialog.close());
         </script>

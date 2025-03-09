@@ -50,7 +50,7 @@
     const editDialog = document.getElementById("edit-dialog");
     const editWrapper = document.querySelector(".edit-container");
     const showEditDialog = (show) => show ? editDialog.showModal() : editDialog.close();
-    editDialog.editEventListener("click", (e) => !editWrapper.contains(e.target) && editDialog.close());
+    editDialog.editEventListener("click", (e) => !editWrapper.contains(e.target) && (editDialog.close(), $(".error-message").text(message));
 
     function postEditDetails() {
         event.preventDefault();
