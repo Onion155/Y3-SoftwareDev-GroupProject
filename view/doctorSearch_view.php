@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Search patients</title>
-  <link rel="stylesheet" href="./style/record_styles.css">
   <link rel="stylesheet" href="./style/form_styles.css">
+  <link rel="stylesheet" href="./style/record_styles.css">
 </head>
 <body>
   <header>
