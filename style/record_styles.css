@@ -21,7 +21,6 @@ body {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-
     font-size: 18px;
 }
 
@@ -94,18 +93,21 @@ body {
 	background-color: var(--background);
 }
 
-form {
-	width: max-content;
-}
-
 .search {
+	margin-top: 20px;
 	width: max-content;
 	display: flex;
 	align-items: center;
-	padding: 15px;
 	border-radius: 30px;
 	background-color: #f4f4f4;
 	transition: box-shadow 0.25s;
+}
+
+.search .dropdown button {
+	background-color: #eaeaea;
+	color: var(--text-black);
+	border: 1px solid var(--text-black);
+	width: 20px;
 }
 
 .search:focus-within {
@@ -116,11 +118,11 @@ form {
 	height: 41px;
 	width: auto;
 	opacity: 0.3;
+	margin: 15px;
 }
 
 .search-input {
 	width: 400px;
-	margin-left: 15px;
 	outline: none;
 	border: none;
 	background: transparent;

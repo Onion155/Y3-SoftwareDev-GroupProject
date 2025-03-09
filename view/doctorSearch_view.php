@@ -32,93 +32,109 @@
     </div>
   </header>
   <div class="box-container">
-    <?php if (true): ?>
-      <form>
-        <div class="search">
-          <img src="other/search-icon.png" alt="search">
-          <input class="search-input" type="search" placeholder="Search">
-        </div>
-      </form>
-    <?php endif ?>
 
-    <div class="box-bottom">
-      <div id="table-container">
-        <table class="table-content">
-          <thead>
-            <tr>
-              <th><input id="select_all_ids" type="checkbox" }"></th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>NHS Number</th>
-            </tr>
-          </thead>
-          <tbody>
-            <form method="POST" action="./requestHandler.php?action=deletePatients">
-              <?php
-              require_once "entity/delete_dialog.php";
-              for ($i = 0; $i < count($patients); $i++):
-                ?>
-                <tr class="record-row">
-                  <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patients[$i]->id ?>"></td>
-                  <td><?= $patients[$i]->firstName ?></td>
-                  <td><?= $patients[$i]->lastName ?></td>
-                  <td><?= $patients[$i]->NHSNumber ?></td>
-                </tr>
-              <?php endfor ?>
-            </form>
-          </tbody>
-        </table>
+    <form>
+      <div class="search">
+        <img src="other/search-icon.png" alt="search">
+        <input class="search-input" type="search" placeholder="Search">
+        <div class="dropdown" id="patient-dropdown">
+            <button id="action-button">Filter</button>
+            <div class="content">
+              <a href="#" onclick="">NHS Number</a>
+              <a href="#" onclick="">First Name</a>
+              <a href="#" onclick="">Last Name</a>
+            </div>
+          </div>
       </div>
-    </div>
-     <form id="form" method="POST" action="./requestHandler.php?action=setPatientSession">
-      <input type="hidden" class="patient-id" name="patient-id">
-      </form>
-      <div class="dropdown" id="patient-dropdown">
-        <button id="action-button">Actions</button>
-        <div class="content">
-          <a id="header" href="#" onclick="submitForm()">Go to patient records</a>
-          <a href="#" onclick="showAddDialog(true)">Add patient</a>
-          <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete patient(s)</a>
+    </form>
+
+    <?php if (true): ?>
+      <div class="box-bottom">
+        <div id="table-container">
+          <table class="table-content">
+            <thead>
+              <tr>
+                <th><input id="select_all_ids" type="checkbox" }"></th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>NHS Number</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            <form id="egfr-form" method="POST" action="requestHandler.php?action=deletePatients">
+                <?php
+                require_once "entity/delete_dialog.php";
+                for ($i = 0; $i < count($patients); $i++):
+                  ?>
+                  <tr class="record-row">
+                    <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patients[$i]->id ?>"></td>
+                    <td><?= $patients[$i]->firstName ?></td>
+                    <td><?= $patients[$i]->lastName ?></td>
+                    <td><?= $patients[$i]->NHSNumber ?></td>
+                    <td><button onclick="goToRecords(<?= $patients[$i]->id ?>)">Calculate</button></td>
+                  </tr>
+                <?php endfor ?>
+              </form>
+            </tbody>
+          </table>
+          <div class="dropdown" id="patient-dropdown">
+            <button id="action-button">Actions</button>
+            <div class="content">
+              
+              <a href="#" onclick="showAddDialog(true)">Add patient</a>
+              <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+    <?php endif ?>
   </div>
   <?php require_once "entity/editPatient_dialog.php" ?>
   <?php require_once "entity/addPatient_dialog.php" ?>
   <script>
-    function submitForm() {
-      $("#form").submit();
+    function goToRecords(patientId) {
+      event.preventDefault();
+        $.post("requestHandler.php", {
+            action: "setPatientSession",
+            patientId: patientId
+        }, function(message) {
+          if (message == "success") window.location.href = "doctorPatient.php";
+        });
     }
-    $(".checkbox_ids").on('change', function () {
-      var num = $(".checkbox_ids:checked").length
-      if (num > 0) {
-        $("#delete").addClass("enabled")
-      } else {
-        $("#delete").removeClass("enabled")
-      }
 
-      if (num == 1) {
-        $("#header").addClass("enabled")
-        $("#edit").addClass("enabled")
-        $(".patient-id").val($(this).val());
-      } else {
-        $("#header").removeClass("enabled")
-        $("#edit").removeClass("enabled")
-      }
-    });
 
-    $("#select_all_ids").on('change', function () {
-      $(".checkbox_ids").prop('checked', $(this).prop('checked')).trigger('change')
-    });
+    $(".checkbox_ids").on('change', function() {
+    var num = $(".checkbox_ids:checked").length
+    if(num > 0) {
+      $("#delete").addClass("enabled")
+    } else {
+      $("#delete").removeClass("enabled")
+    }
+    
+    if(num == 1) {
+      $("#header").addClass("enabled")
+      $("#edit").addClass("enabled")
+      $(".patient-id").val($(this).val());
+    } else {
+      $("#header").removeClass("enabled")
+      $("#edit").removeClass("enabled")
+    }
+  });
 
-    $(".record-row").on('click', function (e) {
-      if (!$(e.target).is("input.checkbox_ids")) {
-        $(".record-row").not(this).removeClass("active")
-        $(this).toggleClass("active")
-        var isActive = $(this).hasClass("active")
-        $("#select_all_ids").prop('checked', false).trigger('change')
-        $(this).find("input.checkbox_ids").prop('checked', isActive).trigger('change')
-      }
-    });
+  $("#select_all_ids").on('change', function() {
+    $(".checkbox_ids").prop('checked', $(this).prop('checked')).trigger('change')
+  });
+
+  $(".record-row").on('click', function(e) {
+    if (!$(e.target).is("input.checkbox_ids")) {
+    $(".record-row").not(this).removeClass("active")
+    $(this).toggleClass("active")
+    var isActive = $(this).hasClass("active")
+    $("#select_all_ids").prop('checked', false).trigger('change')
+    $(this).find("input.checkbox_ids").prop('checked', isActive).trigger('change')
+    }
+  });
 
   </script>
 </body>

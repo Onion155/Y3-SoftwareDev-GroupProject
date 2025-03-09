@@ -32,9 +32,10 @@ switch ($action) {
         header("Location: index.php");
         break;
     case "setPatientSession":
-        $id = $_POST["patient-id"];
-        $_SESSION["patient"] = fetchPatient($id);
-        header("Location: doctorPatient.php");
+        $doctorId = $_SESSION["doctor"]->id;
+        $patientId = $_POST["patientId"];
+        $_SESSION["patient"] = fetchPatient($patientId, $doctorId);
+        echo "success";
         break;
     case "unsetPatientSession":
         unset($_SESSION["patient"]); 
@@ -45,8 +46,8 @@ switch ($action) {
         validatePatient($data);
         break;
     case "getPatients":
-        $doctorID = $_SESSION['account']->id;
-        echo json_encode(fetchPatients($doctorID));
+        $doctorId = $_SESSION['account']->id;
+        echo json_encode(fetchPatients($doctorId));
         break;
     
     case "deletePatients":

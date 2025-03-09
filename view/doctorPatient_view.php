@@ -85,7 +85,7 @@
         <div class="dropdown">
           <button>Actions</button>
           <div class="content">
-            <a href="#" onclick="showAddDialog(true)">Add record</a>
+            <a href="#" onclick="showAddDialog(true)">Calculate</a>
             <a id="edit" href="#" onclick="showEditDialog(true)">Edit record</a>
             <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
             </div>

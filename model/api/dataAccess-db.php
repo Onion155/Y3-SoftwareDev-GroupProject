@@ -77,11 +77,11 @@ function fetchPatientWithAccountId($accountId)
   }
 }
 
-function fetchPatient($patientId)
+function fetchPatient($patientId, $doctorId)
 {
   global $pdo;
-  $statement = $pdo->prepare('SELECT * FROM patient WHERE id =  ?');
-  $statement->execute([$patientId]);
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE id =  ? AND doctorId = ?');
+  $statement->execute([$patientId, $doctorId]);
   $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
   if (count($result) == 0) {
     return null;
