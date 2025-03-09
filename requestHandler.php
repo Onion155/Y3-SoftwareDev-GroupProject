@@ -49,7 +49,12 @@ switch ($action) {
         $doctorId = $_SESSION['account']->id;
         echo json_encode(fetchPatients($doctorId));
         break;
-    
+    case "getPatient":
+        $doctorId = $_SESSION['account']->id;
+        $patientId = $_GET['patientId'];
+        echo $patiendId;
+        echo json_encode(fetchPatient($patientId, $doctorId));
+        break;
     case "deletePatients":
         if (isset($_POST["checkbox"])) {
             $ids = $_POST["checkbox"];

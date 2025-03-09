@@ -48,9 +48,25 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const editDialog = document.getElementById("edit-dialog");
-    const editWrapper = document.querySelector(".edit-container");
-    const showEditDialog = (show) => show ? editDialog.showModal() : editDialog.close();
-    editDialog.editEventListener("click", (e) => !editWrapper.contains(e.target) && (editDialog.close(), $(".error-message").text(message));
+    function showEditDialog (show) {
+        if (show) {
+            editDialog.showModal();
+            getEditDetails();
+        } else {
+            editDialog.close();
+            $(".error-message").text(message);
+        }
+    }
+    
+    function getEditDetails() {
+        $.get("requestHandler.php", {
+            action: "getPatient",
+            patientId: $("#patient-id").val() 
+        }, function (message, status) {
+            console.log(message);
+            console.log(status);
+        });
+    }
 
     function postEditDetails() {
         event.preventDefault();

@@ -17,23 +17,24 @@
 		</dialog>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script>
-const editDialog = document.getElementById("edit-dialog");
-const showEditDialog = (show) => show ? editDialog.showModal() : (editDialog.close(), $(".error-message").text(message));
+			const editDialog = document.getElementById("edit-dialog");
+			editDialog.showModal();
+			const showEditDialog = (show) => show ? editDialog.showModal() : (editDialog.close(), $(".error-message").text(message));
 
-    function postEditDetails() {
-        event.preventDefault();
+			function postEditDetails() {
+				event.preventDefault();
 
-        const recordData = {
-            creatinine: $("#edit-creatinine").val(),
-            bloodPressure: $("#edit-blood-pressure").val(),
-			recordId: $("#record-id").val()
-        };
-        $.post("requestHandler.php", {
-            action: "editRecord",
-            recordData: JSON.stringify(recordData)
-        }, function (message) {
-            if (message == "success") window.location.href = "doctorPatient.php";
-            else $(".error-message").text(message);
-        });
-    }
-</script>
+			const recordData = {
+				creatinine: $("#edit-creatinine").val(),
+				bloodPressure: $("#edit-blood-pressure").val(),
+				recordId: $("#record-id").val()
+			};
+			$.post("requestHandler.php", {
+				action: "editRecord",
+				recordData: JSON.stringify(recordData)
+			}, function (message) {
+				if (message == "success") window.location.href = "doctorPatient.php";
+				else $(".error-message").text(message);
+			});
+			}
+		</script>

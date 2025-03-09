@@ -47,7 +47,7 @@
           </div>
       </div>
     </form>
-
+    <input type="hidden" id="patient-id" name="patient-id">
     <?php if (true): ?>
       <div class="box-bottom">
         <div id="table-container">
@@ -68,6 +68,7 @@
                 for ($i = 0; $i < count($patients); $i++):
                   ?>
                   <tr class="record-row">
+                
                     <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patients[$i]->id ?>"></td>
                     <td><?= $patients[$i]->firstName ?></td>
                     <td><?= $patients[$i]->lastName ?></td>
@@ -81,8 +82,8 @@
           <div class="dropdown" id="patient-dropdown">
             <button id="action-button">Actions</button>
             <div class="content">
-              
               <a href="#" onclick="showAddDialog(true)">Add patient</a>
+              <a id="edit" href="#" onclick="showEditDialog(true)">Edit patient</a>
               <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
             </div>
           </div>
@@ -113,11 +114,9 @@
     }
     
     if(num == 1) {
-      $("#header").addClass("enabled")
       $("#edit").addClass("enabled")
-      $(".patient-id").val($(this).val());
+      $("#patient-id").val($(this).val());
     } else {
-      $("#header").removeClass("enabled")
       $("#edit").removeClass("enabled")
     }
   });
