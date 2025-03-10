@@ -222,6 +222,12 @@ button:hover {
 	height: 100%;
 }
 
+#search-table-wrapper {
+	padding: 30px 40px;
+	background-color: rgba(var(--accent-rgb),0.3);
+	border-radius: 10px;
+}
+
 #table-container {
 	overflow-y: auto;
 	width: 740px;
@@ -281,9 +287,17 @@ td {
     max-height: 500px;
 }
 
+#filter-button {
+	width: auto;
+}
+
+#filter-dropdown {
+	margin: 20px;
+}
+
 .action-dropdown {
     float: right;
-    margin: 20px;
+    margin-top: 20px;
 }
 
 .action-dropdown button {

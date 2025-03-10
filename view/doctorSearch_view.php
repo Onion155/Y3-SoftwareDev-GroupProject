@@ -37,19 +37,20 @@
       <div class="search">
         <img src="other/search-icon.png" alt="search">
         <input class="search-input" type="search" placeholder="Search">
-        <div class="action-dropdown" id="patient-dropdown">
-            <button id="action-button">Filter</button>
+        <input type="hidden" id="filter" name="filter">
+        <div class="action-dropdown" id="filter-dropdown">
+            <button id="filter-button">Filter</button>
             <div class="content">
-              <a href="#" onclick="">NHS Number</a>
-              <a href="#" onclick="">First Name</a>
-              <a href="#" onclick="">Last Name</a>
+              <a href="#" onclick="applyFilter('nhs')">NHS Number</a>
+              <a href="#" onclick="applyFilter('firstName')">First Name</a>
+              <a href="#" onclick="applyFilter('lastName')">Last Name</a>
             </div>
           </div>
       </div>
     </form>
     <input type="hidden" id="patient-id" name="patient-id">
     <?php if (true): ?>
-      <div class="box-bottom">
+      <div id="search-table-wrapper">
         <div id="table-container">
           <table class="table-content">
             <thead>
@@ -79,15 +80,15 @@
               </form>
             </tbody>
           </table>
-          <div class="action-dropdown" id="patient-dropdown">
-            <button id="action-button">Actions</button>
+        </div>
+        <div class="action-dropdown" id="patient-dropdown">
+            <button>Actions</button>
             <div class="content">
               <a href="#" onclick="showAddDialog(true)">Add patient</a>
               <a id="edit" href="#" onclick="showEditDialog(true)">Edit patient</a>
               <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
             </div>
           </div>
-        </div>
       </div>
     <?php endif ?>
   </div>
@@ -102,6 +103,20 @@
         }, function(message) {
           if (message == "success") window.location.href = "doctorPatient.php";
         });
+    }
+
+    function applyFilter(name) {
+      if (name == "nhs") {
+        $("#filter-button").text("Filter: NHS Number");
+        $("#filter").val("nhs");
+      } else if (name == "firstName") {
+        $("#filter-button").text("Filter: First Name");
+        $("#filter").val("firstName");
+      } else if (name == "lastName") {
+        $("#filter-button").text("Filter: Last Name");
+        $("#filter").val("lastName");
+        
+      }
     }
 
 
