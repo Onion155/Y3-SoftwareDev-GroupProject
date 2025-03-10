@@ -117,7 +117,7 @@ switch ($action) {
         throw new Exception("GET action name couldn't be found: $action");
 }
 
-function validatePatient($data) {
+function validatePatient($data, $action) {
     foreach ($data as $key => $value) {
         if (empty($value)) {
             echo "All fields are required";
@@ -133,6 +133,7 @@ function validatePatient($data) {
     $sex = $data->sex;
     $email = $data->email;
     $role =$data->role;
+    if ($action == "edit") $patientId = $data->patientId;
 
     if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
         echo "Email is invalid";
@@ -173,7 +174,11 @@ function validatePatient($data) {
         insertAccount($email, null, $role);
         $accountId = fetchAccount($email)->id;
         $doctorId = $_SESSION["doctor"]->id;
+        if ($action == "add") {
         insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
+        } else if ($action == "edit") {
+            updatePatient($patientId, $accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
+        }
         echo "success";    
     }
 

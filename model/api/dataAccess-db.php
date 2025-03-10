@@ -116,6 +116,11 @@ function insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhs,
   $statement = $pdo->prepare('INSERT INTO patient (accountId, doctorId, firstName, lastName, DoB, NHSNumber, isBlack, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
   $statement->execute([$accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity == "black" ? true : false, $sex]);
 }
+function updatePatient($patientId, $accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity, $sex) {
+    global $pdo;
+    $statement = $pdo->prepare('UPDATE patient SET accountId = ?, doctorId = ?, firstName = ?, lastName = ?, DoB = ?, NHSNumber = ?, isBlack = ?, sex = ? WHERE id = ?');
+    $statement->execute([$accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity == "black" ? true : false, $sex, $patientId]);
+  }
 function insertPatientRecord($patientId, $eGFR, $bloodPressure)
 {
   global $pdo;
