@@ -28,15 +28,26 @@ function renderFAQ($question, $answer) {
     </header>
     
     <div class="logo">
-    <img src = "../other/logo.png" alt = "Logo">
+        <img src = "../other/logo.png" alt = "Logo">
     </div>
-    <h1>Welcome to <span class="red">My Kidney</span> <span class="blue">Buddy</span></h1>
+
+    <h1>Welcome to My <span class="red">Kidney</span> <span class="blue">Buddy</span></h1>
     <p>Your dedicated online resource for kidney health</p>
-    <p>My Kidney Buddy is a secure, web-based platform tailored to help you monitor and understand your kidney health with ease...</p>
-    
-    <h2>What We Do Best</h2>
-    <p>Our platform simplifies complex medical information, providing personalized insights...</p>
-    
+
+    <div class= "HealthAnywhere">
+        <h2>Your <span class="red">health</span> Anywhere <span class="blue">Anytime</span></h2>
+        <p>My Kidney Buddy is a secure, web-based platform tailored to help you monitor and understand your kidney health with ease.
+         Whether you're at home, at work, or on the go, you can conveniently access tools to track your Chronic Kidney Disease (CKD) journey.</p>
+</div>
+
+    <div class= "whatwedoBest">
+        <h2>What We Do <span class="blue">Best</span></h2>
+        <p>Our platform simplifies complex medical information, providing personalised insights and clear explanations to empower you to take control of your health.
+             With My Kidney Buddy, you can view your eGFR, understand your CKD stage, and access helpful resources— all in one easy-to-use platform.</p>
+
+        <p>We are here to support you every step of the way, making your health journey more manageable and less overwhelming.</p>
+</div>
+
     <div class="banners">
         <div class="banner">
             <h3>Access Anywhere</h3>
@@ -60,15 +71,15 @@ function renderFAQ($question, $answer) {
         <div class="review">
         <p>"My Kidney Buddy has been a game-changer for me. I love how easy it is to track my
         kidney health and understand what my results mean. Highly recommend!"</p>
-        <p>- Sarah T., CKD Patient</p>
+        <p><span class="blue">- Sarah T., CKD Patient</span></p>
     </div>
         <div class="review">
             <p>"I love the free control I have to record my eGFR. It is very responsive and tracks my eGFR history in very helpful graphs!”</p>
-            <p>- Bob S., CKD Expert Patient</p>
+            <p><span class="blue">- Bob S., CKD Expert Patient</span></p>
         </div>
         <div class="review">
             <p>"It has never been easier to do sessions with my patients. They are able to see a detailed analysis of their records in real-time!"</p>
-            <p>- Marco B., Clinician</p>
+            <p><span class="blue">- Marco B., Clinician</span></p>
         </div>
     </div>
     
@@ -83,5 +94,11 @@ function renderFAQ($question, $answer) {
             renderFAQ("How can this service be used to calculate my eGFR?", "answer");
         ?>
     </div>
+    <footer class="copyright">
+    <p>© My Kidney Buddy. All rights reserved.</p>
+</footer>
 </body>
+
+
+
 </html>
