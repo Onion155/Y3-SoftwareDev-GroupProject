@@ -1,158 +1,123 @@
+<?php 
+function renderButton($text, $link = "#") {
+    echo "<a href='$link' class='btn'>$text</a>";
+}
+
+function renderFAQ($question, $answer) {
+    echo "<details><summary>$question</summary><p>$answer</p></details>";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <title>Patient Records</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style/record_styles.css">
-  <link rel="stylesheet" href="./style/form_styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Kidney Buddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="../style/home_styles.css">
+    <link rel="stylesheet" href="../style/form_styles.css">
 </head>
-
-<body>
-  <header>
-	
-<a href="./index.php">
-    <img id="logo" src="other/logo.png" alt="My Kidney Buddy mascot logo">
-</a>
-<div class="header-container">
-	<div class="header-content">
-    <h1>My Kidney Buddy</h1>
-    <h2 id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></h2>
-	</div>
-	<div class="navigation-menu">
-		<a href="./index.php">
-		<h2>Home</h2>
-		</a>
-	<form method="POST" action="./requestHandler.php?action=signout">
-      <button class="signout-button" type="submit"><h2>Sign out</h2></button>
-    </form>
-</div>
-</div>
-  </header>
-  <div class="box-container">
-    <div class="box-bottom">
-      <div id="box-left">
-      <div id="info-container">
-        <p>Patient name: <?= "$patient->firstName $patient->lastName" ?></p>
-        <p>NHS: <?= $patient->NHSNumber?></p>
-        <p>Age: <?= $patient->getAge() ?> | Sex: <?= $patient->sex ?> | Ethnicity: <?= ($patient->isBlack == 1) ? "black" : "not black" ?></p>
-      </div>
-      <div id="notes-container">
-		<h2>Notes</h2>
-        <textarea id="doctor-notes" maxlength="600"
-          placeholder="Type down your notes here... (max 600 characters)"><?= $patient->notes ?></textarea>
-          <?php if($patient->notes !== ''): ?>
-          <text id="notes-save-status">Notes loaded</text>
-          <?php else: ?>
-            <text id="notes-save-status">There aren't any notes to load</text>
-          <?php endif ?>
-      </div>
-      </div>
-      <div id="box-right">
-		<h2>Patient Records</h2>
-      <form method="POST" action="requestHandler.php?action=deletePatientRecords">
-        <div id="action-container">
-          <p>Patient Records</p>
-          <text id="error-message"><?= $errorMessage ?></text>
-      <div class="dropdown">
-          <button>Actions</button>
-          <div class="content">
-            <a href="#" onclick="showAddDialog(true)">Add record</a>
-            <a id="edit" href="#" onclick="showEditDialog(true)">Edit record</a>
-            <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete record(s)</a>
+    <body>
+        <div id="top-body" />
+            <header>
+                <nav>
+                    <div>
+                        <?php renderButton("Contact Us", "contact.php"); ?>  
+                        <?php renderButton("FAQ", "faq.php"); ?> 
+                    </div>
+                    <?php renderButton("Login", "../login.php"); ?> 
+                </nav>
+            </header>
+            <div class="header-container">
+            <div class="logo">
+                <img src = "../other/logo.png" alt = "Logo">
             </div>
-          </div>
+
+            <h1><span class="black">Welcome to My</span> <span class="red">Kidney</span> <span class="blue">Buddy</span></h1>
+            <h4>Your dedicated online resource for kidney health</h4>
+            </div>
+            <div class= "HealthAnywhere">
+                <h2>Your <span class="red">health</span><br>Anywhere <span class="blue"><br>Anytime</span></h2>
+                <p>My Kidney Buddy is a secure, web-based platform tailored to help you monitor and understand your kidney health with ease.
+                Whether you're at home, at work, or on the go, you can conveniently access tools to track your Chronic Kidney Disease (CKD) journey.</p>
+            </div>
         </div>
-        <div id="table-container">
-          <table class="table-content">
-            <thead>
-              <tr>
-              <th><input id="select_all_ids" type="checkbox"}"></th>
-                <th>Date Created (yyyy-mm-dd)</th>
-                <th>Blood Pressure (mmHg)</th>
-                <th>eGFR (ml/min/1.73m<sup>2</sup>)</th>
-                <th>eGFR Value</th>  
-              </tr>
-            </thead>
-            <tbody>
-            <form id="egfr-form" method="POST" action="requestHandler.php?action=deletePatientRecords">
-              <?php
-              require_once "entity/delete_dialog.php";
-              for ($i = 0; $i < count($patientRecords); $i++):
-              ?>
-                <tr class="record-row">
-                <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
-                  <td><?= $patientRecords[$i]->dateCreated ?></td>
-                  <td><?= round($patientRecords[$i]->bloodPressure,2) ?></td>
-                  <td><?= round($patientRecords[$i]->eGFR,2) ?></td>
-                  <td><?= $egfrValue[$i] ?></td>
-                </tr>
-              <?php endfor ?>
-              </form>
-            </tbody>
-          </table>
-          </form>
+        <div id="middle-body">
+
+            <div class= "whatwedoBest" data-aos="fade-up">
+                <h2>What We Do <span class="blue">Best</span></h2>
+                <p>Our platform simplifies complex medical information, providing personalised insights and clear explanations to empower you to take control of your health.
+                    With My Kidney Buddy, you can view your eGFR, understand your CKD stage, and access helpful resources— all in one easy-to-use platform.</p>
+
+                <p>We are here to support you every step of the way, making your health journey more manageable and less overwhelming.</p>
+            </div>
+            
+            <div class="banners" data-aos="fade-in">
+                <div class="banner">
+                    <h3>Access Anywhere</h3>
+                    <img src="../other/internet_icon.png" alt="Access Anywhere">
+                    <div class="p-wrapper">
+                    <p>Log in securely from any device to track your eGFR and view easy to-read graphs and summaries</p>
+                    </div>
+                </div>
+                <div class="banner">
+                    <h3>Understanding Yourself</h3>
+                    <img src="../other/identify_icon.png" alt="Understanding Yourself">
+                    <div class="p-wrapper">
+                        <p>Visualize your kidney health trends and gain insights into your CKD results with simple explanations.</p>
+                </div>
+                </div>
+                <div class="banner">
+                    <h3>Adaptive Resources</h3>
+                    <img src="../other/resources_icon.png" alt="Adaptive Resources">
+                    <div class="p-wrapper">
+                        <p>Create, edit, or delete eGFR records, and upload CSV data to visualise them through charts.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <form method="POST" action="./requestHandler.php?action=unsetPatientSession">
-          <button type="submit" id="return-button" >Return to search</button>
-       </form>
-      </div>
-    </div>
-    <div id="chart-container">
-      <?php if(!$isChartEmpty): ?>
-      <canvas id="egfr-chart"></canvas>
-      <canvas id="bp-chart"></canvas>
-      <?php else: ?>
-      <text>There is no data to load the graphs</text>
-      <?php endif ?>
-      </div>
-      <p>© 2025 My Kidney Buddy. All rights reserved.</p>
-  </div>
-  <?php require_once "entity/editRecord_dialog.php" ?>
-  <?php require_once "entity/addRecord_dialog.php" ?>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
+        <div id="bottom-body">
+        
+            <div class="reviews" data-aos="fade-up">
+                <h2>What Our Users Say</h2>
+                <div class="review">
+                <p>"My Kidney Buddy has been a game-changer for me. I love how easy it is to track my
+                kidney health and understand what my results mean. Highly recommend!"</p>
+                <h4>- Sarah T., CKD Patient</span></h4>
+            </div>
+                <div class="review">
+                    <p>"I love the free control I have to record my eGFR. It is very responsive and tracks my eGFR history in very helpful graphs!”</p>
+                    <h4>- Bob S., CKD Expert Patient</h4>
+                </div>
+                <div class="review">
+                    <p>"It has never been easier to do sessions with my patients. They are able to see a detailed analysis of their records in real-time!"</p>
+                    <h4>- Marco B., Clinician</span></h4>
+                </div>
+            </div>
 
-    $(".checkbox_ids").on('change', function() {
-    var num = $(".checkbox_ids:checked").length
-    if(num > 0) {
-      $("#delete").addClass("enabled")
-    } else {
-      $("#delete").removeClass("enabled")
-    }
-    
-    if(num == 1) {
-      $("#edit").addClass("enabled")
-      $("#record-id").val($(this).val());
-    } else {
-      $("#edit").removeClass("enabled")
-    }
-  });
-
-  $("#select_all_ids").on('change', function() {
-    $(".checkbox_ids").prop('checked', $(this).prop('checked')).trigger('change')
-  });
-
-  $(".record-row").on('click', function(e) {
-    if (!$(e.target).is("input.checkbox_ids")) {
-    $(".record-row").not(this).removeClass("active")
-    $(this).toggleClass("active")
-    var isActive = $(this).hasClass("active")
-    $("#select_all_ids").prop('checked', false).trigger('change')
-    $(this).find("input.checkbox_ids").prop('checked', isActive).trigger('change')
-    }
-  });
-  
-    </script>
-  <script>
-    egfrReadings = <?php echo json_encode($egfrReadings) ?>;
-    bpReadings = <?php echo json_encode($bpReadings) ?>;
-    dateLabels = <?php echo json_encode($dateLabels) ?>;
-    document.getElementById("egfr-chart")
-</script>
-<script src ="script/charts.js"></script>
-<script src ="script/notes.js"></script>
-</body>
+            <div class="faq">
+            <h2>Frequently Asked Questions</h2>
+                <?php 
+                    renderFAQ("What are the early signs of kidney disease?", "answer");
+                    renderFAQ("What is eGFR, and why is it important?", "answer");
+                    renderFAQ("What foods should i avoid if i have kidney problems?", "answer");
+                    renderFAQ("What are the common causes for kidney disease?", "answer");
+                    renderFAQ("How can I sign up for My Kidney Buddy?", "answer");
+                    renderFAQ("How can this service be used to calculate my eGFR?", "answer");
+                ?>
+            </div>
+            <footer class="copyright">
+                <p>© My Kidney Buddy. All rights reserved.</p>
+            </footer>
+        </div>
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                offset: 200,
+                duration: 600
+            });
+        </script>
+    </body>
 </html>
