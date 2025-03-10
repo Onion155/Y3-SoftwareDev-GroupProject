@@ -44,7 +44,7 @@ function renderFAQ($question, $answer) {
                 </div>
             </header>
             <div class= "HealthAnywhere">
-                <h2>Your <span class="red">health</span><br>Anywhere <span class="blue"><br>Anytime</span></h2>
+                <h2>Your <span class="red">health</span><br>Anywhere,<span class="blue"><br>Anytime</span></h2>
                 <p>My Kidney Buddy is a secure, web-based platform tailored to help you monitor and understand your kidney health with ease.
                 Whether you're at home, at work, or on the go, you can conveniently access tools to track your Chronic Kidney Disease (CKD) journey.</p>
             </div>
@@ -52,11 +52,12 @@ function renderFAQ($question, $answer) {
         <div id="middle-body">
 
             <div class= "whatwedoBest" data-aos="fade-up">
-                <h2>What We Do <span class="blue"><u>Best</u></span></h2>
-                <p>Our platform simplifies complex medical information, providing personalised insights and clear explanations to empower you to take control of your health.
-                    With My Kidney Buddy, you can view your eGFR, understand your CKD stage, and access helpful resources— all in one easy-to-use platform.</p>
-                    <br>
-                <p>We are here to support you every step of the way, making your health journey more manageable and less overwhelming.</p>
+                <h2>What we do <span class="blue">Best</span></h2>
+                <ul>
+                    <li>Our platform simplifies complex medical information, providing personalised insights and clear explanations to empower you to take control of your health.</li>
+                    <li>With My Kidney Buddy, you can view your eGFR, understand your CKD stage, and access helpful resources— all in one easy-to-use platform.</li>
+                    <li>We are here to support you every step of the way, making your health journey more manageable and less overwhelming.</li>
+                </ul>
             </div>
             
             <div class="banners" data-aos="fade-in">

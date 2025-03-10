@@ -16,15 +16,15 @@
     </a>
     <div class="header-container">
       <div class="header-content">
-        <h1>My Kidney Buddy</h1>
-        <h2 id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></h2>
+        <h2>My Kidney Buddy</h2>
+        <h4 id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></h4>
       </div>
       <div class="navigation-menu">
         <a href="./index.php">
-        <h2>Home</h2>
+        <h4>Home</h4>
         </a>
         <form method="POST" action="./requestHandler.php?action=signout">
-          <button class="signout-button" type="submit"><h2>Sign out</h2></button>
+          <button class="signout-button" type="submit"><h4>Sign out</h4></button>
         </form>
       </div>
     </div>
@@ -39,7 +39,7 @@
         <p>Ethnicity: <?= ($patient->isBlack == 1) ? "black" : "not black" ?></p>
       </div>
       <div id="notes-container">
-		<h2>Notes</h2>
+		<h4>Notes</h4>
         <textarea id="doctor-notes" maxlength="600"
           placeholder="Type down your notes here... (max 600 characters)"><?= $patient->notes ?></textarea>
           <?php if($patient->notes !== ''): ?>
@@ -50,7 +50,7 @@
       </div>
       </div>
       <div id="box-right">
-		<h2>Patient Records</h2>
+		<h4>Patient Records</h4>
       <form method="POST" action="requestHandler.php?action=deletePatientRecords">
         <div id="table-container">
           <table class="table-content">
@@ -97,13 +97,13 @@
     </div>
       <?php if(sizeof($egfrReadings) > 2): ?>
         <div id="chart-container">
-        <h2>eGFR History Chart</h2>
+        <h4>eGFR History Chart</h4>
       <canvas id="egfr-chart"></canvas>
       </div>
       <?php endif ?>
       <?php if(sizeof($bpReadings) > 2): ?>
       <div id="chart-container">
-      <h2>Blood Pressure History Chart</h2>
+      <h4>Blood Pressure History Chart</h4>
       <canvas id="bp-chart"></canvas> 
       </div>
       <?php endif ?>

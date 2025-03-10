@@ -16,16 +16,16 @@
     </a>
     <div class="header-container">
       <div class="header-content">
-        <h1>My Kidney Buddy</h1>
-        <h2 id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></h2>
+        <h2>My Kidney Buddy</h2>
+        <h4 id="welcome"><?= "Welcome $doctor->firstName $doctor->lastName" ?></h4>
       </div>
       <div class="navigation-menu">
         <a href="./index.php">
-          <h2>Home</h2>
+          <h4>Home</h4>
         </a>
         <form method="POST" action="./requestHandler.php?action=signout">
           <button class="signout-button" type="submit">
-            <h2>Sign out</h2>
+            <h4>Sign out</h4>
           </button>
         </form>
       </div>

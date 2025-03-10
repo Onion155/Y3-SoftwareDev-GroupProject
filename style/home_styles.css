@@ -58,6 +58,10 @@ body {
     gap: 320px;
 }
 
+li {
+    margin-bottom: 20px;
+}
+
 h1 {
     font-size: 64px;
     font-weight: bold;

@@ -1,6 +1,6 @@
 <dialog class="dialog" id="login-dialog">
 			<div class="login-container form-wrapper">
-				<h3>Log In</h3>
+				<h3>Login Account</h3>
 				<form class="login-form form" method="POST">
 					<label for="login-email">Email</label>
 					<input

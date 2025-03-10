@@ -1,6 +1,6 @@
 <dialog class="dialog" id="delete-dialog">
 			<div class="delete-container form-wrapper">
-				<h2>User Confirmation</h2>
+				<h3>User Confirmation</h3>
 				<div class="form">
 					<p>
 						The selected items will be deleted forever and won't be able to be

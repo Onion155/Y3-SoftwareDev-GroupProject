@@ -1,6 +1,6 @@
 <dialog class="dialog" id="add-dialog">
 	<div class="add-container form-wrapper">
-		<h2>Add Record</h2>
+		<h3>Add Record</h3>
 		<form method="POST">
 			<div class="form">
 				<label for="add-creatinine">Serum Creatinine (micromol/l)</label>

@@ -1,6 +1,6 @@
 <dialog class="dialog" id="signup-dialog">
 			<div class="signup-container form-wrapper">
-				<h3>Sign Up</h3>
+				<h3>Create Account</h3>
 				<form class="signup-form form" method="POST">
 					<label for="signup-email">Email</label>
 					<input name="email" id="signup-email" type="text" placeholder="Enter your email assigned to your doctor"/>

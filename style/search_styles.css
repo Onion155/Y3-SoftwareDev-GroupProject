@@ -31,13 +31,23 @@ height: 160px;
 }
 
 h1 {
-	padding: 10px 0 27px 0;
-	font-size: 44px;
+    font-size: 64px;
+    font-weight: bold;
 }
 
 h2 {
-	font-weight: normal;
-	font-size: 24px;
+    font-size: 44px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 36px;
+    font-weight: 500;
+}
+
+h4 {
+    font-size: 24px;
+    font-weight: 500;
 }
 
 .header-container {
@@ -51,6 +61,10 @@ h2 {
 
 .header-content {
 	float: left;
+}
+
+.header-content h2 {
+	padding: 10px 0 27px 0;
 }
 
 .navigation-menu {

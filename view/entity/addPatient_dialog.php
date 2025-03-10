@@ -1,6 +1,6 @@
 <dialog class="dialog" id="add-dialog">
     <div class="add-container form-wrapper">
-        <h2>Create Patient</h2>
+        <h3>Create Patient</h3>
         <form class="add-form form" method="POST">
             <div class="form-row">
                 <div class="form-container">

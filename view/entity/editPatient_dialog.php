@@ -1,6 +1,6 @@
 <dialog class="dialog" id="edit-dialog">
     <div class="edit-container form-wrapper">
-        <h2>Modify Patient</h2>
+        <h3>Modify Patient</h3>
         <form class="edit-form form" method="POST">
             <div class="form-row">
               <input type="hidden" id="patient-id" name="patient-id">
