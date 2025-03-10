@@ -1,50 +1,63 @@
+<?php
+    function renderButton($text) {
+        echo "<button>$text</button>";
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Kidney Buddy</title>
-    <link rel="stylesheet" href="./style/home_styles.css">
-    <link rel="stylesheet" href="./style/form_styles.css">
+    <link rel="stylesheet" href="../style\home_styles.css">
 </head>
 <body>
-    <div class="header">
-        <img src="other\logo.png" alt="Logo" class="logo">
-        <h1>My Kidney Buddy</h1>
-<?php if(!isset($_SESSION["account"])): ?>
-        <button onclick="showLoginDialog(true)" class="login-btn">Log in</button>
-<?php require_once "entity/signup_dialog.php" ?>
-<?php require_once "entity/login_dialog.php" ?>
-<?php else: ?>
-    <a href="dashboard.php" class="login-btn">Go to dashboard</a>
-<?php endif; ?>
-    </div>
-
-    <div class="content">
-        <div class="text-box">
-            <h3> Information about the website</h3>
-               <p> Welcome to SDP – Your dedicated online resource for kidney health.
-                 Our website offers comprehensive information, support, and community for kidney patients.
-                  From understanding your condition to managing your treatment, SDP is here to guide you every step of the way.
-                   Join us to connect with experts, access valuable resources, and find the support you need for a healthier life.</p>
-
-                   <h3>Common Symptoms</h3>
-                   <p>1. Fatigue: Feeling unusually tired or weak.</p>
-                   <p>2. Swelling: Particularly in the ankles, feet, or hands due to fluid retention.</p>
-                   <p>3. Changes in urination: This can include urinating more or less frequently than usual, or changes in the color and appearance of urine.</p>
-                   <p>4. Nausea and vomiting: Feeling sick to your stomach or actually vomiting.</p>
-                   <p>5. Shortness of breath: Difficulty breathing, which can be caused by fluid buildup in the lungs.</p>
-                   <p>6. Confusion: Difficulty concentrating or experiencing brain fog.</p>
-
-                   <h3>How to contact your local GP</h3>
-                   <p>To contact your local GP, you can usually use an online form on our website or visit in person</p>
-                    
+    <header>
+        <div>
+            <?php renderButton("Contact Us"); ?>
+            <?php renderButton("FAQ"); ?>
         </div>
-        <div class="image-container">
-            <img src="other\DrugsImage1.PNG" alt="Kidney Image 1">
-            <img src="other\kidneyImage1.PNG" alt="Kidney Image 2">
+        <?php renderButton("Login"); ?>
+    </header>
+    <div class="logo"></div>
+    <h1>Welcome to <span class="red">My Kidney</span> <span class="blue">Buddy</span></h1>
+    <p>Your dedicated online resource for kidney health</p>
+    <p>My Kidney Buddy is a secure, web-based platform tailored to help you monitor and understand your kidney health with ease...</p>
+    <h2>What We Do Best</h2>
+    <p>Our platform simplifies complex medical information, providing personalised insights...</p>
+    <div class="banners">
+        <div class="banner">
+            <h3>Access Anywhere</h3>
+            <div class="image-placeholder"></div>
+            <p>Text about accessibility.</p>
+        </div>
+        <div class="banner">
+            <h3>Understanding Yourself</h3>
+            <div class="image-placeholder"></div>
+            <p>Text about understanding CKD.</p>
+        </div>
+        <div class="banner">
+            <h3>Adaptive Resources</h3>
+            <div class="image-placeholder"></div>
+            <p>Text about adaptive resources.</p>
         </div>
     </div>
-
+    <h2>What Our Users Say</h2>
+    <div class="reviews">
+        <div class="review">Review 1</div>
+        <div class="review">Review 2</div>
+        <div class="review">Review 3</div>
+    </div>
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq">
+        <?php 
+            function renderFAQ($question) {
+                echo "<button>$question</button>";
+            }
+            renderFAQ("Question 1");
+            renderFAQ("Question 2");
+            renderFAQ("Question 3");
+        ?>
+    </div>
 </body>
 </html>
