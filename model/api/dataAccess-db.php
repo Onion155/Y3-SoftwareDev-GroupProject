@@ -70,6 +70,30 @@ function fetchPatients($doctorId)
   return $result;
 }
 
+function fetchPatientsByFirstName($doctorId, $firstName) {
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE doctorId =  ? AND firstName LIKE ?');
+  $statement->execute([$doctorId, $firstName."%"]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  return $result;
+}
+
+function fetchPatientsByLastName($doctorId, $lastName) {
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE doctorId =  ? AND lastName LIKE ?');
+  $statement->execute([$doctorId, $lastName."%"]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  return $result;
+}
+
+function fetchPatientsByNHS($doctorId, $nhsNum) {
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE doctorId =  ? AND NHSNumber LIKE ?');
+  $statement->execute([$doctorId, $nhsNum]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  return $result;
+}
+
 function fetchPatientWithAccountId($accountId)
 {
   global $pdo;

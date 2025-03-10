@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Search patients</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style/record_styles.css">
+  <link rel="stylesheet" href="./style/search_styles.css">
   <link rel="stylesheet" href="./style/form_styles.css">
 </head>
 
@@ -33,24 +33,23 @@
   </header>
   <div class="box-container">
 
-    <form>
+    <form method="GET">
       <div class="search">
         <img src="other/search-icon.png" alt="search">
-        <input class="search-input" type="search" placeholder="Search">
+        <input class="search-input" name="search" type="search" placeholder="Search Patient">
         <input type="hidden" id="filter" name="filter">
         <div class="action-dropdown" id="filter-dropdown">
             <button id="filter-button">Filter</button>
             <div class="content">
-              <a href="#" onclick="applyFilter('nhs')">NHS Number</a>
               <a href="#" onclick="applyFilter('firstName')">First Name</a>
               <a href="#" onclick="applyFilter('lastName')">Last Name</a>
+              <a href="#" onclick="applyFilter('nhs')">NHS Number</a>
             </div>
           </div>
       </div>
     </form>
     <input type="hidden" id="patient-id" name="patient-id">
-    <?php if (true): ?>
-      <div id="search-table-wrapper">
+    <?php if (!empty($patients)): ?>
         <div id="table-container">
           <table class="table-content">
             <thead>
@@ -74,7 +73,11 @@
                     <td><?= $patients[$i]->firstName ?></td>
                     <td><?= $patients[$i]->lastName ?></td>
                     <td><?= $patients[$i]->NHSNumber ?></td>
-                    <td><button onclick="goToRecords(<?= $patients[$i]->id ?>)">Calculate</button></td>
+                    <td>
+                      <a href="#" onclick="goToRecords(<?= $patients[$i]->id ?>)">
+                        <img id="calculator-icon" src="other/calculator-icon.png" alt="My Kidney Buddy mascot logo">
+                      </a>
+                    </td>
                   </tr>
                 <?php endfor ?>
               </form>
@@ -85,16 +88,26 @@
             <button>Actions</button>
             <div class="content">
               <a href="#" onclick="showAddDialog(true)">Add patient</a>
-              <a id="edit" href="#" onclick="showEditDialog(true)">Edit patient</a>
+              <a id="edit" href="#" onclick="showEditDialog(true)">Edit selected</a>
               <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
             </div>
           </div>
       </div>
+    <?php else: ?>
+      <p>No patients were found.</p>
     <?php endif ?>
-  </div>
   <?php require_once "entity/editPatient_dialog.php" ?>
   <?php require_once "entity/addPatient_dialog.php" ?>
   <script>
+
+  $(document).ready(function() {
+    <?php if(isset($_SESSION["patient-filter"])): ?>
+    applyFilter("<?= $_SESSION["patient-filter"] ?>");
+    <?php else: ?>
+    applyFilter("firstName");
+    <?php endif ?>
+  });
+
     function goToRecords(patientId) {
       event.preventDefault();
         $.post("requestHandler.php", {
@@ -115,7 +128,6 @@
       } else if (name == "lastName") {
         $("#filter-button").text("Filter: Last Name");
         $("#filter").val("lastName");
-        
       }
     }
 
