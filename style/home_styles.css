@@ -10,18 +10,55 @@ body {
 header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
 }
 
+nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-right {
+    margin-left: auto;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
 .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 20px auto;
-    width: 200px;
-    height: 100px;
-    background: lightgray;
+}
+
+.logo img {
+    width: 100px; 
+    height: auto; 
+    max-width: 100%; 
 }
 
 h1 {
-    font-size: 24px;
+    font-size: 45px;
+}
+
+h2{
+    font-size: 30px;
 }
 
 .red {
@@ -35,13 +72,22 @@ h1 {
 .banners {
     display: flex;
     justify-content: space-around;
+    gap: -40px; 
     margin: 20px 0;
 }
 
 .banner {
-    width: 30%;
+    width: 10%;
     padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 10px; /* Rounded corners */
+    background-color: lightgreen; /* Light green fill */
+}
+
+.banner img {
+    width: 170px; 
+    height: auto; 
+    max-width: 100%; 
 }
 
 .reviews {
@@ -55,15 +101,45 @@ h1 {
     margin: 10px;
     padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 10px; /* Rounded corners */
+    background-color: lightgreen; /* Light green fill */
 }
 
 .faq {
-    margin: 20px;
+    margin: 20px auto;
+    background-color: white; /* Solid white background */
+    padding: 15px;
+    border: 2px solid black; /* Box surrounding the FAQ section */
+    border-radius: 10px;
+    width: 50%; /* Center the FAQ section */
+    text-align: left;
 }
 
-.faq button {
-    display: block;
-    width: 100%;
+.faq details {
+    border: 1px solid black; /* Border around each FAQ item */
+    margin-bottom: 5px;
     padding: 10px;
-    margin: 5px 0;
+    border-radius: 5px;
+    background-color: white;
+    position: relative;
+}
+
+.faq summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Move arrow to the right */
+    cursor: pointer;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid black; /* Separator line */
+}
+
+.faq summary::after {
+    content: "\25B6"; /* Right-facing arrow */
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.faq details[open] summary::after {
+    content: "\25BC"; /* Down-facing arrow when expanded */
 }
