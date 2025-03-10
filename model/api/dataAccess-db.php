@@ -23,6 +23,12 @@ function fetchAccount($email)
   }
 }
 
+function updateAccount($accountId, $email, $role) {
+  global $pdo;
+  $statement = $pdo->prepare('UPDATE account SET email = ?, role = ? WHERE id = ?');
+  $statement->execute([$email, $role, $accountId]);
+}
+
 function fetchPatientWithNHS($nhsNum)
 {
   global $pdo;
@@ -77,6 +83,41 @@ function fetchPatientWithAccountId($accountId)
   }
 }
 
+function fetchPatientEmail($patientId, $doctorId) {
+  global $pdo;
+  $statement = $pdo->prepare('
+    SELECT email, role 
+    FROM account
+    JOIN patient ON account.id = patient.accountId
+    JOIN doctor ON doctor.id = patient.doctorId
+    WHERE patient.id = ? AND doctor.id = ?
+    ');
+  $statement->execute([$patientId, $doctorId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0]->email;
+  }
+}
+
+function fetchPatientRole($patientId, $doctorId) {
+  global $pdo;
+  $statement = $pdo->prepare('
+    SELECT role 
+    FROM account
+    JOIN patient ON account.id = patient.accountId
+    JOIN doctor ON doctor.id = patient.doctorId
+    WHERE patient.id = ? AND doctor.id = ?
+    ');
+  $statement->execute([$patientId, $doctorId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0]->role;
+  }
+}
 function fetchPatient($patientId, $doctorId)
 {
   global $pdo;

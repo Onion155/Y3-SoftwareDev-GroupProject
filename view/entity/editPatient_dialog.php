@@ -66,11 +66,12 @@
             let patient = JSON.parse(data);
             $("#edit-first-name").val(patient.firstName);
             $("#edit-last-name").val(patient.lastName);
+            $("#edit-email").val(patient.email);
             $("#edit-nhs").val(patient.NHSNumber);
             $("#edit-dob").val(patient.DoB);
             $("#edit-ethnicity").val(patient.ethnicity == true ? "black" : "other");
             $("#edit-sex").val(patient.sex);
-            console.log(patient);
+            $("#edit-expert").prop("checked", patient.isExpert);
         });
     }
 

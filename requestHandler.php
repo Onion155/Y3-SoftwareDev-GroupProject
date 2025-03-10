@@ -56,8 +56,10 @@ switch ($action) {
     case "getPatient":
         $doctorId = $_SESSION['doctor']->id;
         $patientId = $_POST['patientId'];
-        $patient = fetchPatient($patientId, $doctorId);
-        echo json_encode($patient->toArray());
+        $patientArray = fetchPatient($patientId, $doctorId)->toArray();
+        $patientArray['email'] = fetchPatientEmail($patientId, $doctorId);
+        $patientArray['isExpert'] = fetchPatientRole($patientId, $doctorId) == "expert patient" ? true : false;
+        echo json_encode($patientArray);
         break;
     case "deletePatients":
         if (isset($_POST["checkbox"])) {
@@ -133,7 +135,16 @@ function validatePatient($data, $action) {
     $sex = $data->sex;
     $email = $data->email;
     $role =$data->role;
-    if ($action == "edit") $patientId = $data->patientId;
+    $doctorId = $_SESSION["doctor"]->id;
+
+    $oldEmail = null;
+    if ($action == "edit") {
+        $patientId = $data->patientId;
+        $oldEmail = fetchPatientEmail($patientId, $doctorId);
+        $oldNhsNum = fetchPatient($patientId, $doctorId)->NHSNumber;
+    }
+
+    
 
     if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
         echo "Email is invalid";
@@ -141,7 +152,7 @@ function validatePatient($data, $action) {
     } else if (!filter_var($nhsNum, FILTER_VALIDATE_INT) || strlen($nhsNum) != 10) {
         echo "NHS number is invalid";
         exit();
-    } else if (!empty(fetchPatientWithNHS($nhsNum))) {
+    } else if ((!empty(fetchPatientWithNHS($nhsNum))) && $nhsNum != $oldNhsNum) {
         echo "NHS number is already taken";
         exit();
     } else if  (!validateDate($dob, "Y-m-d")) {
@@ -164,20 +175,23 @@ function validatePatient($data, $action) {
         echo "Ethnicity is invalid";
         exit();
     } else if (!($role == "patient" || $role == "expert patient")) {
-        echo $role;
             echo "Role is invalid";
             exit();
-    } else if (!empty($account) || isset($account->passwordHash)) {
+    } else if ((!empty($account) || isset($account->passwordHash)) && $email != $oldEmail) {
         echo "Email already taken";
         exit();
     } else {
+
+        
+        if ($action == "add") {
         insertAccount($email, null, $role);
         $accountId = fetchAccount($email)->id;
-        $doctorId = $_SESSION["doctor"]->id;
-        if ($action == "add") {
+        
         insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
         } else if ($action == "edit") {
-            updatePatient($patientId, $accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
+           $accountId = fetchAccount($oldEmail)->id;
+           updateAccount($accountId, $email, $role);
+           updatePatient($patientId, $accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
         }
         echo "success";    
     }
