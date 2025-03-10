@@ -113,11 +113,7 @@ nav {
 
 .btn {
     display: inline-block;
-    width: 152px;
-    height: 63px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 16px 44px;
     color: var(--text-black);
     text-decoration: none;
     border-radius: 20px;

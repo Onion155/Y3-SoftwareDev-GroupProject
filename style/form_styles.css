@@ -1,3 +1,18 @@
+:root {
+	--primary: #00CC3D;
+    --primary-rgb: 0, 204, 61;
+	--secondary: #B1FFDF;
+    --secondary-rgb: 177, 238, 179;
+    --accent: #64d0f8;
+	--accent-rgb: 100, 208, 248;
+	--primary-blue: #35C2F6;
+    --primary-red: #FE1F18;
+	--background: #F7FBFF;
+    --background-rgb: 247, 251, 255;
+	--text-black: #02353C;
+	--text-white: #FFFF;
+}
+
 .error-message {
 	color: red;
 	margin-bottom:16px;
@@ -11,15 +26,10 @@ select {
 	box-sizing: border-box;
 }
 
-h2 {
-	margin: 0;
-}
-
-
 button {
 	min-width: 120px;
 	padding: 10px 26px;
-	background-color: #28a745;
+	background-color: var(--text-black);
 	color: #fff;
 	border: none;
 	cursor: pointer;
@@ -56,23 +66,24 @@ dialog::backdrop {
 }
 
 .dialog {
-	background: white;
+	background: rgb(232, 248, 249);
 	border-radius: 20px;
 	margin: auto;
+	
 	border: 0;
 	padding: 0;
 }
 
 .form-wrapper {
 	width: 450px;
-	padding: 16px;	
+	padding: 20px;
 }
 
 .form {
 	display: flex;
 	flex-direction: column;
+	margin: 35px 20px;
 	text-align: left;
-	margin: 35px 0;
 }
 
 .form input, select {
@@ -81,8 +92,13 @@ dialog::backdrop {
 	margin-bottom: 20px;
 	font-size: 16px;
 	padding: 0 12px;
-	border-radius: 5px;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 15px;
 	border: 1px solid lightgray;
+}
+
+.form a {
+	color: blue;
 }
 
 .form-checkbox {

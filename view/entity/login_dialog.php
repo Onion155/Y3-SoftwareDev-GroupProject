@@ -1,6 +1,6 @@
 <dialog class="dialog" id="login-dialog">
 			<div class="login-container form-wrapper">
-				<h2>Login</h2>
+				<h3>Log In</h3>
 				<form class="login-form form" method="POST">
 					<label for="login-email">Email</label>
 					<input
@@ -24,7 +24,7 @@
 						Added by the doctor? <a
 							href="#"
 							onclick="showLoginDialog(false); showSignupDialog(true);"
-							>Create an account using your email</a>
+							>Create an account</a>
 					</div>
 				</form>
 			</div>

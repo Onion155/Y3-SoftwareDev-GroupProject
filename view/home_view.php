@@ -29,7 +29,7 @@ function renderFAQ($question, $answer) {
                             <?php if(!isset($_SESSION["account"])): ?>
                                 <a href='#' onclick="showLoginDialog(true)" class="btn"><h4>Login</h4></a>
                             <?php else: ?>
-                                <a href='dashboard.php' class="btn"><h4>Calculate</h4></a>
+                                <a href='dashboard.php' class="btn"><h4>To Dashboard</h4></a>
                             <?php endif ?>
                         </div>
                     </nav>
