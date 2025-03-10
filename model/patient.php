@@ -11,6 +11,9 @@ class Patient {
     private $accountId;
     private $doctorId;
 
+    public function toArray() {
+      return get_object_vars($this);
+    }
     function __get($name) {
         return $this->$name;
       }

@@ -32,9 +32,10 @@ switch ($action) {
         header("Location: index.php");
         break;
     case "setPatientSession":
-        $id = $_POST["patient-id"];
-        $_SESSION["patient"] = fetchPatient($id);
-        header("Location: doctorPatient.php");
+        $doctorId = $_SESSION["doctor"]->id;
+        $patientId = $_POST["patientId"];
+        $_SESSION["patient"] = fetchPatient($patientId, $doctorId);
+        echo "success";
         break;
     case "unsetPatientSession":
         unset($_SESSION["patient"]); 
@@ -42,18 +43,30 @@ switch ($action) {
         break;
     case "addPatient":
         $data = json_decode($_POST["patientData"]);
-        validatePatient($data);
+        validatePatient($data, "add");
         break;
+        case "editPatient":
+            $data = json_decode($_POST["patientData"]);
+            validatePatient($data, "edit");
+            break;
     case "getPatients":
-        $doctorID = $_SESSION['account']->id;
-        echo json_encode(fetchPatients($doctorID));
+        $doctorId = $_SESSION['account']->id;
+        echo json_encode(fetchPatients($doctorId));
         break;
-    
+    case "getPatient":
+        $doctorId = $_SESSION['doctor']->id;
+        $patientId = $_POST['patientId'];
+        $patientArray = fetchPatient($patientId, $doctorId)->toArray();
+        $patientArray['email'] = fetchPatientEmail($patientId, $doctorId);
+        $patientArray['isExpert'] = fetchPatientRole($patientId, $doctorId) == "expert patient" ? true : false;
+        echo json_encode($patientArray);
+        break;
     case "deletePatients":
         if (isset($_POST["checkbox"])) {
-            $ids = $_POST["checkbox"];
-            foreach ($ids as $id) {
-                deletePatient($id);
+            $doctorId = $_SESSION["doctor"]->id;
+            $patientIds = $_POST["checkbox"];
+            foreach ($patientIds as $patientId) {
+                deletePatient($patientId, $doctorId);
             }
             header("Location: dashboard.php");
             exit();
@@ -65,19 +78,20 @@ switch ($action) {
 
     case "addRecord":
         $data = json_decode($_POST["recordData"]);
-        validateRecord($data,"add");
+        validateRecord($data, "add");
         break;
 
         case "editRecord":
             $data = json_decode($_POST["recordData"]);
-            validateRecord($data,"edit");
+            validateRecord($data, "edit");
         break;
 
     case "deletePatientRecords":
         if (isset($_POST["checkbox"])) {
-            $ids = $_POST["checkbox"];
-            foreach ($ids as $id) {
-                deletePatientRecord($id);
+            $recordIds = $_POST["checkbox"];
+            $patientId = $_SESSION["patient"]->id;
+            foreach ($recordIds as $recordId) {
+                deletePatientRecord($recordId, $patientId);
             }
             header("Location: doctorPatient.php");
             exit();
@@ -89,30 +103,23 @@ switch ($action) {
         
     case "setNotes":
         $newNotes = $_GET["notes"];
-        $id = $_SESSION["patient"]->id;
+        $patientId = $_SESSION["patient"]->id;
+        $doctorId = $_SESSION["doctor"]->id;
+
         if (!filter_var($newNotes, FILTER_SANITIZE_STRING)) {
             echo "Invalid notes";
         } else {
             setNotes($id, $newNotes);
-            $_SESSION["patient"] = fetchPatient($id);
+            $_SESSION["patient"] = fetchPatient($patientId, $doctorId);
             echo "Notes saved";
         }
         break;
-
-    case "getPatientRecords":
-        $patientID = $_SESSION["patient"]->id;
-        if ($_SESSION["account"]->role === "doctor") {
-            $doctorID = $_SESSION["user"]->id;
-            echo json_encode(fetchPatientRecords($patientID));
-        } else {
-            echo "UNSUPPORTED function: getPatientRecords() - User is not a doctor";
-        }
-        break;
+        
     default:
         throw new Exception("GET action name couldn't be found: $action");
 }
 
-function validatePatient($data) {
+function validatePatient($data, $action) {
     foreach ($data as $key => $value) {
         if (empty($value)) {
             echo "All fields are required";
@@ -128,6 +135,16 @@ function validatePatient($data) {
     $sex = $data->sex;
     $email = $data->email;
     $role =$data->role;
+    $doctorId = $_SESSION["doctor"]->id;
+
+    $oldEmail = null;
+    if ($action == "edit") {
+        $patientId = $data->patientId;
+        $oldEmail = fetchPatientEmail($patientId, $doctorId);
+        $oldNhsNum = fetchPatient($patientId, $doctorId)->NHSNumber;
+    }
+
+    
 
     if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
         echo "Email is invalid";
@@ -135,7 +152,7 @@ function validatePatient($data) {
     } else if (!filter_var($nhsNum, FILTER_VALIDATE_INT) || strlen($nhsNum) != 10) {
         echo "NHS number is invalid";
         exit();
-    } else if (!empty(fetchPatientWithNHS($nhsNum))) {
+    } else if ((!empty(fetchPatientWithNHS($nhsNum))) && $nhsNum != $oldNhsNum) {
         echo "NHS number is already taken";
         exit();
     } else if  (!validateDate($dob, "Y-m-d")) {
@@ -158,17 +175,24 @@ function validatePatient($data) {
         echo "Ethnicity is invalid";
         exit();
     } else if (!($role == "patient" || $role == "expert patient")) {
-        echo $role;
             echo "Role is invalid";
             exit();
-    } else if (!empty($account) || isset($account->passwordHash)) {
+    } else if ((!empty($account) || isset($account->passwordHash)) && $email != $oldEmail) {
         echo "Email already taken";
         exit();
     } else {
+
+        
+        if ($action == "add") {
         insertAccount($email, null, $role);
         $accountId = fetchAccount($email)->id;
-        $doctorId = $_SESSION["doctor"]->id;
+        
         insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
+        } else if ($action == "edit") {
+           $accountId = fetchAccount($oldEmail)->id;
+           updateAccount($accountId, $email, $role);
+           updatePatient($patientId, $accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
+        }
         echo "success";    
     }
 

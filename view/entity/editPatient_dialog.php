@@ -48,14 +48,38 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const editDialog = document.getElementById("edit-dialog");
-    const editWrapper = document.querySelector(".edit-container");
-    const showEditDialog = (show) => show ? editDialog.showModal() : editDialog.close();
-    editDialog.editEventListener("click", (e) => !editWrapper.contains(e.target) && (editDialog.close(), $(".error-message").text(message));
+    function showEditDialog (show) {
+        if (show) {
+            editDialog.showModal();
+            getEditDetails();
+        } else {
+            editDialog.close();
+            $(".error-message").text(message);
+        }
+    }
+    
+    function getEditDetails() {
+        $.post("requestHandler.php", {
+            action: "getPatient",
+            patientId: $("#patient-id").val() 
+        }, function (data) {
+            let patient = JSON.parse(data);
+            $("#edit-first-name").val(patient.firstName);
+            $("#edit-last-name").val(patient.lastName);
+            $("#edit-email").val(patient.email);
+            $("#edit-nhs").val(patient.NHSNumber);
+            $("#edit-dob").val(patient.DoB);
+            $("#edit-ethnicity").val(patient.ethnicity == true ? "black" : "other");
+            $("#edit-sex").val(patient.sex);
+            $("#edit-expert").prop("checked", patient.isExpert);
+        });
+    }
 
     function postEditDetails() {
         event.preventDefault();
 
         const patientData = {
+            patientId: $("#patient-id").val(),
             firstName: $("#edit-first-name").val(),
             lastName: $("#edit-last-name").val(),
             email: $("#edit-email").val(),

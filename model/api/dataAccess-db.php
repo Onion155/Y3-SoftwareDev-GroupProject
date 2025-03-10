@@ -23,6 +23,12 @@ function fetchAccount($email)
   }
 }
 
+function updateAccount($accountId, $email, $role) {
+  global $pdo;
+  $statement = $pdo->prepare('UPDATE account SET email = ?, role = ? WHERE id = ?');
+  $statement->execute([$email, $role, $accountId]);
+}
+
 function fetchPatientWithNHS($nhsNum)
 {
   global $pdo;
@@ -64,6 +70,30 @@ function fetchPatients($doctorId)
   return $result;
 }
 
+function fetchPatientsByFirstName($doctorId, $firstName) {
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE doctorId =  ? AND firstName LIKE ?');
+  $statement->execute([$doctorId, $firstName."%"]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  return $result;
+}
+
+function fetchPatientsByLastName($doctorId, $lastName) {
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE doctorId =  ? AND lastName LIKE ?');
+  $statement->execute([$doctorId, $lastName."%"]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  return $result;
+}
+
+function fetchPatientsByNHS($doctorId, $nhsNum) {
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE doctorId =  ? AND NHSNumber LIKE ?');
+  $statement->execute([$doctorId, $nhsNum]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  return $result;
+}
+
 function fetchPatientWithAccountId($accountId)
 {
   global $pdo;
@@ -77,11 +107,46 @@ function fetchPatientWithAccountId($accountId)
   }
 }
 
-function fetchPatient($patientId)
+function fetchPatientEmail($patientId, $doctorId) {
+  global $pdo;
+  $statement = $pdo->prepare('
+    SELECT email, role 
+    FROM account
+    JOIN patient ON account.id = patient.accountId
+    JOIN doctor ON doctor.id = patient.doctorId
+    WHERE patient.id = ? AND doctor.id = ?
+    ');
+  $statement->execute([$patientId, $doctorId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0]->email;
+  }
+}
+
+function fetchPatientRole($patientId, $doctorId) {
+  global $pdo;
+  $statement = $pdo->prepare('
+    SELECT role 
+    FROM account
+    JOIN patient ON account.id = patient.accountId
+    JOIN doctor ON doctor.id = patient.doctorId
+    WHERE patient.id = ? AND doctor.id = ?
+    ');
+  $statement->execute([$patientId, $doctorId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0]->role;
+  }
+}
+function fetchPatient($patientId, $doctorId)
 {
   global $pdo;
-  $statement = $pdo->prepare('SELECT * FROM patient WHERE id =  ?');
-  $statement->execute([$patientId]);
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE id =  ? AND doctorId = ?');
+  $statement->execute([$patientId, $doctorId]);
   $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
   if (count($result) == 0) {
     return null;
@@ -90,10 +155,10 @@ function fetchPatient($patientId)
   }
 }
 
-function deletePatient($id) {
+function deletePatient($patientId, $doctorId) {
   global $pdo;
-  $statement = $pdo->prepare('DELETE FROM patient WHERE (id = ?)');
-  $statement->execute([$id]);
+  $statement = $pdo->prepare('DELETE FROM patient WHERE id = ? AND doctorId = ?');
+  $statement->execute([$patientId, $doctorId]);
 }
 
 //Fetches all patient records of a patient
@@ -116,6 +181,11 @@ function insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhs,
   $statement = $pdo->prepare('INSERT INTO patient (accountId, doctorId, firstName, lastName, DoB, NHSNumber, isBlack, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
   $statement->execute([$accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity == "black" ? true : false, $sex]);
 }
+function updatePatient($patientId, $accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity, $sex) {
+    global $pdo;
+    $statement = $pdo->prepare('UPDATE patient SET accountId = ?, doctorId = ?, firstName = ?, lastName = ?, DoB = ?, NHSNumber = ?, isBlack = ?, sex = ? WHERE id = ?');
+    $statement->execute([$accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity == "black" ? true : false, $sex, $patientId]);
+  }
 function insertPatientRecord($patientId, $eGFR, $bloodPressure)
 {
   global $pdo;
@@ -130,10 +200,10 @@ function updatePatientRecord($recordId, $eGFR, $bloodPressure)
   $statement->execute([$eGFR, $bloodPressure, $recordId]);
 }
 
-function deletePatientRecord($id) {
+function deletePatientRecord($recordId, $patientId) {
   global $pdo;
-  $statement = $pdo->prepare('DELETE FROM patientRecord WHERE (id = ?)');
-  $statement->execute([$id]);
+  $statement = $pdo->prepare('DELETE FROM patientRecord WHERE id = ? AND patientId = ?');
+  $statement->execute([$recordId, $patientId]);
 }
 
 function updatePassword ($email, $password) {

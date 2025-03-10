@@ -10,24 +10,19 @@ if (isset($_SESSION["patient"])) {
 $patient = $_SESSION["patient"];
     $doctor = $_SESSION["doctor"];
     $patientRecords = fetchPatientRecords($patient->id);
-    $previousReadings = [];
-    $readingLabels = [];
-    $egfrValue = [];
+    $egfrReadings = array();
+    $bpReadings = array();
 
-    $isChartEmpty = false;
-    if(!empty($patientRecords)) {
     for ($i=0; $i<count($patientRecords); $i++) {
-        $egfrReadings[$i] = $patientRecords[$i]->eGFR;
-        $bpReadings[$i] = $patientRecords[$i]->bloodPressure;
+        array_push($egfrReadings, $patientRecords[$i]->eGFR);
+        if ($patientRecords[$i]->bloodPressure != null) {
+            array_push($bpReadings, $patientRecords[$i]->bloodPressure);
+        }
         $dateLabels[$i] = $patientRecords[$i]->dateCreated;
         $egfrValue[$i] = array_keys($patientRecords[$i]->getEGFRValuePair())[0];
     }
-    } else {
-        $isChartEmpty = true;
-    }
-
     require_once "view/doctorPatient_view.php";
 } else {
     header("Location: dashboard.php");
 }
-    ?>
+?>
