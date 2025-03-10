@@ -37,7 +37,7 @@
       <div class="search">
         <img src="other/search-icon.png" alt="search">
         <input class="search-input" type="search" placeholder="Search">
-        <div class="dropdown" id="patient-dropdown">
+        <div class="action-dropdown" id="patient-dropdown">
             <button id="action-button">Filter</button>
             <div class="content">
               <a href="#" onclick="">NHS Number</a>
@@ -79,7 +79,7 @@
               </form>
             </tbody>
           </table>
-          <div class="dropdown" id="patient-dropdown">
+          <div class="action-dropdown" id="patient-dropdown">
             <button id="action-button">Actions</button>
             <div class="content">
               <a href="#" onclick="showAddDialog(true)">Add patient</a>

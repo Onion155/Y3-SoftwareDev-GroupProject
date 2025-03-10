@@ -103,7 +103,7 @@ body {
 	transition: box-shadow 0.25s;
 }
 
-.search .dropdown button {
+.search .action-dropdown button {
 	background-color: #eaeaea;
 	color: var(--text-black);
 	border: 1px solid var(--text-black);
@@ -281,12 +281,12 @@ td {
     max-height: 500px;
 }
 
-.dropdown {
+.action-dropdown {
     float: right;
     margin: 20px;
 }
 
-.dropdown button {
+.action-dropdown button {
     background-color: var(--text-black);
     color: var(--text-white);
 	width: 170px;
@@ -295,14 +295,14 @@ td {
 	pointer-events: none;
 }
 
-.dropdown a{
+.action-dropdown a{
 	display: block;
     color: var(--text-white);
 	text-decoration: none;
 	padding: 10px 15px;
 }
 
-.dropdown .content {
+.action-dropdown .content {
 	display: none;
 	position: absolute;
 	border-radius: 5px;
@@ -312,13 +312,13 @@ td {
 	z-index: 1001;
 }
 
-.dropdown:hover .content {
+.action-dropdown:hover .content {
 	display: block;
 }
 
 
 
-.dropdown {
+.action-dropdown {
 	display: inline-block;
 }
 
@@ -342,7 +342,7 @@ td {
     color: var(--text-white);
 }
 
-.dropdown a:hover,
+.action-dropdown a:hover,
 #header.enabled:hover,
 #edit.enabled:hover,
 #delete.enabled:hover {
@@ -350,7 +350,7 @@ td {
     color: var(--text-black);
 }
 
-#patient-dropdown {
+#patient-action-dropdown {
 	float: right;
 	width: auto;
 	margin: 20px;

@@ -82,7 +82,7 @@
           </table>
           </form>
         </div>
-        <div class="dropdown">
+        <div class="action-dropdown">
           <button>Actions</button>
           <div class="content">
             <a href="#" onclick="showAddDialog(true)">Calculate</a>
