@@ -18,7 +18,6 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script>
 			const editDialog = document.getElementById("edit-dialog");
-			editDialog.showModal();
 			const showEditDialog = (show) => show ? editDialog.showModal() : (editDialog.close(), $(".error-message").text(message));
 
 			function postEditDetails() {

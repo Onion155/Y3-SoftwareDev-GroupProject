@@ -43,8 +43,12 @@ switch ($action) {
         break;
     case "addPatient":
         $data = json_decode($_POST["patientData"]);
-        validatePatient($data);
+        validatePatient($data, "add");
         break;
+        case "editPatient":
+            $data = json_decode($_POST["patientData"]);
+            validatePatient($data, "edit");
+            break;
     case "getPatients":
         $doctorId = $_SESSION['account']->id;
         echo json_encode(fetchPatients($doctorId));
@@ -57,9 +61,10 @@ switch ($action) {
         break;
     case "deletePatients":
         if (isset($_POST["checkbox"])) {
-            $ids = $_POST["checkbox"];
-            foreach ($ids as $id) {
-                deletePatient($id);
+            $doctorId = $_SESSION["doctor"]->id;
+            $patientIds = $_POST["checkbox"];
+            foreach ($patientIds as $patientId) {
+                deletePatient($patientId, $doctorId);
             }
             header("Location: dashboard.php");
             exit();
@@ -71,19 +76,20 @@ switch ($action) {
 
     case "addRecord":
         $data = json_decode($_POST["recordData"]);
-        validateRecord($data,"add");
+        validateRecord($data, "add");
         break;
 
         case "editRecord":
             $data = json_decode($_POST["recordData"]);
-            validateRecord($data,"edit");
+            validateRecord($data, "edit");
         break;
 
     case "deletePatientRecords":
         if (isset($_POST["checkbox"])) {
-            $ids = $_POST["checkbox"];
-            foreach ($ids as $id) {
-                deletePatientRecord($id);
+            $recordIds = $_POST["checkbox"];
+            $patientId = $_SESSION["patient"]->id;
+            foreach ($recordIds as $recordId) {
+                deletePatientRecord($recordId, $patientId);
             }
             header("Location: doctorPatient.php");
             exit();
@@ -95,25 +101,18 @@ switch ($action) {
         
     case "setNotes":
         $newNotes = $_GET["notes"];
-        $id = $_SESSION["patient"]->id;
+        $patientId = $_SESSION["patient"]->id;
+        $doctorId = $_SESSION["doctor"]->id;
+
         if (!filter_var($newNotes, FILTER_SANITIZE_STRING)) {
             echo "Invalid notes";
         } else {
             setNotes($id, $newNotes);
-            $_SESSION["patient"] = fetchPatient($id);
+            $_SESSION["patient"] = fetchPatient($patientId, $doctorId);
             echo "Notes saved";
         }
         break;
-
-    case "getPatientRecords":
-        $patientID = $_SESSION["patient"]->id;
-        if ($_SESSION["account"]->role === "doctor") {
-            $doctorID = $_SESSION["user"]->id;
-            echo json_encode(fetchPatientRecords($patientID));
-        } else {
-            echo "UNSUPPORTED function: getPatientRecords() - User is not a doctor";
-        }
-        break;
+        
     default:
         throw new Exception("GET action name couldn't be found: $action");
 }

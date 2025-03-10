@@ -59,12 +59,18 @@
     }
     
     function getEditDetails() {
-        $.get("requestHandler.php", {
+        $.post("requestHandler.php", {
             action: "getPatient",
             patientId: $("#patient-id").val() 
-        }, function (message, status) {
-            console.log(message);
-            console.log(status);
+        }, function (data) {
+            let patient = JSON.parse(data);
+            $("#edit-first-name").val(patient.firstName);
+            $("#edit-last-name").val(patient.lastName);
+            $("#edit-nhs").val(patient.NHSNumber);
+            $("#edit-dob").val(patient.DoB);
+            $("#edit-ethnicity").val(patient.ethnicity == true ? "black" : "other");
+            $("#edit-sex").val(patient.sex);
+            console.log(patient);
         });
     }
 
@@ -72,6 +78,7 @@
         event.preventDefault();
 
         const patientData = {
+            patientId: $("#patient-id").val(),
             firstName: $("#edit-first-name").val(),
             lastName: $("#edit-last-name").val(),
             email: $("#edit-email").val(),

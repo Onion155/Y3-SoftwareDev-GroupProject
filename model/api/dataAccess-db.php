@@ -90,10 +90,10 @@ function fetchPatient($patientId, $doctorId)
   }
 }
 
-function deletePatient($id) {
+function deletePatient($patientId, $doctorId) {
   global $pdo;
-  $statement = $pdo->prepare('DELETE FROM patient WHERE (id = ?)');
-  $statement->execute([$id]);
+  $statement = $pdo->prepare('DELETE FROM patient WHERE id = ? AND doctorId = ?');
+  $statement->execute([$patientId, $doctorId]);
 }
 
 //Fetches all patient records of a patient
@@ -130,10 +130,10 @@ function updatePatientRecord($recordId, $eGFR, $bloodPressure)
   $statement->execute([$eGFR, $bloodPressure, $recordId]);
 }
 
-function deletePatientRecord($id) {
+function deletePatientRecord($recordId, $patientId) {
   global $pdo;
-  $statement = $pdo->prepare('DELETE FROM patientRecord WHERE (id = ?)');
-  $statement->execute([$id]);
+  $statement = $pdo->prepare('DELETE FROM patientRecord WHERE id = ? AND patientId = ?');
+  $statement->execute([$recordId, $patientId]);
 }
 
 function updatePassword ($email, $password) {
