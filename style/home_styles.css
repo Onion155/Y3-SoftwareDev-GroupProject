@@ -198,6 +198,7 @@ margin-right: 15px;
     width: 320px;
     height: 600px;
     border-radius: 20px; 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
     background-color:  rgba(var(--primary-rgb), 0.2);
 }
 
@@ -230,6 +231,7 @@ margin-right: 15px;
     padding: 20px;
     border-radius: 10px;
     text-align: left;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     background-color:  rgba(var(--secondary-rgb), 0.3);
 }
 
@@ -251,6 +253,7 @@ margin-right: 15px;
 }
 
 .faq {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     background-color: rgba(var(--background-rgb), 0.8); 
     padding: 15px;
     border-radius: 10px;
