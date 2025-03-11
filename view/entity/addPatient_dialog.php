@@ -1,5 +1,8 @@
 <dialog class="dialog" id="add-dialog">
     <div class="add-container form-wrapper">
+        <a href="#" onclick="showAddDialog(false)">
+			<img id="x-icon" src="other/x-icon.png" alt="My Kidney Buddy mascot logo">
+		</a>
         <h3>Create Patient</h3>
         <form class="add-form form" method="POST">
             <div class="form-row">
@@ -36,7 +39,7 @@
             </div>
             <span class="form-checkbox">
                 <input name="expert" id="expert" type="checkbox">
-                <label for="expert">The patient can record, edit, and delete their eGFR records</label>
+                <label for="expert">Patient can record, edit, and delete their eGFR records</label>
             </span>
             <p class="error-message"></p>
             <button onclick="postAddDetails()">Add Patient</button>
@@ -47,7 +50,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const addDialog = document.getElementById("add-dialog");
-    const showAddDialog = (show) => show ? addDialog.showModal() : (addDialog.close(), $(".error-message").text(message));
+    const showAddDialog = (show) => show ? addDialog.showModal() : (addDialog.close(), $(".error-message").text());
     function postAddDetails() {
         event.preventDefault();
 

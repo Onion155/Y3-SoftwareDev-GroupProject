@@ -4,9 +4,6 @@ require_once "model/patient.php";
 require_once "model/patientRecord.php";
 require_once "model/api/dataAccess-db.php";
 
-session_start();
-
-if (isset($_SESSION["patient"])) {
 $patient = $_SESSION["patient"];
     $doctor = $_SESSION["doctor"];
     $patientRecords = fetchPatientRecords($patient->id);
@@ -22,7 +19,4 @@ $patient = $_SESSION["patient"];
         $egfrValue[$i] = array_keys($patientRecords[$i]->getEGFRValuePair())[0];
     }
     require_once "view/doctorPatient_view.php";
-} else {
-    header("Location: dashboard.php");
-}
 ?>

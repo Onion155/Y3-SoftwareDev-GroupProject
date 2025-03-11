@@ -1,5 +1,8 @@
 <dialog class="dialog" id="signup-dialog">
 			<div class="signup-container form-wrapper">
+				<a href="#" onclick="showSignupDialog(false)">
+					<img id="x-icon" src="other/x-icon.png" alt="My Kidney Buddy mascot logo">
+				</a>
 				<h3>Create Account</h3>
 				<form class="signup-form form" method="POST">
 					<label for="signup-email">Email</label>
@@ -30,7 +33,7 @@
 
 <script>
     const signupDialog = document.getElementById("signup-dialog");
-    const showSignupDialog = (show) => show ? signupDialog.showModal() : signupDialog.close();
+    const showSignupDialog = (show) => show ? signupDialog.showModal() : (signupDialog.close(), $(".error-message").text(""));
 
 function postSignupDetails() {
 	event.preventDefault();

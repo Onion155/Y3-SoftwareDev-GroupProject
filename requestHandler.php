@@ -93,11 +93,10 @@ switch ($action) {
             foreach ($recordIds as $recordId) {
                 deletePatientRecord($recordId, $patientId);
             }
-            header("Location: doctorPatient.php");
+            header("Location: dashboard.php");
             exit();
         } else {
-            $_SESSION["error-message"] = "No patient records were selected";
-            header("Location: doctorPatient.php");
+            header("Location: dashboard.php");
         }
         break;
         
@@ -109,7 +108,7 @@ switch ($action) {
         if (!filter_var($newNotes, FILTER_SANITIZE_STRING)) {
             echo "Invalid notes";
         } else {
-            setNotes($id, $newNotes);
+            setNotes($patientId, $newNotes);
             $_SESSION["patient"] = fetchPatient($patientId, $doctorId);
             echo "Notes saved";
         }

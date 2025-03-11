@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="./style/record_styles.css">
   <link rel="stylesheet" href="./style/form_styles.css">
 </head>
-
 <body>
   <header>
     <a href="./index.php">

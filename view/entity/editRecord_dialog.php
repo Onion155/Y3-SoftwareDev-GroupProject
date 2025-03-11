@@ -1,5 +1,8 @@
 <dialog class="dialog" id="edit-dialog">
 			<div class="edit-container form-wrapper">
+				<a href="#" onclick="showEditDialog(false)">
+          		  <img id="x-icon" src="other/x-icon.png" alt="My Kidney Buddy mascot logo">
+     		   	</a>
 				<h3>Edit Record</h3>
 				<form method="POST">
 					<div class="form">
@@ -18,7 +21,7 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script>
 			const editDialog = document.getElementById("edit-dialog");
-			const showEditDialog = (show) => show ? editDialog.showModal() : (editDialog.close(), $(".error-message").text(message));
+			const showEditDialog = (show) => show ? editDialog.showModal() : (editDialog.close(), $(".error-message").text(""));
 
 			function postEditDetails() {
 				event.preventDefault();
@@ -32,7 +35,7 @@
 				action: "editRecord",
 				recordData: JSON.stringify(recordData)
 			}, function (message) {
-				if (message == "success") window.location.href = "doctorPatient.php";
+				if (message == "success") window.location.href = "dashboard.php";
 				else $(".error-message").text(message);
 			});
 			}

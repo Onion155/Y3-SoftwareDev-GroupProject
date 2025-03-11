@@ -1,34 +1,37 @@
 <dialog class="dialog" id="edit-dialog">
     <div class="edit-container form-wrapper">
+        <a href="#" onclick="showEditDialog(false)">
+            <img id="x-icon" src="other/x-icon.png" alt="My Kidney Buddy mascot logo">
+        </a>
         <h3>Modify Patient</h3>
         <form class="edit-form form" method="POST">
             <div class="form-row">
               <input type="hidden" id="patient-id" name="patient-id">
                 <div class="form-container">
-                    <label for="first-name">First Name</label>
+                    <label for="edit-first-name">First Name</label>
                     <input name="firstName" id="edit-first-name" type="text" placeholder="First Name" />
                 </div>
                 <div class="form-container">
-                    <label for="last-name">Last Name</label>
+                    <label for="edit-last-name">Last Name</label>
                     <input name="lastName" id="edit-last-name" type="text" placeholder="Last Name" />
                 </div>
             </div>
-            <label for="email">Email</label>
+            <label for="edit-email">Email</label>
             <input name="email" id="edit-email" type="text" placeholder="Email" />
-            <label for="nhs">NHS Number</label>
+            <label for="edit-nhs">NHS Number</label>
             <input name="nhs" id="edit-nhs" type="text" placeholder="NHS Number" />
-            <label for="dob">Date of Birth</label>
+            <label for="edit-dob">Date of Birth</label>
             <input name="dob" id="edit-dob" type="date" placeholder="Date of Birth" />
             <div class="form-row">
                 <div class="form-container">
-                    <label for="sex">Sex</label>
+                    <label for="edit-sex">Sex</label>
                     <select id="edit-sex" name="sex" class="dropdown">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>
                 </div>
                 <div class="form-container">
-                    <label for="ethnicity">Ethnicity</label>
+                    <label for="edit-ethnicity">Ethnicity</label>
                     <select id="edit-ethnicity" name="ethnicity" class="dropdown">
                         <option value="black">Black</option>
                         <option value="other">Other</option>
@@ -37,7 +40,7 @@
             </div>
             <span class="form-checkbox">
                 <input name="expert" id="edit-expert" type="checkbox">
-                <label for="expert">The patient can record, edit, and delete their eGFR records</label>
+                <label for="edit-expert">Patient can record, edit, and delete their eGFR records</label>
             </span>
             <p class="error-message"></p>
             <button onclick="postEditDetails()">Edit Patient</button>
@@ -54,7 +57,7 @@
             getEditDetails();
         } else {
             editDialog.close();
-            $(".error-message").text(message);
+            $(".error-message").text("");
         }
     }
     

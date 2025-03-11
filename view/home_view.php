@@ -76,7 +76,7 @@ function renderFAQ($question, $answer) {
                 </div>
                 </div>
                 <div class="banner">
-                    <h3>Adaptive Resources</h3>
+                    <h3>Adaptive<br>Resources</h3>
                     <img src="../other/resources_icon.png" alt="Adaptive Resources">
                     <div class="p-wrapper">
                         <p>Create, edit, or delete eGFR records, and upload CSV data to visualise them through charts.</p>

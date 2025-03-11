@@ -26,8 +26,9 @@ select {
 	box-sizing: border-box;
 }
 
-button {
+.form button {
 	min-width: 120px;
+	font-size: 18px;
 	padding: 10px 26px;
 	background-color: var(--text-black);
 	color: #fff;
@@ -35,6 +36,17 @@ button {
 	cursor: pointer;
 	border-radius: 50px;
 	transition: all 0.3s ease 0s;
+}
+
+.form button:hover {
+	color: var(--text-black);
+	background-color: #eeeeee;
+}
+
+#x-icon {
+	width: 20px;
+	height: auto;
+	float: right;
 }
 
 .red-button {
@@ -89,7 +101,7 @@ dialog::backdrop {
 	height: 45px;
 	width: 100%;
 	margin-bottom: 20px;
-	font-size: 16px;
+	font-size: 18px;
 	padding: 0 12px;
 	background-color: rgba(255, 255, 255, 0.5);
 	border-radius: 5px;
@@ -108,10 +120,6 @@ dialog::backdrop {
 	width: auto;
 	margin: initial;
 }
-.form-checkbox label {
-	font-size: 0.9em;
-}
-
 
 .form .form-row {
 	display: flex;
@@ -157,7 +165,6 @@ margin-top: 20px;
 }
 
 #input-container text {
-	font-size: 0.9em;
 	margin-left: 8px;
 }
 

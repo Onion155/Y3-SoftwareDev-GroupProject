@@ -93,8 +93,10 @@
             </div>
           </div>
       </div>
-    <?php else: ?>
-      <p>No patients were found.</p>
+    <?php elseif ($isSearch): ?>
+        <p> No patients were found.</p>
+      <?php else: ?>
+        <p> Search for your assigned patient(s) to begin.</p>
     <?php endif ?>
   <?php require_once "entity/editPatient_dialog.php" ?>
   <?php require_once "entity/addPatient_dialog.php" ?>
@@ -114,7 +116,7 @@
             action: "setPatientSession",
             patientId: patientId
         }, function(message) {
-          if (message == "success") window.location.href = "doctorPatient.php";
+          if (message == "success") window.location.href = "dashboard.php";
         });
     }
 
@@ -164,5 +166,4 @@
 
   </script>
 </body>
-
 </html>

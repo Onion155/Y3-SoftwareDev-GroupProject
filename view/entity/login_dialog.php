@@ -1,5 +1,8 @@
 <dialog class="dialog" id="login-dialog">
 			<div class="login-container form-wrapper">
+				<a href="#" onclick="showLoginDialog(false)">
+					<img id="x-icon" src="other/x-icon.png" alt="My Kidney Buddy mascot logo">
+				</a>
 				<h3>Login Account</h3>
 				<form class="login-form form" method="POST">
 					<label for="login-email">Email</label>
@@ -32,7 +35,7 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 const loginDialog = document.getElementById("login-dialog");
-const showLoginDialog = (show) => show ? loginDialog.showModal() : loginDialog.close();
+const showLoginDialog = (show) => show ? loginDialog.showModal() : (loginDialog.close(), $(".error-message").text(""));
 
 function postLoginDetails() {
 	event.preventDefault();
