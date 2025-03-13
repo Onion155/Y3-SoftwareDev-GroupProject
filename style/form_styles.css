@@ -26,7 +26,7 @@ select {
 	box-sizing: border-box;
 }
 
-.form button {
+.form button:not(#toggle-password) {
 	min-width: 120px;
 	font-size: 18px;
 	padding: 10px 26px;
@@ -170,4 +170,45 @@ margin-top: 20px;
 
 #egfr-form button {
 padding: 10px;
+}
+
+#password-wrapper {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+}
+
+#password,
+#signup-password,
+#confirm-password {
+width: 82%;
+}
+
+.form #toggle-password {
+	margin-top: 5px;
+	width: 60px;
+	height: 45px;
+	font-size: 18px;
+	float: right;
+	background-color: var(--text-black);
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	border-radius: 15px;
+	transition: all 0.3s ease 0s;
+}
+
+.form #toggle-password:hover {
+	background-color: #eeeeee;
+}
+
+.form #toggle-password:hover #show-hide{
+	filter: invert(0);
+}
+
+#show-hide {
+	transition: all 0.3s ease 0s;
+	filter: invert();
+	height: 22px;
+	width: auto;
 }
