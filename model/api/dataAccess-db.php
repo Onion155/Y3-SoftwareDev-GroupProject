@@ -6,7 +6,7 @@
 
 
 //Connect to the database file
-$dbPath = "model\data\medicalRoles.db";
+$dbPath = "model/data/medicalRoles.db";
 $pdo = new PDO("sqlite:$dbPath");
 
 //Find and fetch the user by the user username or email
