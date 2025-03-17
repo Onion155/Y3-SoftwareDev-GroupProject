@@ -74,7 +74,7 @@
                 <tr class="record-row">
                 <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                   <td><?= $patientRecords[$i]->dateCreated ?></td>
-                  <td><?= empty($patientRecords[$i]->bloodPressure) ? "N/A" : round($patientRecords[$i]->bloodPressure, 2) ?></td>
+                  <td><?= $patientRecords[$i]->bloodPressure == "" ? "N/A" : round($patientRecords[$i]->bloodPressure, 2) ?></td>
                   <td><?= round($patientRecords[$i]->eGFR,2) ?></td>
                   <td><?= $egfrValue[$i] ?></td>
                 </tr>

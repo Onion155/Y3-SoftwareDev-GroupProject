@@ -52,7 +52,7 @@
           <?php for ($i = 0; $i < count($patientRecords); $i++): ?>
             <tr>
               <td><?= $patientRecords[$i]->dateCreated ?></td>
-              <td><?= $patientRecords[$i]->bloodPressure ?></td>
+              <td><?= $patientRecords[$i]->bloodPressure == "" ? "N/A" : round($patientRecords[$i]->bloodPressure, 2) ?></td>
               <td><?= $patientRecords[$i]->eGFR ?></td>
               <td><?= $egfrValue[$i] ?></td>
             </tr>
