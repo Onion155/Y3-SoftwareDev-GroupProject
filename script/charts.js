@@ -11,6 +11,14 @@ egfrChart = new Chart(ctx, {
         tension: 0.3,
         data: egfrReadings,
       },
+      {
+        label: "Normal eGFR Threshold (90)",
+        data: Array(egfrReadings.length).fill(90),
+        borderColor: "gray",
+        borderWidth: 1,
+        borderDash: [10, 5],
+        pointRadius: 0
+      }
     ],
   },
   options: {
