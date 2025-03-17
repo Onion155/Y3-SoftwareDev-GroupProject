@@ -50,7 +50,10 @@
       </div>
       <div id="box-right">
 		<h4>Patient Records</h4>
-      <form method="POST" action="requestHandler.php?action=deletePatientRecords">
+		<form method="POST" action="./requestHandler.php?action=unsetPatientSession">
+		  <button type="submit" id="return-button">Return to search</button>
+		</form>
+		<form method="POST" action="requestHandler.php?action=deletePatientRecords">
         <div id="table-container">
           <table class="table-content">
             <thead>
@@ -71,7 +74,7 @@
                 <tr class="record-row">
                 <td><input class="checkbox_ids" name="checkbox[]" type="checkbox" value="<?= $patientRecords[$i]->id ?>"></td>
                   <td><?= $patientRecords[$i]->dateCreated ?></td>
-                  <td><?= round($patientRecords[$i]->bloodPressure,2) ?></td>
+                  <td><?= empty($patientRecords[$i]->bloodPressure) ? "N/A" : round($patientRecords[$i]->bloodPressure, 2) ?></td>
                   <td><?= round($patientRecords[$i]->eGFR,2) ?></td>
                   <td><?= $egfrValue[$i] ?></td>
                 </tr>
@@ -84,14 +87,12 @@
         <div class="action-dropdown">
           <button>Actions</button>
           <div class="content">
-            <a href="#" onclick="showAddDialog(true)">Calculate</a>
+            <a href="#" onclick="showAddDialog(true)">Add record</a>
+            <a href="#" onclick="showCSVDialog(true)">Add records <span style="font-size: 10px;">(.csv)</span></a>
             <a id="edit" href="#" onclick="showEditDialog(true)">Edit record</a>
             <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
             </div>
           </div>
-        <form method="POST" action="./requestHandler.php?action=unsetPatientSession">
-          <button type="submit" id="return-button" >Return to search</button>
-       </form>
       </div>
     </div>
       <?php if(sizeof($egfrReadings) > 2): ?>
@@ -111,6 +112,7 @@
       </span>
   </div>
   <?php require_once "entity/editRecord_dialog.php" ?>
+  <?php require_once "entity/addRecordCSV_dialog.php" ?>
   <?php require_once "entity/addRecord_dialog.php" ?>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

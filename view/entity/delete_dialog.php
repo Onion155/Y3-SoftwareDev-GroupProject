@@ -7,15 +7,11 @@
 						recovered.
 					</p>
 				</div>
-					<button type="submit" class="red-button">Delete</button>
-					<button
-						type="reset"
-						class="green-button"
-						onclick="showDeleteDialog(false)"
-					>
-						Cancel
-					</button>
-			</div>
+				<button type="submit" id="bad-button">Delete</button>
+				<button type="reset" id="good-button" onclick="showDeleteDialog(false)">
+					Cancel
+				</button>
+				</div>
 		</dialog>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>

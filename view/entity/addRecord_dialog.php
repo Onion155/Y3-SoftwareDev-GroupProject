@@ -13,8 +13,8 @@
 				<input type="text" id="add-blood-pressure"/>
 			</div>
 			<p class="error-message"></p>
-			<button onclick="postAddDetails()" class="green-button">Calculate</button>
-			<button type="reset" class="red-button" onclick="showAddDialog(false)">Cancel</button>
+			<button onclick="postAddDetails()" id="good-button">Calculate</button>
+			<button type="reset" id="bad-button" onclick="showAddDialog(false)">Cancel</button>
 		</form>
 	</div>
 </dialog>

@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style/search_styles.css">
-    <link rel="stylesheet" href="./style/form_styles.css">
-
-</head>
-
-<body>
     <dialog class="dialog" id="csv-dialog">
         <div class="csv-container form-wrapper">
             <a href="#" onclick="showCSVDialog(false)">
@@ -20,34 +5,33 @@
             </a>
             <h3>Add Records</h3>
             <div id="csv-table-wrapper">
-                <div id="csv-table-container">
-                    <table id="records-table" class="csv-table-content">
-                        <thead>
-                            <tr>
-                                <th>Creatinine</th>
-                                <th>Blood Pressure</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div id="csv-table-container">
+                <table id="records-table" class="csv-table-content">
+                    <thead>
+                        <tr>
+                            <th>Creatinine</th>
+                            <th>Blood Pressure</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
                 <button id="good-button" onclick="postCSVAddDetails() ">Add Records</button>
                 <button id="bad-button" onclick="clearTableRecords()">Cancel .csv</button>
-            </div>
-            <div id="upload-container">
-                <input type="file" id="csvFileInput" accept=".csv" />
-                <button onclick="handleFileUpload()">Upload .csv</button>
-            </div>
+        </div>
+        <div id="upload-container">
+            <input type="file" id="csvFileInput" accept=".csv" />
+            <button onclick="handleFileUpload()">Upload .csv</button>
+        </div>
         </div>
     </dialog>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        const csvDialog = document.getElementById("csv-dialog");
-        const showCSVDialog = (show) => show ? csvDialog.showModal() : csvDialog.close();
-        csvDialog.showModal();
+    const csvDialog = document.getElementById("csv-dialog");
+    const showCSVDialog = (show) => show ? csvDialog.showModal() : csvDialog.close();
 
         // Function to parse CSV data
         function parseCSV(csv) { // this breaks the data up in the csv file
@@ -70,7 +54,7 @@
 
         // Function to add data to patients, it sends the data to the correct patient
         var rowsCreated;
-
+        
         function addDataToRow(csvData) {
             const recordsData = parseCSV(csvData);
             rowsCreated = 0;
@@ -111,41 +95,38 @@
         function createTableRow(creatinine, bloodPressure) {
             var row = $("<tr>");
             //row.append($("<td>").append(createInput(firstName, "csv-date-created-"+ (rowsCreated+1), "Date of Creation")));
-            row.append($("<td>").append(createInput(creatinine, "csv-creatinine-" + (rowsCreated + 1), "Creatinine")));
-            row.append($("<td>").append(createInput(bloodPressure, "csv-blood-pressure-" + (rowsCreated + 1), "Blood Pressure")));
+            row.append($("<td>").append(createInput(creatinine, "csv-creatinine-" + (rowsCreated+1), "Creatinine")));
+            row.append($("<td>").append(createInput(bloodPressure, "csv-blood-pressure-" + (rowsCreated+1), "Blood Pressure")));
             $(".csv-table-content tbody").append(row);
             $("#csv-table-wrapper").show();
             $("#upload-container").hide();
         }
-        function createInput(value, id, placeholder) {
-            var textField = $("<input>")
-                .attr("type", "input")
-                .attr("class", id)
-                .attr("placeholder", "Enter " + placeholder)
-                .val(value ? value : "");
-            return textField;
-        }
+            function createInput(value, id, placeholder) {
+                var textField = $("<input>")
+                    .attr("type", "input")
+                    .attr("id", id)
+                    .attr("placeholder", "Enter " + placeholder)
+                    .val(value ? value : "");
+                return textField;
+            }
 
         function postCSVAddDetails() {
             event.preventDefault();
-
-            for (let i = 1; i < rowsCreated + 1; i++) {
+            for(let i = 1; i < rowsCreated + 1; i++) {
                 const recordData = {
-                    //dateCreated: $("#add-date-created"+"-"+1).val(),
-                    creatinine: $("#add-creatinine" + "-" + 1).val(),
-                    bloodPressure: $("#add-blood-pressure" + "-" + 1).val(),
+                   //dateCreated: $("#add-date-created"+"-"+1).val(),
+                    creatinine: $("#csv-creatinine"+"-"+i).val(),
+                    bloodPressure: $("#csv-blood-pressure"+"-"+i).val(),
                 };
+                console.log(recordData);
                 $.post("requestHandler.php", {
                     action: "addRecord",
-                    patientData: JSON.stringify(patientsData)
+                    recordData: JSON.stringify(recordData)
                 }, function (message) {
                     if (message == "success") alert("Row " + i + " successfully added");
                     else alert("Row " + i + " error: " + message);
+                    if (i == rowsCreated) window.location.href = "dashboard.php";
                 });
             }
-            window.location.href = "dashboard.php";
         }
-    </script>
-    </body>
-
-</html>
+</script>

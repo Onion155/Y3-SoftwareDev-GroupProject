@@ -39,7 +39,7 @@
         <input class="search-input" name="search" type="search" placeholder="Search Patient">
         <input type="hidden" id="filter" name="filter">
         <div class="action-dropdown" id="filter-dropdown">
-            <button id="filter-button">Filter</button>
+            <button id="filter-button"></button>
             <div class="content">
               <a href="#" onclick="applyFilter('firstName')">First Name</a>
               <a href="#" onclick="applyFilter('lastName')">Last Name</a>
@@ -54,7 +54,7 @@
           <table class="table-content">
             <thead>
               <tr>
-                <th><input id="select_all_ids" type="checkbox" }"></th>
+                <th><input id="select_all_ids" type="checkbox"></th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>NHS Number</th>
@@ -84,20 +84,23 @@
             </tbody>
           </table>
         </div>
-        <div class="action-dropdown" id="patient-dropdown">
-            <button>Actions</button>
-            <div class="content">
-              <a href="#" onclick="showAddDialog(true)">Add patient</a>
-              <a id="edit" href="#" onclick="showEditDialog(true)">Edit selected</a>
-              <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
-            </div>
-          </div>
-      </div>
+      
     <?php elseif ($isSearch): ?>
         <p> No patients were found.</p>
       <?php else: ?>
         <p> Search for your assigned patient(s) to begin.</p>
     <?php endif ?>
+            <div class="action-dropdown" id="patient-dropdown">
+            <button>Actions</button>
+            <div class="content">
+              <a href="#" onclick="showAddDialog(true)">Add patient</a>
+              <a href="#" onclick="showCSVDialog(true)">Add patients <span style="font-size: 10px;">(.csv)</span></a>
+              <a id="edit" href="#" onclick="showEditDialog(true)">Edit selected</a>
+              <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
+            </div>
+          </div>
+          </div>
+  <?php require_once "entity/addPatientCSV_dialog.php" ?>
   <?php require_once "entity/editPatient_dialog.php" ?>
   <?php require_once "entity/addPatient_dialog.php" ?>
   <script>

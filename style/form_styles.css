@@ -212,3 +212,99 @@ width: 82%;
 	height: 22px;
 	width: auto;
 }
+
+.csv-container {
+	width: auto;
+	min-height: 200px;
+}
+
+#upload-container {
+	width: 350px;
+}
+
+#csv-table-wrapper {
+	display: none;
+}
+
+#csv-table-container {
+	overflow-y: auto;
+	width: auto;
+	max-height: 500px;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.csv-table-content {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+
+.csv-table-content thead tr {
+	background-color: var(--accent);
+    color: white;
+	font-weight: bold;
+	position: sticky;
+	top: 0;
+}
+
+.csv-table-content th {
+	padding: 12px 15px;
+}
+
+.csv-table-content tbody tr {
+	background-color: white;
+}
+
+.csv-table-content td:nth-last-child(1),
+.csv-table-content td:nth-last-child(2)
+{
+    width: 70px;
+}
+.csv-table-content td:nth-last-child(4) {
+	width: 150px;
+}
+
+.csv-table-content td:nth-child(1),
+.csv-table-content td:nth-child(2),
+.csv-table-content td:nth-child(3) {
+	width: 180px;
+}
+
+.csv-container h3,
+#csvFileInput {
+		display: inline-block;
+	margin-bottom: 16px;
+}
+
+
+.csv-container button {
+	margin-top: 20px;
+	width: 100%;
+	background-color: var(--text-black);
+}
+
+
+
+#bad-button {
+	background-color: transparent;
+	border: 2px solid var(--text-black);
+	color: red;
+	
+}
+
+#good-button {
+	background-color: var(--text-black);
+	color: white;
+}
+
+#good-button,
+#bad-button {
+	width: 165px;
+	margin-right: 8px;
+}
+
+#records-table td {
+width: 250px;
+}

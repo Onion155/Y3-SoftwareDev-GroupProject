@@ -13,8 +13,8 @@
 						<input type="text" id="edit-blood-pressure"/>
 					</div>
 					<p class="error-message"></p>
-					<button onclick="postEditDetails()" class="green-button">Edit</button>
-					<button type="reset" class="red-button" onclick="showEditDialog(false)">Cancel</button>
+					<button onclick="postEditDetails()" id="good-button">Edit</button>
+					<button type="reset" id="bad-button" onclick="showEditDialog(false)">Cancel</button>
 				</form>
 			</div>
 		</dialog>

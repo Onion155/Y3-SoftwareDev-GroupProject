@@ -41,7 +41,7 @@ h2 {
 }
 
 h3 {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 500;
 }
 
@@ -240,6 +240,18 @@ button:hover {
 	background-color: rgba(var(--accent-rgb), 0.5);
 }
 
+#box-right h4 {
+	display: inline-block;
+	float: left;
+}
+
+#return-button {
+	background-color: rgba(var(--primary-rgb),0.7);
+	border-radius: 10px;
+	float: right;
+	margin-bottom: 25px;
+}
+
 #table-container {
 	overflow-y: auto;
 	width: 740px;
@@ -353,12 +365,6 @@ td {
 	display: inline-block;
 }
 
-#return-button {
-	background-color: var(--accent);
-	margin-top: 20px;
-	border-radius: 10px;
-	float: left;
-}
 
 #header,
 #edit,

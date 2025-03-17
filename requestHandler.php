@@ -203,21 +203,17 @@ function validateDate($dateString, $format) {
 } 
 
 function validateRecord($data, $action){
-    foreach ($data as $key => $value) {
-        if (empty($value)) {
-            echo "All fields are required";
-            exit();
-        }
-    }
-
     $creatinine = $data->creatinine;
     $bloodPressure = $data->bloodPressure;
     if ($action == "edit") $recordId = $data->recordId;
 
-    if ($creatinine < 0 || !filter_var($creatinine, FILTER_VALIDATE_FLOAT)) {
+    if(empty($creatinine)) {
+        echo "creatinine needs to be filled in";
+        exit();
+    } else if ($creatinine < 0 || !filter_var($creatinine, FILTER_VALIDATE_FLOAT)) {
         echo "Invalid creatinine value";
         exit();
-    } if ($bloodPressure < 0 || !filter_var($bloodPressure, FILTER_VALIDATE_FLOAT)) {
+    } else if (!empty($bloodPressure) && ($bloodPressure < 0 || !filter_var($bloodPressure, FILTER_VALIDATE_FLOAT))) {
         echo "Invalid blood pressure value";
         exit();
     } else {
