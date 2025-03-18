@@ -285,6 +285,11 @@ margin-right: 15px;
     transition: 0.3s;
 }
 
+.faq #separator {
+    border-bottom: 1px solid var(--text-black);
+    margin-bottom: 16px;
+}
+
 .faq details:hover {
     background-color: #DFF6E3;
     transform: scale(1.02);
@@ -300,7 +305,11 @@ margin-right: 15px;
 }
 
 .faq details p {
-    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.faq details ul {
+    padding-left: 20px;
 }
 
 .faq summary::after {

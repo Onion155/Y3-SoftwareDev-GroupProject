@@ -1,6 +1,6 @@
 <?php 
 function renderFAQ($question, $answer) {
-    echo "<details><summary>$question</summary><p>$answer</p></details>";
+    echo "<details><summary>$question</summary><p id='separator'></p>$answer</details>";
 }
 ?>
 
@@ -104,15 +104,65 @@ function renderFAQ($question, $answer) {
                 </div>
             </div>
 
-            <div class="faq" data-aos="fade-up">
+            <div id="faq" class="faq" data-aos="fade-up">
                 <h1>Frequently Asked Questions</h1>
                 <?php 
-                    renderFAQ("What are the early signs of kidney disease?", "answer");
-                    renderFAQ("What is eGFR, and why is it important?", "answer");
-                    renderFAQ("What foods should i avoid if i have kidney problems?", "answer");
-                    renderFAQ("What are the common causes for kidney disease?", "answer");
-                    renderFAQ("How can I sign up for My Kidney Buddy?", "answer");
-                    renderFAQ("How can this service be used to calculate my eGFR?", "answer");
+                    renderFAQ("What are the early signs of kidney disease?","
+                    <p>Early signs include:</p>
+                    <ul>
+                        <li>Changes in urination (frequency, foamy, or blood in urine).</li>
+                        <li>Swelling in the legs, ankles, or face.</li>
+                        <li>Fatigue and difficulty concentrating.</li>
+                        <li>Persistent itching and dry skin. </li>
+                        <li>High blood pressure and/or shortness of breath.</li>
+                    </ul>
+                    ");
+                    renderFAQ("What is eGFR, and why is it important?", "
+                    <ul>
+                        <li>eGFR (estimated Glomerular Filtration Rate) measures kidney function.</li>
+                        <li>It estimates how well your kidneys filter waste from the blood.</li>
+                        <li>A lower eGFR means reduced kidney function.</li>
+                        <li>It helps diagnose and monitor kidney disease.</li>
+                        <li>Doctors use it to guide treatment and lifestyle changes.</li>
+                    </ul>
+                    ");
+                    renderFAQ("What foods should i avoid if i have kidney problems?", "
+                    <ul>
+                        <li>Limit high-sodium foods like processed meats and salty snacks.</li>
+                        <li>Avoid high-potassium foods like bananas, potatoes, and oranges.</li>
+                        <li>Reduce phosphorus-rich foods like dairy and nuts.</li>
+                        <li>Limit protein intake if advised by a doctor.</li>
+                        <li>Stay away from sugary drinks and alcohol.</li>
+                    </ul>
+                    ");
+                    renderFAQ("What are the common causes for kidney disease?", "
+                    <ul>
+                        <li>Diabetes and high blood pressure.</li>
+                        <li>Kidney infections or blockages.</li>
+                        <li>Long-term use of certain medications.</li>
+                        <li>Autoimmune diseases like lupus.</li>
+                        <li>Genetic conditions or family history.</li>
+                    </ul>
+
+                    ");
+                    renderFAQ("How can I sign up for My Kidney Buddy?", "
+                    <ul>
+                        <li>You must be registered with a GP.</li>
+                        <li>Your doctor creates your account and sets an initial password.</li>
+                        <li>The doctor decides if you are a regular or expert patient.</li>
+                        <li>You receive login details and change your password.</li>
+                        <li>Access your profile based on your assigned patient type.</li>
+                    </ul>
+                    ");
+                    renderFAQ("How can this service be used to calculate my eGFR?", "
+                    <ul>
+                        <li>Regular patients can view their eGFR results and history.</li>
+                        <li>Expert patients can enter their details to calculate eGFR.</li>
+                        <li>The system uses medical formulas to process the input.</li>
+                        <li>Results are displayed instantly with relevant insights.</li>
+                        <li>This helps track kidney health over time.</li>
+                    </ul>
+                    ");
                 ?>
             </div>
             <footer class="copyright">
