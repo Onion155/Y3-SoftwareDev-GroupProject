@@ -88,6 +88,7 @@
     <div class="action-dropdown">
       <button>Actions</button>
       <div class="content">
+        <a href="#" onclick="showCSVDialog(true)">Add records <span style="font-size: 10px;">(.csv)</span></a>
         <a id="edit" href="#" onclick="showEditDialog(true)">Edit record</a>
         <a id="delete" href="#" onclick="showDeleteDialog(true)">Delete selected</a>
       </div>
@@ -126,6 +127,7 @@
   <p>© 2025 My Kidney Buddy. All rights reserved.</p>
 </span>
 </div>
+<?php require_once "entity/addRecordCSV_dialog.php" ?>
 <?php require_once "entity/editRecord_dialog.php" ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
