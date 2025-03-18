@@ -251,6 +251,7 @@ function validateLogin($email, $password) {
         exit();
     } else {
         updateLoginAttempts($email, 0);
+        $_SESSION["session-time"] =  time();
         $_SESSION["account"] = $account;
         echo "success";
     }
@@ -293,6 +294,7 @@ function validateSignup($email, $password, $confirmPassword) {
         updatePassword($email, password_hash($password, PASSWORD_DEFAULT));
         $account = fetchAccount($email);
         $_SESSION["account"] = $account;
+        $_SESSION["session-time"] =  time();
         echo "success";
     }
 }
