@@ -1,7 +1,7 @@
     <dialog class="dialog" id="csv-dialog">
         <div class="csv-container form-wrapper">
             <a href="#" onclick="showCSVDialog(false)">
-                <img id="x-icon" src="other/x-icon.png" alt="My Kidney Buddy mascot logo">
+                <img id="x-icon" src="other/x-icon.png" alt="exit logo">
             </a>
             <h3>Create Patients</h3>
             <div id="csv-table-wrapper">

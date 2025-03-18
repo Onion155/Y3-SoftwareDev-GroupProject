@@ -1,7 +1,7 @@
 <dialog class="dialog" id="edit-dialog">
 			<div class="edit-container form-wrapper">
 				<a href="#" onclick="showEditDialog(false)">
-          		  <img id="x-icon" src="other/x-icon.png" alt="My Kidney Buddy mascot logo">
+          		  <img id="x-icon" src="other/x-icon.png" alt="exit logo">
      		   	</a>
 				<h3>Edit Record</h3>
 				<form method="POST">

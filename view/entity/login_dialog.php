@@ -1,7 +1,7 @@
 <dialog class="dialog" id="login-dialog">
     <div class="login-container form-wrapper">
         <a href="#" onclick="showLoginDialog(false)">
-            <img id="x-icon" src="other/x-icon.png" alt="My Kidney Buddy mascot logo">
+            <img id="x-icon" src="other/x-icon.png" alt="exit logo">
         </a>
         <h3>Login Account</h3>
         <form class="login-form form" method="POST">

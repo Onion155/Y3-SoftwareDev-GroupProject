@@ -1,7 +1,7 @@
 <dialog class="dialog" id="add-dialog">
 	<div class="add-container form-wrapper">
         <a href="#" onclick="showAddDialog(false)">
-            <img id="x-icon" src="other/x-icon.png" alt="My Kidney Buddy mascot logo">
+            <img id="x-icon" src="other/x-icon.png" alt="exit logo">
         </a>
 		<h3>Add Record</h3>
 		<form method="POST">

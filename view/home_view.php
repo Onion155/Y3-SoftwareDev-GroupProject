@@ -15,6 +15,7 @@ function renderFAQ($question, $answer) {
     <link rel="stylesheet" href="../style/home_styles.css">
     <link rel="stylesheet" href="../style/form_styles.css">
 </head>
+    <?php require_once "entity/contact_dialog.php" ?>
     <?php require_once "entity/signup_dialog.php" ?>
     <?php require_once "entity/login_dialog.php" ?>
     <body>
@@ -22,7 +23,7 @@ function renderFAQ($question, $answer) {
             <header>
                     <nav>
                         <div class="nav-left">
-                            <a href="#contact"><h4>Contact Us</h4></a>  
+                            <a href="#" onclick="showContactDialog(true)"><h4>Contact Us</h4></a>  
                             <a href="#faq"><h4>FAQ</h4></a>  
                         </div>
                         <div class="nav-right">
@@ -103,18 +104,16 @@ function renderFAQ($question, $answer) {
                 </div>
             </div>
 
-            <div class="faq-wrapper" data-aos="fade-up">
+            <div class="faq" data-aos="fade-up">
                 <h1>Frequently Asked Questions</h1>
-                <div id="faq" class="faq">
-                    <?php 
-                        renderFAQ("What are the early signs of kidney disease?", "answer");
-                        renderFAQ("What is eGFR, and why is it important?", "answer");
-                        renderFAQ("What foods should i avoid if i have kidney problems?", "answer");
-                        renderFAQ("What are the common causes for kidney disease?", "answer");
-                        renderFAQ("How can I sign up for My Kidney Buddy?", "answer");
-                        renderFAQ("How can this service be used to calculate my eGFR?", "answer");
-                    ?>
-                </div>
+                <?php 
+                    renderFAQ("What are the early signs of kidney disease?", "answer");
+                    renderFAQ("What is eGFR, and why is it important?", "answer");
+                    renderFAQ("What foods should i avoid if i have kidney problems?", "answer");
+                    renderFAQ("What are the common causes for kidney disease?", "answer");
+                    renderFAQ("How can I sign up for My Kidney Buddy?", "answer");
+                    renderFAQ("How can this service be used to calculate my eGFR?", "answer");
+                ?>
             </div>
             <footer class="copyright">
                 <p>© My Kidney Buddy. All rights reserved.</p>
