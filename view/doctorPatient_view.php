@@ -100,12 +100,28 @@
         <h4>eGFR History Chart</h4>
       <canvas id="egfr-chart"></canvas>
       </div>
+      <div id="filter-container">
+        <label for="egfr-date-filter">Filter by Date:</label>
+        <select id="egfr-date-filter">
+          <option value="all">All Data</option>
+          <option value="last6months">Last 6 Months</option>
+          <option value="last1year">Last 1 Year</option>
+        </select>
+      </div>
       <?php endif ?>
       <?php if(sizeof($bpReadings) > 2): ?>
       <div id="chart-container">
       <h4>Blood Pressure History Chart</h4>
       <canvas id="bp-chart"></canvas> 
       </div>
+        <div id="filter-container">
+          <label for="bp-date-filter">Filter by Date:</label>
+          <select id="bp-date-filter">
+            <option value="all">All Data</option>
+            <option value="last6months">Last 6 Months</option>
+            <option value="last1year">Last 1 Year</option>
+          </select>
+        </div>
       <?php endif ?>
       <span id="bottom-text">
       <p>© 2025 My Kidney Buddy. All rights reserved.</p>
@@ -150,10 +166,20 @@
   
     </script>
   <script>
-    egfrReadings = <?php echo json_encode($egfrReadings) ?>;
-    bpReadings = <?php echo json_encode($bpReadings) ?>;
-    dateLabels = <?php echo json_encode($dateLabels) ?>;
-    document.getElementById("egfr-chart")
+    const egfrReadings = <?php echo json_encode($egfrReadings) ?>;
+    const bpReadings = <?php echo json_encode($bpReadings) ?>;
+    const egfrDateLabels = <?php echo json_encode($egfrDateLabels) ?>;
+    const bpDateLabels = <?php echo json_encode($bpDateLabels) ?>;
+
+    const egfrHistory = egfrDateLabels.map((date, i) => ({
+        date: date,
+        egfr: egfrReadings[i]
+    }));
+    const bpHistory = bpDateLabels.map((date, i) => ({
+        date: date,
+        egfr: bpReadings[i]
+    }));
+
 </script>
 <script src ="script/charts.js"></script>
 <script src ="script/notes.js"></script>
