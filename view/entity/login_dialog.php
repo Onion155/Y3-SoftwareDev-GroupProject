@@ -44,9 +44,12 @@
         }, function (message) {
             if (message == "success") window.location.href = "dashboard.php";
             else {
-                if (message != "Please fill in the fields") {
-                    $("#email").val("");
+                if (message == "Password is incorrect") {
                     $("#password").val("");
+                }
+                else if (message != "Please fill in the fields") {
+                    $("#password").val("");
+                    $("#email").val("");
                 }
                 $("#login-error-message").text(message);
             }
