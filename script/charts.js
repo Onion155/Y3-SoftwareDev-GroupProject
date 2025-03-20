@@ -43,7 +43,6 @@ function renderBpGraph(filter) {
 var egfrChart = null;
 
 function renderEgfrGraph(filter) {
-  console.log("hi");
   let filteredData = filterHistory(egfrHistory, filter)
   ctx = document.getElementById("egfr-chart").getContext("2d");
   if (!egfrChart) { //Create new chart if it doesn't exist
