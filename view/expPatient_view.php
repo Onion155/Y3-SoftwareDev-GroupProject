@@ -34,7 +34,7 @@
     <div id="box-left">
       <div id="info-container">
         <h4>Current Kidney Health</h4>
-        <p><?= $egfrDescription ?></p>
+        <p><?= $egfrDescription ?: "You have no results to show" ?></p>
       </div>
       <div id="form-container">
         <h4>Add eGFR Record</h4>
@@ -58,7 +58,7 @@
           <table class="table-content">
             <thead>
               <tr>
-                <th><input id="select_all_ids" type="checkbox" }"></th>
+                <th><input id="select_all_ids" type="checkbox"></th>
                 <th>Date Created (yyyy-mm-dd)</th>
                 <th>Blood Pressure (mmHg)</th>
                 <th>eGFR (ml/min/1.73m<sup>2</sup>)</th>

@@ -58,7 +58,7 @@
           <table class="table-content">
             <thead>
               <tr>
-              <th><input id="select_all_ids" type="checkbox"}"></th>
+              <th><input id="select_all_ids" type="checkbox"></th>
                 <th>Date Created (yyyy-mm-dd)</th>
                 <th>Blood Pressure (mmHg)</th>
                 <th>eGFR (ml/min/1.73m<sup>2</sup>)</th>
