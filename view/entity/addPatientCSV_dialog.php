@@ -139,7 +139,7 @@
 
         function postCSVAddDetails() {
             event.preventDefault();
-            
+            let rowCount = 0;
             for(let i = 1; i < rowsCreated + 1; i++) {
                 const patientsData = {
                     firstName: $("#csv-fn"+"-"+i).val(),
@@ -155,10 +155,21 @@
                     action: "addPatient",
                     patientData: JSON.stringify(patientsData)
                 }, function (message) {
-                    if (message == "success") alert("Row " + i + " successfully added");
-                    else alert("Row " + i + " error: " + message);
-                    if (i == rowsCreated) window.location.href = "dashboard.php";
 
+                    if (message == "success") rowCount++;
+                    else alert("Row " + i + " error: " + message);
+
+                    if (i == rowsCreated) {
+                      if (rowCount == rowsCreated) {
+                        alert("All Rows have been successfully added");
+                        window.location.href = "dashboard.php";
+                      }
+                      else if (rowCount > 0) {
+                        alert(rowCount + " Row(s) have been successfully added");
+                        window.location.href = "dashboard.php";
+                      }
+                      else alert("No rows have been added");
+                    }
                 });
           }
         }

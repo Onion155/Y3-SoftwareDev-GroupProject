@@ -112,20 +112,33 @@
 
         function postCSVAddDetails() {
             event.preventDefault();
+
+            let rowCount = 0;
             for(let i = 1; i < rowsCreated + 1; i++) {
                 const recordData = {
                    //dateCreated: $("#add-date-created"+"-"+1).val(),
                     creatinine: $("#csv-creatinine"+"-"+i).val(),
                     bloodPressure: $("#csv-blood-pressure"+"-"+i).val(),
                 };
-                console.log(recordData);
                 $.post("requestHandler.php", {
                     action: "addRecord",
                     recordData: JSON.stringify(recordData)
                 }, function (message) {
-                    if (message == "success") alert("Row " + i + " successfully added");
+
+                    if (message == "success") rowCount++;
                     else alert("Row " + i + " error: " + message);
-                    if (i == rowsCreated) window.location.href = "dashboard.php";
+
+                    if (i == rowsCreated) {
+                      if (rowCount == rowsCreated) {
+                        alert("All Rows have been successfully added");
+                        window.location.href = "dashboard.php";
+                      }
+                      else if (rowCount > 0) {
+                        alert(rowCount + " Row(s) have been successfully added");
+                        window.location.href = "dashboard.php";
+                      }
+                      else alert("No rows have been added");
+                    }
                 });
             }
         }

@@ -6,8 +6,11 @@ session_start();
 if (isset($_SESSION["session-time"]) && (time() - $_SESSION["session-time"] > 1800)) {
     session_unset();
     session_destroy();
-    header("Location: index.php");
-    exit();    
+    echo "<script>       
+            alert('Your 30 minute session has expired');
+            window.location.href = 'index.php';
+          </script>";
+    exit();
 }
 
 $account = $_SESSION["account"];
