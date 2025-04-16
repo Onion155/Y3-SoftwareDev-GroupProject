@@ -36,76 +36,14 @@
         </div>
     </dialog>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src = "view\entity\Helper.js"></script> 
     <script>
     const csvDialog = document.getElementById("csv-dialog");
+    
     const showCSVDialog = (show) => show ? csvDialog.showModal() : csvDialog.close();
 
-        // Function to parse CSV data
-        function parseCSV(csv) { // this breaks the data up in the csv file
-            const lines = csv.split('\n');
-            const headers = lines[0].split(',');
-            const data = [];
-
-            for (let i = 1; i < lines.length; i++) {
-                const row = lines[i].split(',');
-                if (row.length === headers.length) {
-                    const entry = {};
-                    for (let j = 0; j < headers.length; j++) {
-                        entry[headers[j].trim()] = row[j].trim();
-                    }
-                    data.push(entry);
-                }
-            }
-            return data;
-        }
-
-        // Function to add data to patients, it sends the data to the correct patient
-        var rowsCreated;
-        
-        function addDataToRow(csvData) {
-            const patientsData = parseCSV(csvData);
-            rowsCreated = 0;
-            patientsData.forEach(patient => {
-                const firstName = patient['First Name'];
-                const lastName = patient['Last Name'];
-                const email = patient['Email'];
-                const nhs = patient['NHS Number'];
-                const dob = patient['DoB'];
-                const isBlack = patient['Black'];
-                const isExpert = patient['Expert'];
-                const isFemale = patient['Female']
-
-                createTableRow(firstName, lastName, email, nhs, dob, isFemale, isBlack, isExpert);
-                rowsCreated++;
-
-            });
-        }
-
-        function clearTableRecords() {
-            $("#csv-table-wrapper").hide();
-            $("#upload-container").show();
-            $(".csv-table-content tbody").empty();
-        }
-
-        // Function to handle file upload
-        function handleFileUpload() {
-            const fileInput = document.getElementById('csvFileInput');
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function (event) {
-                const csvData = event.target.result;
-                addDataToRow(csvData);
-            };
-
-            if (file) {
-                reader.readAsText(file);
-            } else {
-                alert('Please select a CSV file to upload.');
-            }
-        }
-
-        function createTableRow(firstName, lastName, email, nhs, dob, isFemale, isBlack, isExpert) {
+    // the other functions are now in the helper.js script and its reveranced at the src above
+        function createTableRow(firstName, lastName, email, nhs, dob, isFemale, isBlack, isExpert) { // the function peramaters need to be retrieved from the helper script
             var row = $("<tr>");
             row.append($("<td>").append(createInput(firstName, "csv-fn-"+ (rowsCreated+1), "input", "First Name")));
             row.append($("<td>").append(createInput(lastName, "csv-ln-" + (rowsCreated+1), "input", "Last Name")));
