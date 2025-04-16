@@ -185,8 +185,8 @@ function validatePatient($data, $action) {
         if ($action == "add") {
         insertAccount($email, null, $role);
         $accountId = fetchAccount($email)->id;
-        
         insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhsNum, $ethnicity, $sex);
+        
         } else if ($action == "edit") {
            $accountId = fetchAccount($oldEmail)->id;
            updateAccount($accountId, $email, $role);

@@ -54,6 +54,19 @@ function fetchDoctor($accountId)
   }
 }
 
+function fetchAdmin($accountId)
+{
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM admin WHERE accountId = ?');
+  $statement->execute([$accountId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Admin');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0];
+  }
+}
+
 function setNotes($patientId, $notes)
 {
   global $pdo;

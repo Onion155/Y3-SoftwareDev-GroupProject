@@ -1,12 +1,9 @@
 <?php
-class Account {
+class Admin {
     private $id;
-    private $passwordHash;
-    private $email;
-    private $loginAttempts;
-    private $lastLockTime;
-    private $lastLoginTime;
-    private $role;
+    private $firstName;
+    private $lastName;
+    private $accountId;
 
     function __get($name) {
         return $this->$name;
