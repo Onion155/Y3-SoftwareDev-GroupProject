@@ -6,10 +6,10 @@
         <h3>Login Account</h3>
         <form class="login-form form" method="POST">
             <label for="login-email">Email</label>
-            <input name="email" id="email" value="drmarco@gmail.com" type="text" placeholder="Enter your email" />
+            <input name="email" id="email" value="" type="text" placeholder="Enter your email" />
             <label for="login-password">Password</label>
             <div id="view-password-wrapper">
-                <input name="password" id="password" value="123" type="password" placeholder="Enter your password" />
+                <input name="password" id="password" value="" type="password" placeholder="Enter your password" />
                 <button id="toggle-password" onclick="togglePassword($(this))" type="button">
                     <img id="show-hide" src="other/hide.png">
                 </button>

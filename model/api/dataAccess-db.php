@@ -41,6 +41,33 @@ function fetchPatientWithNHS($nhsNum)
     return $result[0];
   }
 }
+
+function fetchDoctorWithGMC($gmcNum)
+{
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM doctor WHERE GMCNumber = ?');
+  $statement->execute([$gmcNum]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Doctor');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0];
+  }
+}
+
+function fetchAdmin($accountId)
+{
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM admin WHERE accountId = ?');
+  $statement->execute([$accountId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Admin');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0];
+  }
+}
+
 function fetchDoctor($accountId)
 {
   global $pdo;
@@ -51,6 +78,70 @@ function fetchDoctor($accountId)
     return null;
   } else {
     return $result[0];
+  }
+}
+
+function fetchDoctorById($doctorId, $adminId)
+{
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM doctor WHERE id = ? AND adminId = ?');
+  $statement->execute([$doctorId, $adminId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Doctor');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0];
+  }
+}
+
+function fetchDoctors($adminId)
+{
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM doctor WHERE adminId =  ?');
+  $statement->execute([$adminId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Doctor');
+  return $result;
+}
+
+function fetchDoctorsByFirstName($adminId, $firstName) {
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM doctor WHERE adminId =  ? AND firstName LIKE ?');
+  $statement->execute([$adminId, $firstName."%"]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Doctor');
+  return $result;
+}
+
+function fetchDoctorsByLastName($adminId, $firstName) {
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM doctor WHERE adminId =  ? AND lastName LIKE ?');
+  $statement->execute([$adminId, $firstName."%"]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Doctor');
+  return $result;
+}
+
+function fetchDoctorsByGMC($adminId, $gmcNum) {
+  global $pdo;
+  $statement = $pdo->prepare('SELECT * FROM doctor WHERE adminId =  ? AND GMCNumber = ?');
+  $statement->execute([$adminId, $gmcNum]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Doctor');
+  return $result;
+}
+
+function fetchDoctorEmail($doctorId, $adminId) {
+  global $pdo;
+  $statement = $pdo->prepare('
+    SELECT email, role 
+    FROM account
+    JOIN doctor ON account.id = doctor.accountId
+    JOIN admin ON admin.id = doctor.adminId
+    WHERE doctor.id = ? AND admin.id = ?
+    ');
+  $statement->execute([$doctorId, $adminId]);
+  $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Doctor');
+  if (count($result) == 0) {
+    return null;
+  } else {
+    return $result[0]->email;
   }
 }
 
@@ -88,7 +179,7 @@ function fetchPatientsByLastName($doctorId, $lastName) {
 
 function fetchPatientsByNHS($doctorId, $nhsNum) {
   global $pdo;
-  $statement = $pdo->prepare('SELECT * FROM patient WHERE doctorId =  ? AND NHSNumber LIKE ?');
+  $statement = $pdo->prepare('SELECT * FROM patient WHERE doctorId =  ? AND NHSNumber = ?');
   $statement->execute([$doctorId, $nhsNum]);
   $result = $statement->fetchALL(PDO::FETCH_CLASS, 'Patient');
   return $result;
@@ -154,13 +245,16 @@ function fetchPatient($patientId, $doctorId)
     return $result[0];
   }
 }
-
+function deleteDoctor($doctorId, $adminId) {
+  global $pdo;
+  $statement = $pdo->prepare('DELETE FROM doctor WHERE id = ? AND adminId = ?');
+  $statement->execute([$doctorId, $adminId]);
+}
 function deletePatient($patientId, $doctorId) {
   global $pdo;
   $statement = $pdo->prepare('DELETE FROM patient WHERE id = ? AND doctorId = ?');
   $statement->execute([$patientId, $doctorId]);
 }
-
 //Fetches all patient records of a patient
 function fetchPatientRecords($patientId)
 {
@@ -176,6 +270,16 @@ function insertAccount($email, $password, $role) {
   $statement->execute([$email, $password, $role]);
 }
 
+function insertDoctor($accountId, $adminId, $firstName, $lastName, $gmc) {
+  global $pdo;
+  $statement = $pdo->prepare('INSERT INTO doctor (accountId, adminId, firstName, lastName, GMCNumber) VALUES (?, ?, ?, ?, ?)');
+  $statement->execute([$accountId, $adminId, $firstName, $lastName, $gmc]);
+}
+function updateDoctor($doctorId, $firstName, $lastName, $gmc) {
+    global $pdo;
+    $statement = $pdo->prepare('UPDATE doctor SET firstName = ?, lastName = ?, GMCNumber = ? WHERE id = ?');
+    $statement->execute([$firstName, $lastName, $gmc, $doctorId]);
+  }
 function insertPatient($accountId, $doctorId, $firstName, $lastName, $dob, $nhs, $ethnicity, $sex) {
   global $pdo;
   $statement = $pdo->prepare('INSERT INTO patient (accountId, doctorId, firstName, lastName, DoB, NHSNumber, isBlack, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');

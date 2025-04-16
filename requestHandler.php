@@ -2,6 +2,7 @@
 require_once "model/account.php";
 require_once "model/patient.php";
 require_once "model/doctor.php";
+require_once "model/admin.php";
 require_once "model/patientRecord.php";
 require_once "model/api/dataAccess-db.php";
 
@@ -61,6 +62,35 @@ switch ($action) {
         $patientArray['isExpert'] = fetchPatientRole($patientId, $doctorId) == "expert patient" ? true : false;
         echo json_encode($patientArray);
         break;
+    case "getDoctor":
+        $adminId = $_SESSION['admin']->id;
+        $doctorId = $_POST['doctorId'];
+        $doctorArray = fetchDoctorById($doctorId, $adminId)->toArray();
+        $doctorArray['email'] = fetchDoctorEmail($doctorId, $adminId);
+        echo json_encode($doctorArray);
+        break;
+    case "addDoctor":
+        $data = json_decode($_POST["doctorData"]);
+        validateDoctor($data, "add");
+        break;
+    case "editDoctor":
+        $data = json_decode($_POST["doctorData"]);
+        validateDoctor($data, "edit");
+        break;
+case "deleteDoctors":
+    if (isset($_POST["checkbox"])) {
+        $adminId = $_SESSION["admin"]->id;
+        $doctorIds = $_POST["checkbox"];
+        foreach ($doctorIds as $doctorId) {
+            deleteDoctor($doctorId, $adminId);
+        }
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        $_SESSION["error-message"] = "No doctors were selected";
+        header("Location: dashboard.php");
+    }
+    break;
     case "deletePatients":
         if (isset($_POST["checkbox"])) {
             $doctorId = $_SESSION["doctor"]->id;
@@ -136,6 +166,7 @@ function validatePatient($data, $action) {
     $role =$data->role;
     $doctorId = $_SESSION["doctor"]->id;
 
+    $oldNhsNum = null;
     $oldEmail = null;
     if ($action == "edit") {
         $patientId = $data->patientId;
@@ -195,6 +226,59 @@ function validatePatient($data, $action) {
         echo "success";    
     }
 
+}
+
+function validateDoctor($data, $action) {
+    foreach ($data as $key => $value) {
+        if (empty($value)) {
+            echo "All fields are required";
+            exit();
+        }
+    }
+
+    $firstName = filter_var($data->firstName, FILTER_SANITIZE_STRING);
+    $lastName =filter_var($data->lastName, FILTER_SANITIZE_STRING);
+    $gmcNum = $data->gmc;
+    $email = $data->email;
+    $adminId = $_SESSION["admin"]->id;
+    $oldGmcNum = null;
+    $oldEmail = null;
+    if ($action == "edit") {
+        $doctorId = $data->doctorId;
+        $oldEmail = fetchDoctorEmail($doctorId, $adminId);
+        $oldGmcNum = fetchDoctorById($doctorId, $adminId)->GMCNumber;
+    }
+
+    if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+        echo "Email is invalid";
+        exit();
+    } else if (!filter_var($gmcNum, FILTER_VALIDATE_INT) || strlen($gmcNum) != 7) {
+        echo "GMC number is invalid";
+        exit();
+    } else if ((!empty(fetchDoctorWithGMC($gmcNum))) && $gmcNum != $oldGmcNum) {
+        echo "GMC number is already taken";
+        exit();
+    } else {
+        $account = fetchAccount($email);
+    }
+
+    if ((!empty($account) || isset($account->passwordHash)) && $email != $oldEmail) {
+        echo "Email already taken";
+        exit();
+    } else {
+        
+        if ($action == "add") {
+        insertAccount($email, null, "doctor");
+        $accountId = fetchAccount($email)->id;
+        insertDoctor($accountId, $adminId, $firstName, $lastName, $gmcNum);
+        
+        } else if ($action == "edit") {
+           $accountId = fetchAccount($oldEmail)->id;
+           updateAccount($accountId, $email, "doctor");
+           updateDoctor($doctorId, $firstName, $lastName, $gmcNum);
+        }
+        echo "success";    
+    }
 }
 
 function validateDate($dateString, $format) {

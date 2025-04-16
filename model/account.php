@@ -7,6 +7,7 @@ class Account {
     private $lastLockTime;
     private $lastLoginTime;
     private $role;
+
     function __get($name) {
         return $this->$name;
       }
@@ -14,6 +15,5 @@ class Account {
       function __set($name,$value) {
         $this->$name = $value;
       }
-    
 }
 ?>

@@ -15,6 +15,9 @@ if (isset($_SESSION["session-time"]) && (time() - $_SESSION["session-time"] > 18
 
 $account = $_SESSION["account"];
     switch ($account->role) {
+        case "admin":
+            require_once "adminSearch.php";
+            break;
         case "doctor":
             require_once "doctorSearch.php";
             break;

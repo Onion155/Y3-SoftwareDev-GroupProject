@@ -1,14 +1,10 @@
 <?php
-class Doctor {
+class Admin {
     private $id;
     private $firstName;
     private $lastName;
-    private $GMCNumber;
     private $accountId;
-    private $adminId;
-    public function toArray() {
-      return get_object_vars($this);
-    }
+
     function __get($name) {
         return $this->$name;
       }
