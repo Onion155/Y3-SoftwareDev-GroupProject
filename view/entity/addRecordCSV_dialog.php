@@ -28,7 +28,7 @@
         </div>
         </div>
     </dialog>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type = "module" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     const csvDialog = document.getElementById("csv-dialog");
     const showCSVDialog = (show) => show ? csvDialog.showModal() : csvDialog.close();
